@@ -11,11 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 @Entity
 @Table(name="movies")
 public class Movie {
@@ -29,7 +29,6 @@ public class Movie {
 	private List<Review> reviews;
 	private Date date;
 	private double eloRating;
-	private int eloTimesRated;
 	@ManyToMany
 	@JoinTable(name="favorites",
 	joinColumns={@JoinColumn(name="movieId")},
@@ -72,7 +71,7 @@ public class Movie {
 	@Column(name="actor")
 	private List<String>actors;
 	
-	@Lob //http://www.concretepage.com/hibernate/lob-hibernate-annotation
+	@Column(columnDefinition = "text")
 	private String plot;
 	
 	public int getMovieId() {
@@ -147,12 +146,6 @@ public class Movie {
 	}
 	public void setEloRating(double eloRating) {
 		this.eloRating = eloRating;
-	}
-	public int getEloTimesRated() {
-		return eloTimesRated;
-	}
-	public void setEloTimesRated(int eloTimesRated) {
-		this.eloTimesRated = eloTimesRated;
 	}
 
 }
