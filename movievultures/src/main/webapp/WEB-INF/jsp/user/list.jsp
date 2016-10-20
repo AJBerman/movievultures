@@ -14,7 +14,7 @@
 	<tr><th>User ID</th> <th>Username</th></tr>
 	<c:forEach items="${users}" var="user" varStatus="status">
 		<tr>
-		<td>${user.id}</td>
+		<td>${user.userId}</td>
 		<td>${user.username}</td>
 		</tr>
 	</c:forEach>

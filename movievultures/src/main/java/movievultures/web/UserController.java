@@ -16,13 +16,13 @@ public class UserController {
 	@Autowired
 	UserDao userDao;
 	
-	@RequestMapping("users/list.html")
+	@RequestMapping("user/list.html")
 	public String listUsers(ModelMap models){
 		
 		List<User> users = userDao.getUsers();
 		models.put("users", users);
 		
-		return "users/list";
+		return "user/list";
 	}
 
 }
