@@ -2,6 +2,7 @@ package movievultures.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,6 +19,7 @@ public class Review {
 	private User user;
 	@ManyToOne
 	private Movie movie;
+	@Column(columnDefinition="double precision")
 	private double rating;
 	private String review;
 	private Date date;

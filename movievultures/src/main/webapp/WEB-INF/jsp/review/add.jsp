@@ -26,9 +26,7 @@
 </tr>
 <tr>
   <td>Rating</td>
-  <td>
-  	<form:input type="text" path="rating" min="0.5" max="5.0" step="0.5" />
-  </td>
+  <td><form:input type="number" path="rating" min="0.5" max="5.0" step="0.5" /></td>
 </tr>
 
 </table>
