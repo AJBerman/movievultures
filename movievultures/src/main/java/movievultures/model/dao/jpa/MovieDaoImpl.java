@@ -23,17 +23,14 @@ public class MovieDaoImpl implements MovieDao{
 
     @Override
 	public Movie getRandomMovie() {
-		return entityManager
-			.createQuery( "from movies order by random() limit 1", Movie.class )
-			.getResultList()
-			.get(0);
+		return this.getRandomMovies(1).get(0);
 	}
 
     @Override
 	public List<Movie> getRandomMovies( int i ) {
 		return entityManager
-			.createQuery( "from movies order by random() limit :i", Movie.class )
-			.setParameter("i", i)
+			.createQuery( "from movies order by random()", Movie.class )
+			.setMaxResults(i)
 			.getResultList();
 	}
 
