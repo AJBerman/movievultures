@@ -26,7 +26,7 @@ public class ReviewDaoImpl implements ReviewDao {
     @Override
 	public List<Review> getReviewsByUser( User user ) {
 		return entityManager
-			.createQuery( "from Reviews where user_userid=:userid", Review.class )
+			.createQuery( "from Review where user_userid=:userid", Review.class )
 			.setParameter("userid",user.getUserId())
 			.getResultList();
 	}
@@ -34,7 +34,7 @@ public class ReviewDaoImpl implements ReviewDao {
     @Override
 	public List<Review> getReviewsByMovie( Movie movie ) {
 		return entityManager
-				.createQuery( "from Reviews where movie_movieid=:movieid", Review.class )
+				.createQuery( "from Review where movie_movieid=:movieid", Review.class )
 				.setParameter("movieid",movie.getMovieId())
 				.getResultList();
 	}
