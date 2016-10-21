@@ -2,6 +2,8 @@ package movievultures.web.controller;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -47,15 +49,43 @@ public class ReviewController {
         models.put("review", review);
         return "review/add";
     }
+	@RequestMapping(value = "/review/add.html", method = RequestMethod.POST)
+    public String add( @ModelAttribute Review review ) // e.g. /rate?id=5267
+    {
+		reviewDao.saveReview(review);
+        return "redirect:movie.html?id=${movie.id}";
+    }
+
+	@RequestMapping(value = "/review/edit.html", method = RequestMethod.GET)
+	public String edit(@RequestParam("id") int id, ModelMap models ) 
+	{
+        //User user = SecurityUtils.getUser();
+		User user = userDao.getUser(12); //just for testing
+        Review review = reviewDao.getReview(id);
+        //for testing
+        models.put("movie", review.getMovie());
+        models.put("review", review);
+		return "review/edit";
+		/*if(user.equals(review.getUser())) 
+		{
+	        models.put("movie", review.getMovie());
+	        models.put("review", review);
+			return "review/edit";
+		}
+		else 
+		{
+			return "redirect:movie.html?id=${movie.id}";
+		}*/
+	}
+	@RequestMapping(value = "/review/edit.html", method = RequestMethod.POST)
+	public String edit(@ModelAttribute Review review ) 
+	{
+		reviewDao.saveReview(review);
+        return "redirect:movie.html?id=${review.movie.id}";
+	}
 
 	@InitBinder
 	public void dataBinding(WebDataBinder binder) {
 		binder.registerCustomEditor(java.lang.Double.class, "rating", new CustomNumberEditor(java.lang.Double.class, false));
 	}
-	@RequestMapping(value = "/review/add.html", method = RequestMethod.POST)
-    public String rate( @ModelAttribute Review review ) // e.g. /rate?id=5267
-    {
-		reviewDao.saveReview(review);
-        return "redirect:movie.html?id=${movie.id}";
-    }
 }

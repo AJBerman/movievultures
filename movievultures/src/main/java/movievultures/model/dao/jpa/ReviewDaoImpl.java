@@ -19,7 +19,7 @@ public class ReviewDaoImpl implements ReviewDao {
     private EntityManager entityManager;
 
     @Override
-	public Review getReview( Long id ) {
+	public Review getReview( int id ) {
 		return entityManager.find( Review.class, id );
 	}
 
