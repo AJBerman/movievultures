@@ -5,8 +5,9 @@ import java.util.List;
 import movievultures.model.User;
 
 public interface UserDao {
-	User getUser(Long id);
+	User getUser(int id);
 	User getUserByUsername(String username);
 	List<User> getUsersByUsername(String username);
 	User saveUser(User user);
+	List<User> getUsers();
 }

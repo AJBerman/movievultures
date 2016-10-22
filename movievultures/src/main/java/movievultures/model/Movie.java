@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -74,7 +73,7 @@ public class Movie {
 	@Column(name="actor")
 	private List<String>actors;
 	
-	@Lob //http://www.concretepage.com/hibernate/lob-hibernate-annotation
+	@Column(columnDefinition = "text")
 	private String plot;
 	
 	public int getMovieId() {
