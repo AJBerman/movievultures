@@ -29,7 +29,6 @@ public class Movie {
 	private List<Review> reviews;
 	private Date date;
 	private double eloRating;
-	private int eloTimesRated;
 	@Column(name="is_hidden", columnDefinition = "boolean default false", nullable=false)
 	private boolean hidden;
 	@ManyToMany
@@ -149,12 +148,6 @@ public class Movie {
 	}
 	public void setEloRating(double eloRating) {
 		this.eloRating = eloRating;
-	}
-	public int getEloTimesRated() {
-		return eloTimesRated;
-	}
-	public void setEloTimesRated(int eloTimesRated) {
-		this.eloTimesRated = eloTimesRated;
 	}
 	public boolean isHidden() {
 		return hidden;

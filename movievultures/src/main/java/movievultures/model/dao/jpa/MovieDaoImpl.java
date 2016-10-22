@@ -38,8 +38,8 @@ public class MovieDaoImpl implements MovieDao{
     @Override
 	public List<Movie> getMoviesByTitle(String title) {
 		return entityManager
-			.createQuery( "from Movie where title LIKE '%:title%'", Movie.class )
-			.setParameter("title", title)
+			.createQuery( "from Movie where title LIKE :title", Movie.class )
+			.setParameter("title", '%' + title + '%')
 			.getResultList();
 	}
 

@@ -34,8 +34,8 @@ public class UserDaoImpl implements UserDao {
     @Override
 	public List<User> getUsersByUsername(String username) {
 		return entityManager
-			.createQuery( "from User where username LIKE '%:username%'", User.class )
-			.setParameter("username",username)
+			.createQuery( "from User where username LIKE :username", User.class )
+			.setParameter("username",'%' + username + '%')
 			.getResultList();
 	}
 
