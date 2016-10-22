@@ -10,6 +10,7 @@
 	<h1>Welcome to Movie Vultures!</h1>
 	<ul>
 		<li><a href="user/list.html">User Management</a></li>
+		<li><a href="user/register.html">Register</a></li>
 	</ul>
 </body>
 </html>

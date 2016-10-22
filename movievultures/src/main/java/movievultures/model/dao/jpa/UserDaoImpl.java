@@ -7,7 +7,6 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import movievultures.model.Movie;
 import movievultures.model.User;
 import movievultures.model.dao.UserDao;
 
@@ -30,13 +29,13 @@ public class UserDaoImpl implements UserDao{
 			.getResultList()
 			.get(0);
 	}
-	@Override
+    @Override
 	public List<User> getUsersByUsername(String username) {
 		return entityManager
-			.createQuery( "from User where username LIKE '%:username%'", User.class )
-			.setParameter("username",username)
+			.createQuery( "from User where username LIKE :username", User.class )
+			.setParameter("username",'%' + username + '%')
 			.getResultList();
-	} 
+	}
 	@Override
 	public User saveUser(User user) {
         return entityManager.merge( user );

@@ -5,17 +5,25 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
 
 import movievultures.model.User;
 import movievultures.model.dao.UserDao;
+import movievultures.web.validator.UserValidator;
 
 @Controller
 public class UserController {
 	
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	UserValidator userValidator;
 	
 	@RequestMapping("user/list.html")
 	public String listUsers(ModelMap models){
@@ -41,7 +49,30 @@ public class UserController {
 		return "user/view";
 	}
 	//register user
+	@RequestMapping(value="user/register.html", method=RequestMethod.GET)
+	public String register(ModelMap models){
+		models.put("user", new User());
+		return "user/register";
+	}
+	
+	@RequestMapping(value="user/register.html", method=RequestMethod.POST)
+	public String register(@ModelAttribute User user, BindingResult result, SessionStatus status){
+		userValidator.validate(user, result);
+		if(result.hasErrors())
+			return "user/register";
+		//If no errors save user
+		userDao.saveUser(user);
+		//free resources
+		status.setComplete();
+		
+		return "redirect:user/list.html";
+	}
 	
 	//edit user
+	@RequestMapping(value="user/edit.html", method=RequestMethod.GET)
+	public String edit(@RequestParam int userId, ModelMap models){
+		models.put("user", userDao.getUser(userId));
+		return "user/edit";
+	}
 
 }
