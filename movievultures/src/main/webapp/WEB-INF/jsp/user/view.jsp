@@ -7,18 +7,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>List of Users</title>
+<title>Curiouser and Curiouser</title>
 </head>
 <body>
+	<h2>${user.username}</h2>
+	
+	<br />
+	
+	${user.username} has reviewed:
 	<table border=1>
-	<tr><th>User ID</th> <th>Username</th></tr>
-	<c:forEach items="${users}" var="user" varStatus="status">
-		<tr>
-		<td>${user.userId}</td>
-		<td>${user.username}</td>
-		<td><a href="view.html?userId=${user.userId}">view</a></td>
-		</tr>
-	</c:forEach>
+		<tr><th>Title</th><th>rating</th></tr>
+		<c:forEach items="${user.reviewedMovies}" var="review" varStatus="status" >
+			<tr>
+				<td><a href="movie/view.html?id=${review.movie.movieId}">${review.movie.title}</a></td>
+				<td>${review.rating }</td>
+			</tr>
+		</c:forEach>
 	</table>
+	
 </body>
 </html>

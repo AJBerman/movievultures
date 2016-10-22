@@ -18,14 +18,14 @@ public class UserDaoImpl implements UserDao{
     private EntityManager entityManager;
 
     @Override
-	public User getUser(int id) {
-        return entityManager.find( User.class, id );
+	public User getUser(int userId) {
+        return entityManager.find( User.class, userId );
 	}
 	
 	@Override
 	public User getUserByUsername(String username) {
 		return entityManager
-			.createQuery( "from users where username=:username", User.class )
+			.createQuery( "from User where username=:username", User.class )
 			.setParameter("username",username)
 			.getResultList()
 			.get(0);
@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public List<User> getUsersByUsername(String username) {
 		return entityManager
-			.createQuery( "from users where username LIKE '%:username%'", User.class )
+			.createQuery( "from User where username LIKE '%:username%'", User.class )
 			.setParameter("username",username)
 			.getResultList();
 	} 
