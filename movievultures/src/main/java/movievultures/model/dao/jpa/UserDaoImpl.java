@@ -30,7 +30,7 @@ public class UserDaoImpl implements UserDao {
 			.getResultList()
 			.get(0);
 	}
-
+    
     @Override
 	public List<User> getUsersByUsername(String username) {
 		return entityManager
@@ -43,5 +43,10 @@ public class UserDaoImpl implements UserDao {
     @Transactional
 	public User saveUser(User user) {
         return entityManager.merge( user );
+	}
+	
+	@Override
+	public List<User> getUsers() {
+		return entityManager.createQuery("from User order by id", User.class).getResultList();
 	}
 }

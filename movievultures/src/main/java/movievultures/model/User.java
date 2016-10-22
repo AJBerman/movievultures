@@ -3,6 +3,7 @@ package movievultures.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,9 +19,12 @@ public class User {
 	@Id
 	@GeneratedValue
 	private int userId;
+	@Column(unique=true, nullable=false)
 	private String username;
 	private String password;
 	private String email;
+	@Column(name="is_hidden", columnDefinition = "boolean default false", nullable=false)
+	private boolean hidden;
 	@OneToMany(mappedBy="user",
 			cascade=CascadeType.ALL)
 	private List<Review> reviewedMovies;
@@ -87,6 +91,12 @@ public class User {
 	}
 	public void setWatchLater(List<Movie> watchLater) {
 		this.watchLater = watchLater;
+	}
+	public boolean isHidden() {
+		return hidden;
+	}
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
 	}
 	
 }
