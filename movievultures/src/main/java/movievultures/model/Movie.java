@@ -150,8 +150,6 @@ public class Movie {
 	public void setEloRating(double eloRating) {
 		this.eloRating = eloRating;
 	}
-<<<<<<< HEAD
-=======
 	public int getEloTimesRated() {
 		return eloTimesRated;
 	}
@@ -164,6 +162,5 @@ public class Movie {
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
 	}
->>>>>>> master
 
 }
