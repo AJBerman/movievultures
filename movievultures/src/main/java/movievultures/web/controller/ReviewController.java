@@ -2,8 +2,6 @@ package movievultures.web.controller;
 
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -26,7 +24,7 @@ import movievultures.model.dao.UserDao;
 import movievultures.security.SecurityUtils;
 
 @Controller
-@SessionAttributes("user")
+@SessionAttributes({"user", "review"})
 public class ReviewController {
 	@Autowired
 	private MovieDao movieDao;
@@ -50,10 +48,10 @@ public class ReviewController {
         return "review/add";
     }
 	@RequestMapping(value = "/review/add.html", method = RequestMethod.POST)
-    public String add( @ModelAttribute Review review ) // e.g. /rate?id=5267
+    public String add( @ModelAttribute("review") Review review ) // e.g. /rate?id=5267
     {
 		reviewDao.saveReview(review);
-        return "redirect:movie.html?id=${movie.id}";
+        return "redirect:movie.html?id=" + review.getMovie().getMovieId();
     }
 
 	@RequestMapping(value = "/review/edit.html", method = RequestMethod.GET)
@@ -78,10 +76,10 @@ public class ReviewController {
 		}*/
 	}
 	@RequestMapping(value = "/review/edit.html", method = RequestMethod.POST)
-	public String edit(@ModelAttribute Review review ) 
+	public String edit( @ModelAttribute("review") Review review ) 
 	{
 		reviewDao.saveReview(review);
-        return "redirect:movie.html?id=${review.movie.id}";
+        return "redirect:movie.html?id=" + review.getMovie().getMovieId();
 	}
 
 	@InitBinder

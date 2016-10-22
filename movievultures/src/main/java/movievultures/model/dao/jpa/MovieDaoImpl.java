@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import movievultures.model.Movie;
 import movievultures.model.dao.MovieDao;
@@ -59,6 +60,7 @@ public class MovieDaoImpl implements MovieDao{
 	}
 
     @Override
+    @Transactional
 	public Movie saveMovie(Movie movie) {
         return entityManager.merge( movie );
 	}

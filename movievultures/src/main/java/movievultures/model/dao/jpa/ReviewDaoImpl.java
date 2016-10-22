@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import movievultures.model.Movie;
 import movievultures.model.Review;
@@ -26,9 +27,9 @@ public class ReviewDaoImpl implements ReviewDao {
     @Override
 	public List<Review> getReviewsByUser( User user ) {
 		return entityManager
-			.createQuery( "from Review where user_userid=:userid", Review.class )
-			.setParameter("userid",user.getUserId())
-			.getResultList();
+				.createQuery( "from Review where user_userid=:userid", Review.class )
+				.setParameter("userid",user.getUserId())
+				.getResultList();
 	}
 
     @Override
@@ -40,6 +41,7 @@ public class ReviewDaoImpl implements ReviewDao {
 	}
 
     @Override
+    @Transactional
 	public Review saveReview( Review review ) {
         return entityManager.merge( review );
 	}
