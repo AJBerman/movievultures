@@ -10,7 +10,7 @@
 <title>List of Users</title>
 </head>
 <body>
-	<form action="/logout" method="POST">
+	<form action="/movievultures/logout" method="POST">
   		<input name="_csrf" type="hidden" value="${_csrf.token}" />
   		<input name="submit" type="submit" value="Logout" />
 	</form>

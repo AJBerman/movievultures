@@ -17,6 +17,7 @@
 		<tr><th>Username:</th> <td>${user.username}</td></tr>
 		<tr><th>e-mail: </th><td>${user.email}</td></tr>
 	</table>
+	<a href="profile.html?userId=${user.userId}">Edit Profile</a>
 	
 	<br />
 	<h3>Recommendations:</h3>
@@ -42,7 +43,7 @@
 		<p>None at the moment.</p>
 	</c:if>
 	<c:if test="${not empty user.favorites}">
-		<table>
+		<table border=1>
 			<tr><th>Title</th></tr>
 			<c:forEach items="${user.favorites}" var="movie" varStatus="status" >
 				<tr>
@@ -50,6 +51,7 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<a href="favorites.html?userId=${user.userId}">Edit favorites</a>
 	</c:if>
 
 	<br />
@@ -59,7 +61,7 @@
 		<p>None at the moment.</p>
 	</c:if>
 	<c:if test="${not empty user.watchLater}">
-		<table>
+		<table border=1>
 			<tr><th>Title</th></tr>
 			<c:forEach items="${user.watchLater}" var="movie" varStatus="status" >
 				<tr>

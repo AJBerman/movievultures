@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import movievultures.model.User;
@@ -17,6 +18,7 @@ import movievultures.model.dao.UserDao;
 import movievultures.web.validator.UserValidator;
 
 @Controller
+@SessionAttributes("user")
 public class UserController {
 	
 	@Autowired
@@ -68,11 +70,34 @@ public class UserController {
 		return "redirect:list.html";
 	}
 	
-	//edit user
-	@RequestMapping(value="user/edit.html", method=RequestMethod.GET)
-	public String edit(@RequestParam int userId, ModelMap models){
+	//updateProfile
+	@RequestMapping(value="user/profile.html", method=RequestMethod.GET)
+	public String profile(@RequestParam int userId, ModelMap models){
 		models.put("user", userDao.getUser(userId));
-		return "user/edit";
+		return "user/profile";
+	}
+	
+	@RequestMapping(value="user/profile.html", method=RequestMethod.POST)
+	public String profile(@ModelAttribute User user, BindingResult result, SessionStatus status){
+		userDao.saveUser(user);
+		status.setComplete();
+		return "redirect:/user/home.html?username=" + user.getUsername();
+	}
+	
+	//updateFavorites
+	@RequestMapping(value="user/favorites.html")
+	public String favorites(@RequestParam int userId, ModelMap models){
+		models.put("user", userDao.getUser(userId));
+		return "user/favorites";
+	}
+	
+	@RequestMapping(value="user/removeFav", method=RequestMethod.GET)
+	public String removeFav(@RequestParam int index, @RequestParam int userId, SessionStatus status){
+		User user = userDao.getUser(userId);
+		user.getFavorites().remove(index);
+		userDao.saveUser(user);
+		status.setComplete();
+		return "redirect:/user/home.html?username=" + user.getUsername();
 	}
 
 }

@@ -18,7 +18,7 @@ def readin_reviews():
     
     try:
         # get a connection, if a connect cannot be made an exception will be raised here
-        conn = psycopg2.connect("host='localhost' dbname='movievultures' user='swan' password='abcdabcd'")
+        conn = psycopg2.connect("host='localhost' dbname='movievultures' user='swa")n' password='abcdabcd'
         # conn.cursor will return a cursor object, you can use this cursor to perform queries
         cursor = conn.cursor()
         print "Connected!\n"
@@ -34,6 +34,22 @@ def readin_reviews():
         reviewFile.close()
         conn.close()
 
+def readin_roles():
+    query = "INSERT INTO authorities(username, authority) VALUES (%s, %s);"
+    try:
+        conn = psycopg2.connect("host='localhost' dbname='movievultures' user='swan' password='abcdabcd'")
+        cursor = conn.cursor()
+        print "Connected!\n"
+        authFile = open("roles.csv", 'rb')
+        reader = csv.reader(authFile)
+        for line in reader:
+            data = (line[0], line[1]))
+            cursor.execute(query, data)
+            conn.commit()
+
+    finally:
+        authFile.close()
+        conn.close()
 
 def readin_movies():
     ia = imdb.IMDb() # by default access the web.
@@ -87,7 +103,8 @@ def readin_movies():
 
 
 def main():
-    readin_movies()
+    #readin_movies()
+    readin_roles()
 
 if __name__ == "__main__":
     main()

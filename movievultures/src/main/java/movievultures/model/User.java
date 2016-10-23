@@ -26,8 +26,6 @@ public class User {
 	pkColumnValue = "SEQUENCE",
             allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "EVENT_GEN")
-//	@Id
-//	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int userId;
 	@Column(unique=true, nullable=false)
 	private String username;
@@ -45,7 +43,7 @@ public class User {
 	private List<Movie> recommendations;
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="favorites",
-	joinColumns={@JoinColumn(name="username")},
+	joinColumns={@JoinColumn(name="userId")},
 	inverseJoinColumns={@JoinColumn(name="movieId")})
 	private List<Movie> favorites;
 	@ManyToMany(cascade=CascadeType.ALL)
