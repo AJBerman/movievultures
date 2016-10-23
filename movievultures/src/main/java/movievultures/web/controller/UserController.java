@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import movievultures.model.User;
+import movievultures.model.dao.MovieDao;
 import movievultures.model.dao.UserDao;
+import movievultures.web.validator.EditUserValidator;
 import movievultures.web.validator.UserValidator;
 
 @Controller
@@ -25,7 +27,13 @@ public class UserController {
 	UserDao userDao;
 	
 	@Autowired
+	MovieDao movieDao;
+	
+	@Autowired
 	UserValidator userValidator;
+	
+	@Autowired
+	EditUserValidator editUserValidator;
 	
 	@RequestMapping("user/list.html")
 	public String listUsers(ModelMap models){
@@ -79,20 +87,25 @@ public class UserController {
 	
 	@RequestMapping(value="user/profile.html", method=RequestMethod.POST)
 	public String profile(@ModelAttribute User user, BindingResult result, SessionStatus status){
+		editUserValidator.validate(user, result);
+		if(result.hasErrors())
+			return "user/profile";
 		userDao.saveUser(user);
 		status.setComplete();
 		return "redirect:/user/home.html?username=" + user.getUsername();
 	}
+	
 	//These methods only delete items from their lists - adding should be done at a movie page.
 	
-	//updateFavorites
-	@RequestMapping("user/favorites.html")
-	public String favorites(@RequestParam int userId, ModelMap models){
-		models.put("user", userDao.getUser(userId));
-		return "user/favorites";
+	@RequestMapping("user/addFav")
+	public String addFav(@RequestParam int userId, @RequestParam int movieId){
+		User user = userDao.getUser(userId);
+		user.getFavorites().add(movieDao.getMovie(movieId));
+		userDao.saveUser(user);
+		return "redirect:/user/home.html?username=" + user.getUsername();
 	}
 	
-	@RequestMapping(value="user/removeFav", method=RequestMethod.GET)
+	@RequestMapping("user/removeFav")
 	public String removeFav(@RequestParam int index, @RequestParam int userId, SessionStatus status){
 		User user = userDao.getUser(userId);
 		user.getFavorites().remove(index);
@@ -101,15 +114,8 @@ public class UserController {
 		return "redirect:/user/home.html?username=" + user.getUsername();
 	}
 	
-	//update recommendations
-	
-	@RequestMapping("user/recommendations.html")
-	public String recommendations(@RequestParam int userId, ModelMap models){
-		models.put("user", userDao.getUser(userId));
-		return "user/recommendations";
-	}
-	
-	@RequestMapping(value="user/removeRec", method=RequestMethod.GET)
+	//update recommendations	
+	@RequestMapping("user/removeRec")
 	public String removeRec(@RequestParam int index, @RequestParam int userId, SessionStatus status){
 		User user = userDao.getUser(userId);
 		user.getRecommendations().remove(index);
@@ -118,20 +124,20 @@ public class UserController {
 		return "redirect:/user/home.html?username=" + user.getUsername();
 	}
 	
-	//update watchLater
-	
-	@RequestMapping(value="user/watchLater", method=RequestMethod.GET)
-	public String watchLater(@RequestParam int userId, ModelMap models){
-		models.put("user", userDao.getUser(userId));
-		return "user/watchLater";
-	}
-	
-	@RequestMapping(value="user/watchLater", method=RequestMethod.POST)
+	@RequestMapping("user/removeWL")
 	public String watchLater(@RequestParam int index, @RequestParam int userId, SessionStatus status){
 		User user = userDao.getUser(userId);
-		user.getFavorites().remove(index);
+		user.getWatchLater().remove(index);
 		userDao.saveUser(user);
 		status.setComplete();
+		return "redirect:/user/home.html?username=" + user.getUsername();
+	}
+	
+	@RequestMapping("user/addWL")
+	public String addWL(@RequestParam int userId, @RequestParam int movieId){
+		User user = userDao.getUser(userId);
+		user.getWatchLater().add(movieDao.getMovie(movieId));
+		userDao.saveUser(user);
 		return "redirect:/user/home.html?username=" + user.getUsername();
 	}
 

@@ -11,8 +11,8 @@
 <body>
 	<form:form modelAttribute="user">
 		Username: ${user.username}<br />
-		Password: <form:input path="password" /><br />
-		E-mail: <form:input path="email" /><br />
+		Password: <form:input path="password" /> <font color="red"><form:errors path="password" /></font><br />
+		E-mail: <form:input path="email" /> <font color="red"><form:errors path="email" /></font><br />
 		<input type="submit" name="update" value="Update" />
 	</form:form>
 
