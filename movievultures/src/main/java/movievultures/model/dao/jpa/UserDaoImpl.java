@@ -6,22 +6,23 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import movievultures.model.User;
 import movievultures.model.dao.UserDao;
 
 
 @Repository
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-	public User getUser(int userId) {
-        return entityManager.find( User.class, userId );
+	public User getUser(int id) {
+        return entityManager.find( User.class, id );
 	}
-	
-	@Override
+
+    @Override
 	public User getUserByUsername(String username) {
 		return entityManager
 			.createQuery( "from User where username=:username", User.class )
@@ -29,6 +30,7 @@ public class UserDaoImpl implements UserDao{
 			.getResultList()
 			.get(0);
 	}
+
     @Override
 	public List<User> getUsersByUsername(String username) {
 		return entityManager
@@ -36,7 +38,10 @@ public class UserDaoImpl implements UserDao{
 			.setParameter("username",'%' + username + '%')
 			.getResultList();
 	}
-	@Override
+
+
+    @Override
+    @Transactional
 	public User saveUser(User user) {
         return entityManager.merge( user );
 	}
