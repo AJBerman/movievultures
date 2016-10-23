@@ -1,4 +1,4 @@
-package movievultures.web;
+package movievultures.web.controller;
 
 import java.util.List;
 
@@ -65,7 +65,7 @@ public class UserController {
 		//free resources
 		status.setComplete();
 		
-		return "redirect:user/list.html";
+		return "redirect:list.html";
 	}
 	
 	//edit user

@@ -11,8 +11,8 @@
 <body>
 	<form:form modelAttribute="user">
 		Username: <form:input path="username" /> <font color="red"><form:errors path="username" /></font> <br />
-		E-mail: <form:input path="email" />  <font color="red"><form:errors path="password" /> </font><br />
-		Password: <form:input path="password" /> <font color="red"><form:errors path="email" /> </font><br />
+		E-mail: <form:input path="email" />  <font color="red"><form:errors path="email" /> </font><br />
+		Password: <form:input path="password" /> <font color="red"><form:errors path="password" /> </font><br />
 		<input type="submit" name="add" value="add" />
 	</form:form>
 </body>
