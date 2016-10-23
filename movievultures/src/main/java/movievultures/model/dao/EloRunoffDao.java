@@ -14,7 +14,12 @@ public interface EloRunoffDao {
 	
 	List<EloRunoff> getEloRunoffsForMoviePair(Movie movie1, Movie movie2);
 	
+	EloRunoff getEloRunoffByUserAndMovies(int userid, int movie1id, int movie2id);
+	
+	EloRunoff getEloRunoffByUserAndMovies(User user, Movie movie1, Movie movie2);
+	
 	List<EloRunoff> getEloRunoffsByUser(User user);
 	
 	EloRunoff saveEloRunoff(EloRunoff eloRunoff);
+
 }
