@@ -6,17 +6,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Favorites</title>
+<title>Recommendations!</title>
 </head>
 <body>
-	<form:form modelAttribute="user">
+	<form:form methodAttribute="user">
 		<table border=1>
-			<tr><th>Movie Title</th><th>action</th></tr>
-			<c:forEach items="${user.favorites}" var="movie" varStatus="status">
+			<tr> <th>Movie</th><th>action</th> </tr>
+			<c:forEach items="${user.recommendations}" var="movie" varStatus="status">
 				<tr>
-					<td>${movie.title }</td>
+					<td>${movie.tite}</td>
 					<td>
-						<a href="removeFav.html?index=${status.index}&userId=${user.userId}">
+						<a href="removeRec.html?index=${status.index}&userId=${user.userId}">
 						<img src="../images/delete.png"></img></a>
 					</td>
 				</tr>

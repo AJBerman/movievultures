@@ -35,19 +35,19 @@ public class Movie {
 	@ManyToMany
 	@JoinTable(name="favorites",
 	joinColumns={@JoinColumn(name="movieId")},
-	inverseJoinColumns={@JoinColumn(name="username")})
+	inverseJoinColumns={@JoinColumn(name="userId")})
 	private List<User>favoredBy;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="watchLater",
 	joinColumns={@JoinColumn(name="movieId")},
-	inverseJoinColumns={@JoinColumn(name="username")})
+	inverseJoinColumns={@JoinColumn(name="userId")})
 	private List<User>watchQueue;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="recommendations",
 	joinColumns={@JoinColumn(name="movieId")},
-	inverseJoinColumns={@JoinColumn(name="username")})
+	inverseJoinColumns={@JoinColumn(name="userId")})
 	private List<User>recommendedTo;
 	
 	@ElementCollection

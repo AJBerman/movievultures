@@ -48,7 +48,7 @@ public class User {
 	private List<Movie> favorites;
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="watchLater",
-	joinColumns={@JoinColumn(name="username")},
+	joinColumns={@JoinColumn(name="userId")},
 	inverseJoinColumns={@JoinColumn(name="movieId")})
 	private List<Movie> watchLater;
 	

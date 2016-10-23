@@ -83,9 +83,10 @@ public class UserController {
 		status.setComplete();
 		return "redirect:/user/home.html?username=" + user.getUsername();
 	}
+	//These methods only delete items from their lists - adding should be done at a movie page.
 	
 	//updateFavorites
-	@RequestMapping(value="user/favorites.html")
+	@RequestMapping("user/favorites.html")
 	public String favorites(@RequestParam int userId, ModelMap models){
 		models.put("user", userDao.getUser(userId));
 		return "user/favorites";
@@ -93,6 +94,40 @@ public class UserController {
 	
 	@RequestMapping(value="user/removeFav", method=RequestMethod.GET)
 	public String removeFav(@RequestParam int index, @RequestParam int userId, SessionStatus status){
+		User user = userDao.getUser(userId);
+		user.getFavorites().remove(index);
+		userDao.saveUser(user);
+		status.setComplete();
+		return "redirect:/user/home.html?username=" + user.getUsername();
+	}
+	
+	//update recommendations
+	
+	@RequestMapping("user/recommendations.html")
+	public String recommendations(@RequestParam int userId, ModelMap models){
+		models.put("user", userDao.getUser(userId));
+		return "user/recommendations";
+	}
+	
+	@RequestMapping(value="user/removeRec", method=RequestMethod.GET)
+	public String removeRec(@RequestParam int index, @RequestParam int userId, SessionStatus status){
+		User user = userDao.getUser(userId);
+		user.getRecommendations().remove(index);
+		userDao.saveUser(user);
+		status.setComplete();
+		return "redirect:/user/home.html?username=" + user.getUsername();
+	}
+	
+	//update watchLater
+	
+	@RequestMapping(value="user/watchLater", method=RequestMethod.GET)
+	public String watchLater(@RequestParam int userId, ModelMap models){
+		models.put("user", userDao.getUser(userId));
+		return "user/watchLater";
+	}
+	
+	@RequestMapping(value="user/watchLater", method=RequestMethod.POST)
+	public String watchLater(@RequestParam int index, @RequestParam int userId, SessionStatus status){
 		User user = userDao.getUser(userId);
 		user.getFavorites().remove(index);
 		userDao.saveUser(user);

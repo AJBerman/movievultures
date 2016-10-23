@@ -69,6 +69,7 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<a href="watchLater.html?userId=${user.userId}">Edit Watch Later</a>
 	</c:if>
 
 	<h3>Reviewed Movies:</h3>
@@ -91,8 +92,6 @@
 	</table>
 	</c:if>			
 	
-	<br />
-	<a href="edit.html?username=${user.username}" >Edit Profile</a>
 	
 </body>
 </html>
