@@ -29,15 +29,13 @@ public class ReviewController {
 	@Autowired
 	private MovieDao movieDao;
 	@Autowired
-	private UserDao userDao; //just for testing, until security is implemented
-	@Autowired
 	private ReviewDao reviewDao;
 	
 	@RequestMapping(value = "/review/add.html", method = RequestMethod.GET)
     public String add(@RequestParam("id") int id, ModelMap models ) // e.g. /rate?id=5267
     {
-        //User user = SecurityUtils.getUser();
-		User user = userDao.getUser(12); //just for testing
+        User user = SecurityUtils.getUser();
+		//User user = userDao.getUser(12); //just for testing
         Review review = new Review();
         review.setUser(user);
         review.setDate(new Date());
@@ -57,8 +55,8 @@ public class ReviewController {
 	@RequestMapping(value = "/review/edit.html", method = RequestMethod.GET)
 	public String edit(@RequestParam("id") int id, ModelMap models ) 
 	{
-        //User user = SecurityUtils.getUser();
-		User user = userDao.getUser(12); //just for testing
+        User user = SecurityUtils.getUser();
+		//User user = userDao.getUser(12); //just for testing
         Review review = reviewDao.getReview(id);
         //for testing
         models.put("movie", review.getMovie());
