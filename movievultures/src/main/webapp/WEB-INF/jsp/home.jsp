@@ -11,5 +11,9 @@
 	<ul>
 		<li><a href="user/list.html">User Management</a></li>
 	</ul>
+	
+	<ul>
+		<li><a href="search/searchMovies.html">Search Movie</a></li>
+	</ul>
 </body>
 </html>

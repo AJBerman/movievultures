@@ -34,6 +34,12 @@ public class MovieDaoImpl implements MovieDao{
 			.setMaxResults(i)
 			.getResultList();
 	}
+    
+    @Override
+    @Transactional
+	public Movie saveMovie(Movie movie) {
+        return entityManager.merge( movie );
+	}
 
     @Override
 	public List<Movie> getMoviesByTitle(String title) {
@@ -103,9 +109,58 @@ public class MovieDaoImpl implements MovieDao{
 			.getResultList();
 	}
 
-    @Override
-    @Transactional
-	public Movie saveMovie(Movie movie) {
-        return entityManager.merge( movie );
+	@Override
+	public List<Movie> getMoviesByArtist(String artist) {
+		return null;
+	}
+
+	@Override
+	public List<Movie> getMoviesByArtist(String artist, int limit) {
+		return null;
+	}
+
+	@Override
+	public List<Movie> getMoviesSmallerYear(int year) {
+		return null;
+	}
+
+	@Override
+	public List<Movie> getMoviesGreaterYear(int year) {
+		return null;
+	}
+
+	@Override
+	public List<Movie> getMovieEqualYear(int year) {
+		return null;
+	}
+
+	@Override
+	public List<Movie> getMoviesSmallerUserRating(int userRating) {
+		return null;
+	}
+
+	@Override
+	public List<Movie> getMoviesGreaterUserRating(int userRating) {
+		return null;
+	}
+
+	@Override
+	public List<Movie> getMovieEqualUserRating(int userRating) {
+		return null;
+	}
+
+	@Override
+	public List<Movie> getMoviesSmallerEloRating(int eloRating) {
+		return null;
+	}
+
+	@Override
+	public List<Movie> getMoviesGreaterEloRating(int eloRating) {
+		return null;
+	}
+
+	@Override
+	public List<Movie> getMovieEqualEloRating(int eloRating) {
+		return null;
 	}
 }
