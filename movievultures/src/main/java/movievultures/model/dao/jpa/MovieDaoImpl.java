@@ -44,10 +44,28 @@ public class MovieDaoImpl implements MovieDao{
 	}
 
     @Override
+	public List<Movie> getMoviesByTitle(String title, int limit) {
+		return entityManager
+			.createQuery( "from Movie where title LIKE :title", Movie.class )
+			.setParameter("title", '%' + title + '%')
+			.setMaxResults(limit)
+			.getResultList();
+	}
+
+    @Override
 	public List<Movie> getMoviesByActor(String actor) {
 		return entityManager
 			.createQuery( "from Movie join movie_cast on movie_cast.movieid=movies.movieid where movie_cast.actor LIKE :actor group by movie.movieid", Movie.class )
 			.setParameter("actor", "%" + actor + "%")
+			.getResultList();
+	}
+
+    @Override
+	public List<Movie> getMoviesByActor(String actor, int limit) {
+		return entityManager
+			.createQuery( "from Movie join movie_cast on movie_cast.movieid=movies.movieid where movie_cast.actor LIKE :actor group by movie.movieid", Movie.class )
+			.setParameter("actor", "%" + actor + "%")
+			.setMaxResults(limit)
 			.getResultList();
 	}
 
@@ -58,12 +76,30 @@ public class MovieDaoImpl implements MovieDao{
 			.setParameter("director", "%" + director + "%")
 			.getResultList();
 	}
+
+    @Override
+	public List<Movie> getMoviesByDirector(String director, int limit) {
+		return entityManager
+			.createQuery( "from Movie join movie_directors on movie_directors.movieid=movies.movieid where moviedirectors.director LIKE :director GROUP BY movie.movieid", Movie.class )
+			.setParameter("director", "%" + director + "%")
+			.setMaxResults(limit)
+			.getResultList();
+	}
     
     @Override
 	public List<Movie> getMoviesByGenre(String genre) {
 		return entityManager
 			.createQuery( "from Movie join movie_genres on movie_genres.movieid=movies.movieid where movie_genres.genre LIKE :genre GROUP BY movie.movieid", Movie.class )
 			.setParameter("genre", "%" + genre + "%")
+			.getResultList();
+	}
+    
+    @Override
+	public List<Movie> getMoviesByGenre(String genre, int limit) {
+		return entityManager
+			.createQuery( "from Movie join movie_genres on movie_genres.movieid=movies.movieid where movie_genres.genre LIKE :genre GROUP BY movie.movieid", Movie.class )
+			.setParameter("genre", "%" + genre + "%")
+			.setMaxResults(limit)
 			.getResultList();
 	}
 

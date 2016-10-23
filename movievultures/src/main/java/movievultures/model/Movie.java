@@ -23,7 +23,6 @@ public class Movie {
 	@GeneratedValue
 	private int movieId;
 	private String title;
-	
 	@OneToMany(mappedBy="movie",
 			cascade=CascadeType.ALL)
 	private List<Review> reviews;

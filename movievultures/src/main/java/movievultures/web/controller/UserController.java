@@ -1,4 +1,4 @@
-package movievultures.web;
+package movievultures.web.controller;
 
 import java.util.List;
 

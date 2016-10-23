@@ -12,12 +12,20 @@ public interface MovieDao {
 	List<Movie> getRandomMovies(int i);
 	
 	List<Movie> getMoviesByTitle(String title);
+	
+	List<Movie> getMoviesByTitle(String title, int limit);
 
 	List<Movie> getMoviesByActor(String actor);
+	
+	List<Movie> getMoviesByActor(String actor, int limit);
 
 	List<Movie> getMoviesByDirector(String director);
 	
+	List<Movie> getMoviesByDirector(String director, int limit);
+
 	List<Movie> getMoviesByGenre(String genre);
+	
+	List<Movie> getMoviesByGenre(String genre, int limit);
 	
 	Movie saveMovie(Movie movie);
 	
