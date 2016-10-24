@@ -45,7 +45,7 @@
     </security:authentication-manager>
 
     <security:http auto-config="true" use-expressions="true">
-    	<security:logout logout-success-url="/" />
+    <security:intercept-url pattern="/user/list.html" access="authenticated" />
   	</security:http>
   	
   	<security:global-method-security pre-post-annotations="enabled" />

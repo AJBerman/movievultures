@@ -35,9 +35,10 @@
 		<table class="table table-hover table-bordered">
 			<tr>
 				<th style="width: 15%">Title</th>
-				<th style="width: 60%">Plot</th>
-				<th style="width: 15%">Date</th>
-				<th style="width: 10%">Elo Rating</th>
+				<th style="width: 55%">Plot</th>
+				<th style="width: 10%">Date</th>
+				<th style="width: 5%">Elo Rating</th>
+				<th style="width: 15%">Action</th>
 			</tr>
 			<c:forEach items="${movies}" var="movie">
 				<tr>
@@ -45,7 +46,14 @@
 					<td>${movie.plot}</td>
 					<td>${movie.date}</td>
 					<td>${movie.eloRating}</td>
+					<td>
+						<small>
+						<a href="user/addFav.html?movieId=${movie.movieId}">Favorite?</a> |
+						<a href="user/addWL.html?movieId=${movie.movieId}">WatchLater?</a>
+						</small>
+					</td>
 				</tr>
+				
 			</c:forEach>
 		</table>
 	</div>
