@@ -117,7 +117,8 @@ public class MovieDaoImpl implements MovieDao{
 	@Transactional
 	public void delMovie(Movie movie)
 	{
-		entityManager.remove(movie);
+		movie.setHidden(true); //we hide instead of delete so as not to violate db constraints
+		this.saveMovie(movie);
 	}
 
     @Override
