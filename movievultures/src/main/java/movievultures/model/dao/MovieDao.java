@@ -1,5 +1,6 @@
 package movievultures.model.dao;
 
+import movievultures.model.EloRunoff;
 import movievultures.model.Movie;
 import java.util.List;
 
@@ -12,12 +13,26 @@ public interface MovieDao {
 	List<Movie> getRandomMovies(int i);
 	
 	List<Movie> getMoviesByTitle(String title);
+	
+	List<Movie> getMoviesByTitle(String title, int limit);
 
 	List<Movie> getMoviesByActor(String actor);
 	
+	List<Movie> getMoviesByActor(String actor, int limit);
+
 	List<Movie> getMoviesByDirector(String director);
 	
+	List<Movie> getMoviesByDirector(String director, int limit);
+
+	List<Movie> getMoviesByGenre(String genre);
+	
+	List<Movie> getMoviesByGenre(String genre, int limit);
+	
 	Movie saveMovie(Movie movie);
+
+	void updateElos(Movie winner, Movie loser);
+	
+	void updateElos(EloRunoff runoff);
 	
 	void delMovie(Movie movie);
 	

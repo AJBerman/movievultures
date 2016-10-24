@@ -11,11 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 @Entity
 @Table(name="movies")
 public class Movie {
@@ -23,31 +23,35 @@ public class Movie {
 	@GeneratedValue
 	private int movieId;
 	private String title;
-	
 	@OneToMany(mappedBy="movie",
 			cascade=CascadeType.ALL)
 	private List<Review> reviews;
 	private Date date;
 	private double eloRating;
-	//private int eloTimesRated;
+	////These are not included on purpose; because each EloRunoff includes another movie, querying these would effectively mean dumping the database (or at least whatever subset of it is even weakly connected by Elo Runoffs)
+	////That would be bad.
+	//@OneToMany(mappedBy="winner")
+	//private List<EloRunoff> wonEloRunoffs;
+	//@OneToMany(mappedBy="loser")
+	//private List<EloRunoff> lostEloRunoffs;
 	@Column(name="is_hidden", columnDefinition = "boolean default false", nullable=false)
 	private boolean hidden;
 	@ManyToMany
 	@JoinTable(name="favorites",
 	joinColumns={@JoinColumn(name="movieId")},
-	inverseJoinColumns={@JoinColumn(name="username")})
+	inverseJoinColumns={@JoinColumn(name="userId")})
 	private List<User>favoredBy;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="watchLater",
 	joinColumns={@JoinColumn(name="movieId")},
-	inverseJoinColumns={@JoinColumn(name="username")})
+	inverseJoinColumns={@JoinColumn(name="userId")})
 	private List<User>watchQueue;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="recommendations",
 	joinColumns={@JoinColumn(name="movieId")},
-	inverseJoinColumns={@JoinColumn(name="username")})
+	inverseJoinColumns={@JoinColumn(name="userId")})
 	private List<User>recommendedTo;
 	
 	@ElementCollection
@@ -150,17 +154,17 @@ public class Movie {
 	public void setEloRating(double eloRating) {
 		this.eloRating = eloRating;
 	}
-	/*public int getEloTimesRated() {
-		return eloTimesRated;
-	}
-	public void setEloTimesRated(int eloTimesRated) {
-		this.eloTimesRated = eloTimesRated;
-	}*/
 	public boolean isHidden() {
 		return hidden;
 	}
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
+	}
+	public String getShortPlot() {
+		return this.plot.split("\"")[3];
+	}
+	public String getLongPlot() {
+		return this.plot.split("\"")[1];
 	}
 
 }
