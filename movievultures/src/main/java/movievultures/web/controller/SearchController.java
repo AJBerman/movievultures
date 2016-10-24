@@ -54,63 +54,63 @@ public class SearchController {
 				models.put("movieResults", movieDirector);
 				break;
 			case 4:
+				//get all movies with this actor/actress
+				List <Movie> movieArtist = movieDao.getMoviesByActor(searchTerm);
+				models.put("movieResults", movieArtist);
+			case 5:
 				//get all movies less than this year of release
 				int sT1 = Integer.parseInt(searchTerm);
 				List<Movie> smlMovieYear = movieDao.getMoviesSmallerYear(sT1);
 				models.put("movieResults", smlMovieYear);
 				break;
-			case 5:
+			case 6:
 				//get all movies greater than this year of release
 				int sT2 = Integer.parseInt(searchTerm);
 				List<Movie> grtMovieYear = movieDao.getMoviesGreaterYear(sT2);
 				models.put("movieResults", grtMovieYear);
 				break;
-			case 6:
+			case 7:
 				//get all movies equal to this year of release
 				int sT3 = Integer.parseInt(searchTerm);
 				List<Movie> eqMovieYear = movieDao.getMovieEqualYear(sT3);
 				models.put("movieResults", eqMovieYear);
 				break;
-			case 7:
+			case 8:
 				//get all movies less than this total user rating
-				int sT4 = Integer.parseInt(searchTerm);
+				double sT4 = Double.parseDouble(searchTerm);
 				List<Movie> smlMovieUR = movieDao.getMoviesSmallerUserRating(sT4);
 				models.put("movieResults", smlMovieUR);
 				break;
-			case 8:
+			case 9:
 				//get all movies greater than this total user rating
-				int sT5 = Integer.parseInt(searchTerm);
+				double sT5 = Double.parseDouble(searchTerm);
 				List<Movie> grtMovieUR = movieDao.getMoviesGreaterUserRating(sT5);
 				models.put("movieResults", grtMovieUR);
 				break;
-			case 9:
+			case 10:
 				//get all movies equal to this total user rating
-				int sT6 = Integer.parseInt(searchTerm);
+				double sT6 = Double.parseDouble(searchTerm);
 				List<Movie> eqMovieUR = movieDao.getMovieEqualUserRating(sT6);
 				models.put("movieResults", eqMovieUR);
 				break;
-			case 10:
+			case 11:
 				//get all movies less than this total elo rating
-				int sT7 = Integer.parseInt(searchTerm);
+				double sT7 = Double.parseDouble(searchTerm);
 				List<Movie> smlMovieER = movieDao.getMoviesSmallerEloRating(sT7);
 				models.put("movieResults", smlMovieER);
 				break;
-			case 11:
+			case 12:
 				//get all movies greater than this total elo rating
-				int sT8 = Integer.parseInt(searchTerm);
+				double sT8 = Double.parseDouble(searchTerm);
 				List<Movie> grtMovieER = movieDao.getMoviesGreaterEloRating(sT8);
 				models.put("movieResults", grtMovieER);
 				break;
-			case 12:
+			case 13:
 				//get all movies equal this total elo rating
-				int sT9 = Integer.parseInt(searchTerm);
+				double sT9 = Double.parseDouble(searchTerm);
 				List<Movie> eqMovieER = movieDao.getMovieEqualEloRating(sT9);
 				models.put("movieResults", eqMovieER);
 				break;
-			case 13:
-				//get all movies with this actor/actress
-				List <Movie> movieArtist = movieDao.getMoviesByActor(searchTerm);
-				models.put("movieResults", movieArtist);
 			default:
 				break;
 		}

@@ -23,20 +23,17 @@ public interface MovieDao {
 	List<Movie> getMoviesByGenre(String genre);
 	List<Movie> getMoviesByGenre(String genre, int limit);
 	
-	List<Movie> getMoviesByArtist(String artist);
-	List<Movie> getMoviesByArtist(String artist, int limit);
-	
 	List<Movie> getMoviesSmallerYear(int year);
 	List<Movie> getMoviesGreaterYear(int year);
 	List<Movie> getMovieEqualYear(int year);
 	
-	List<Movie> getMoviesSmallerUserRating(int userRating);
-	List<Movie> getMoviesGreaterUserRating(int userRating);
-	List<Movie> getMovieEqualUserRating(int userRating);
+	List<Movie> getMoviesSmallerUserRating(double userRating);
+	List<Movie> getMoviesGreaterUserRating(double userRating);
+	List<Movie> getMovieEqualUserRating(double userRating);
 	
-	List<Movie> getMoviesSmallerEloRating(int eloRating);
-	List<Movie> getMoviesGreaterEloRating(int eloRating);
-	List<Movie> getMovieEqualEloRating(int eloRating);
+	List<Movie> getMoviesSmallerEloRating(double eloRating);
+	List<Movie> getMoviesGreaterEloRating(double eloRating);
+	List<Movie> getMovieEqualEloRating(double eloRating);
 	
 	Movie saveMovie(Movie movie);
 	

@@ -24,7 +24,7 @@
 	 		<option value="6">Greater Than this Year of Release</option>
 	 		<option value="7">Equal to this Year of Release</option>
 	 		<option value="8">Less Than this User Rating</option>
-	 		<option value="9">Greater Than this Rating</option>
+	 		<option value="9">Greater Than this User Rating</option>
 	 		<option value="10">Equal to this User Rating</option>
 	 		<option value="11">Less Than this Elo Rating</option>
 	 		<option value="12">Greater Thank this Elo Rating</option>
