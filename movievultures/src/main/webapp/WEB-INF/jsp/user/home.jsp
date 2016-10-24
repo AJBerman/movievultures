@@ -17,6 +17,7 @@
 		<tr><th>Username:</th> <td>${user.username}</td></tr>
 		<tr><th>e-mail: </th><td>${user.email}</td></tr>
 	</table>
+	<a href="profile.html?userId=${user.userId}">Edit Profile</a>
 	
 	<br />
 	<h3>Recommendations:</h3>
@@ -42,11 +43,16 @@
 		<p>None at the moment.</p>
 	</c:if>
 	<c:if test="${not empty user.favorites}">
-		<table>
-			<tr><th>Title</th></tr>
+		<table border=1>
+			<tr><th>Title</th><th>action</th></tr>
 			<c:forEach items="${user.favorites}" var="movie" varStatus="status" >
 				<tr>
 					<td>${movie.title }</td>
+					<td>
+						<a href="removeFav.html?index=${status.index}&userId=${user.userId}">
+							<img src="../images/delete.png"></img>
+						</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -59,11 +65,16 @@
 		<p>None at the moment.</p>
 	</c:if>
 	<c:if test="${not empty user.watchLater}">
-		<table>
-			<tr><th>Title</th></tr>
+		<table border=1>
+			<tr><th>Title</th><th>action</th></tr>
 			<c:forEach items="${user.watchLater}" var="movie" varStatus="status" >
 				<tr>
 					<td>${movie.title }</td>
+					<td>
+						<a href="removeWL.html?index=${status.index}&userId=${user.userId}">
+							<img src="../images/delete.png"></img>
+						</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -81,16 +92,14 @@
 				<td>${review.movie.title}</td>
 				<td>${review.rating }</td>
 				<td>
-					<a href="/review/view.html">View</a> |
-					<a href="/review/edit.html">Edit</a>
+					<!--  <a href="/review/view.html">View</a> |-->
+					<a href="../review/edit.html?id=${review.reviewId}">Edit</a>
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
 	</c:if>			
 	
-	<br />
-	<a href="edit.html?username=${user.username}" >Edit Profile</a>
 	
 </body>
 </html>

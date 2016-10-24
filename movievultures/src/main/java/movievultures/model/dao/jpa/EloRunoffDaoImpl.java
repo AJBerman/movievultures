@@ -27,7 +27,7 @@ public class EloRunoffDaoImpl implements EloRunoffDao {
     @Override
 	public List<EloRunoff> getEloRunoffsByMovie(Movie movie) {
 		return entityManager
-			.createQuery( "from EloRunoff where winner=:movieid", EloRunoff.class )
+			.createQuery( "from EloRunoff where winner_movieid=:movieid OR loser_movieid=:movieid", EloRunoff.class )
 			.setParameter("movieid", movie.getMovieId())
 			.getResultList();
 	}
@@ -35,16 +35,31 @@ public class EloRunoffDaoImpl implements EloRunoffDao {
     @Override
     public List<EloRunoff> getEloRunoffsForMoviePair(Movie movie1, Movie movie2) {
 		return entityManager
-				.createQuery( "from EloRunoff where winner=:movie1id AND loser=:movie2id OR winner=:movie2id AND loser=:movie1id", EloRunoff.class )
+				.createQuery( "from EloRunoff where winner_movieid=:movie1id AND loser_movieid=:movie2id OR winner_movieid=:movie2id AND loser_movieid=:movie1id", EloRunoff.class )
 				.setParameter("movie1id", movie1.getMovieId())
 				.setParameter("movie2id", movie2.getMovieId())
 				.getResultList();
 	}
 
     @Override
+    public EloRunoff getEloRunoffByUserAndMovies(int userid, int movie1id, int movie2id) {
+		return entityManager
+				.createQuery( "from EloRunoff where user_userid=:userid AND (winner_movieid=:movie1id AND loser_movieid=:movie2id OR winner_movieid=:movie2id AND loser_movieid=:movie1id)", EloRunoff.class )
+				.setParameter("movie1id", movie1id)
+				.setParameter("movie2id", movie2id)
+				.setParameter("userid", userid)
+				.getSingleResult();
+	}
+
+    @Override
+    public EloRunoff getEloRunoffByUserAndMovies(User user, Movie movie1, Movie movie2) {
+		return this.getEloRunoffByUserAndMovies(user.getUserId(), movie1.getMovieId(), movie2.getMovieId());
+	}
+
+    @Override
     public List<EloRunoff> getEloRunoffsByUser(User user) {
 		return entityManager
-				.createQuery( "from EloRunoff where user=:userid", EloRunoff.class )
+				.createQuery( "from EloRunoff where user_userid=:userid", EloRunoff.class )
 				.setParameter("userid", user.getUserId())
 				.getResultList();
 	}

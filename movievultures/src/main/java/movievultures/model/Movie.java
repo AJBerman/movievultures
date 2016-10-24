@@ -28,24 +28,30 @@ public class Movie {
 	private List<Review> reviews;
 	private Date date;
 	private double eloRating;
+	////These are not included on purpose; because each EloRunoff includes another movie, querying these would effectively mean dumping the database (or at least whatever subset of it is even weakly connected by Elo Runoffs)
+	////That would be bad.
+	//@OneToMany(mappedBy="winner")
+	//private List<EloRunoff> wonEloRunoffs;
+	//@OneToMany(mappedBy="loser")
+	//private List<EloRunoff> lostEloRunoffs;
 	@Column(name="is_hidden", columnDefinition = "boolean default false", nullable=false)
 	private boolean hidden;
 	@ManyToMany
 	@JoinTable(name="favorites",
 	joinColumns={@JoinColumn(name="movieId")},
-	inverseJoinColumns={@JoinColumn(name="username")})
+	inverseJoinColumns={@JoinColumn(name="userId")})
 	private List<User>favoredBy;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="watchLater",
 	joinColumns={@JoinColumn(name="movieId")},
-	inverseJoinColumns={@JoinColumn(name="username")})
+	inverseJoinColumns={@JoinColumn(name="userId")})
 	private List<User>watchQueue;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="recommendations",
 	joinColumns={@JoinColumn(name="movieId")},
-	inverseJoinColumns={@JoinColumn(name="username")})
+	inverseJoinColumns={@JoinColumn(name="userId")})
 	private List<User>recommendedTo;
 	
 	@ElementCollection
@@ -153,6 +159,12 @@ public class Movie {
 	}
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
+	}
+	public String getShortPlot() {
+		return this.plot.split("\"")[3];
+	}
+	public String getLongPlot() {
+		return this.plot.split("\"")[1];
 	}
 
 }

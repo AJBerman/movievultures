@@ -31,7 +31,7 @@ public class ReviewDaoImpl implements ReviewDao {
 				.setParameter("userid",user.getUserId())
 				.getResultList();
 	}
-
+    
     @Override
 	public List<Review> getReviewsByMovie( Movie movie ) {
 		return entityManager
@@ -39,7 +39,7 @@ public class ReviewDaoImpl implements ReviewDao {
 				.setParameter("movieid",movie.getMovieId())
 				.getResultList();
 	}
-
+    
     @Override
     @Transactional
 	public Review saveReview( Review review ) {

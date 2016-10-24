@@ -1,5 +1,6 @@
 package movievultures.model.dao;
 
+import movievultures.model.EloRunoff;
 import movievultures.model.Movie;
 import java.util.List;
 
@@ -36,6 +37,12 @@ public interface MovieDao {
 	List<Movie> getMovieEqualEloRating(double eloRating);
 	
 	Movie saveMovie(Movie movie);
+
+	void updateElos(Movie winner, Movie loser);
+	
+	void updateElos(EloRunoff runoff);
+	
+	void delMovie(Movie movie);
 
 	Long getTotalRateTimes(int movieId);
 	

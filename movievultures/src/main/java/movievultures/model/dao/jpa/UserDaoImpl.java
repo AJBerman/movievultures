@@ -21,14 +21,13 @@ public class UserDaoImpl implements UserDao {
 	public User getUser(int id) {
         return entityManager.find( User.class, id );
 	}
-
+    
     @Override
 	public User getUserByUsername(String username) {
 		return entityManager
 			.createQuery( "from User where username=:username", User.class )
 			.setParameter("username",username)
-			.getResultList()
-			.get(0);
+			.getSingleResult();
 	}
     
     @Override
@@ -39,12 +38,13 @@ public class UserDaoImpl implements UserDao {
 			.getResultList();
 	}
 
+
     @Override
     @Transactional
 	public User saveUser(User user) {
         return entityManager.merge( user );
 	}
-	
+    
 	@Override
 	public List<User> getUsers() {
 		return entityManager.createQuery("from User order by id", User.class).getResultList();

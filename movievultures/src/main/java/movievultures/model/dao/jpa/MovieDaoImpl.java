@@ -1,5 +1,6 @@
 package movievultures.model.dao.jpa;
 
+import java.util.ArrayList;
 import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.List;
@@ -7,9 +8,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import movievultures.model.EloRunoff;
 import movievultures.model.Movie;
 import movievultures.model.dao.MovieDao;
 
@@ -26,7 +29,10 @@ public class MovieDaoImpl implements MovieDao{
 
     @Override
 	public Movie getRandomMovie() {
-		return this.getRandomMovies(1).get(0);
+		return entityManager
+				.createQuery( "from Movie order by random()", Movie.class )
+				.setMaxResults(1)
+				.getSingleResult();
 	}
 
     @Override
@@ -37,12 +43,6 @@ public class MovieDaoImpl implements MovieDao{
 			.getResultList();
 	}
     
-    @Override
-    @Transactional
-	public Movie saveMovie(Movie movie) {
-        return entityManager.merge( movie );
-	}
-
     @Override
 	public List<Movie> getMoviesByTitle(String title) {
 		return entityManager
@@ -110,7 +110,44 @@ public class MovieDaoImpl implements MovieDao{
 			.setMaxResults(limit)
 			.getResultList();
 	}
+	@Override
+	@Transactional
+	public Movie saveMovie(Movie movie) {
+        return entityManager.merge( movie );
+	}
+	
+	@Override
+	@Transactional
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void delMovie(Movie movie)
+	{
+		movie.setHidden(true); //we hide instead of delete so as not to violate db constraints
+		this.saveMovie(movie);
+	}
 
+    @Override
+    @Transactional
+	public void updateElos(Movie winner, Movie loser) {
+    	//make sure we've got the most up-to-date info we can get. Those Movies could have lingered in the ModelMap for hours. Don't want to update based on an old Elo, and DEFINITELY don't want to overwrite changes to the plot or something
+    	winner = this.getMovie(winner.getMovieId());
+    	loser = this.getMovie(loser.getMovieId());
+    	Long winnerCount = (Long) entityManager.createQuery("SELECT COUNT(*) FROM EloRunoff WHERE winner_movieid=:movieid OR loser_movieid=:movieid").setParameter("movieid", winner.getMovieId()).getSingleResult();
+    	Long loserCount = (Long) entityManager.createQuery("SELECT COUNT(*) FROM EloRunoff WHERE winner_movieid=:movieid OR loser_movieid=:movieid").setParameter("movieid", loser.getMovieId()).getSingleResult();
+    	double winnerEloRating = winner.getEloRating(); //saving this for updating loser after updating winner
+    	if(winnerCount > 0) winner.setEloRating(((winnerEloRating*winnerCount)+loser.getEloRating()+400)/(winnerCount+1));
+    	else winner.setEloRating((loser.getEloRating()+400)/1);
+    	if(loserCount > 0) loser.setEloRating(((loser.getEloRating()*loserCount)+winnerEloRating-400)/(loserCount+1));
+    	else loser.setEloRating((winnerEloRating-400)/1);
+    	this.saveMovie(winner);
+    	this.saveMovie(loser);
+	}
+    
+    @Override
+    @Transactional
+	public void updateElos(EloRunoff runoff) {
+    	this.updateElos(runoff.getWinner(), runoff.getLoser());
+    }
+    
 	@Override
 	public List<Movie> getMoviesSmallerYear(int year) {
 		return entityManager
@@ -185,4 +222,5 @@ public class MovieDaoImpl implements MovieDao{
 			.setParameter("eloRating", eloRating)
 			.getResultList();
 	}
+    
 }

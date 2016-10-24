@@ -10,6 +10,11 @@
 <title>List of Users</title>
 </head>
 <body>
+	<form action="/movievultures/logout" method="POST">
+  		<input name="_csrf" type="hidden" value="${_csrf.token}" />
+  		<input name="submit" type="submit" value="Logout" />
+	</form>
+
 	<table border=1>
 	<tr><th>User ID</th> <th>Username</th></tr>
 	<c:forEach items="${users}" var="user" varStatus="status">
@@ -20,5 +25,8 @@
 		</tr>
 	</c:forEach>
 	</table>
+	
+	
+	
 </body>
 </html>
