@@ -3,6 +3,9 @@ package movievultures.web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -44,6 +47,13 @@ public class UserController {
 	//this will take user to user's home page, can view everything
 	@RequestMapping("user/home.html")
 	public String home(@RequestParam String username, ModelMap models){
+		String username_sec = "";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(!(authentication instanceof AnonymousAuthenticationToken)){
+			username_sec = authentication.getName();
+		}else{
+			return "redirect:../login";
+		}
 		models.put("user", userDao.getUserByUsername(username));
 		
 		return "user/home";
@@ -69,6 +79,7 @@ public class UserController {
 			return "user/register";
 		//If no errors save user
 		userDao.saveUser(user);
+		userDao.saveNewUser(user.getUsername());
 		//free resources
 		status.setComplete();
 		
@@ -95,8 +106,16 @@ public class UserController {
 	//These methods only delete items from their lists - adding should be done at a movie page.
 	
 	@RequestMapping("user/addFav")
-	public String addFav(@RequestParam int userId, @RequestParam int movieId){
-		User user = userDao.getUser(userId);
+	public String addFav(@RequestParam int movieId){
+		String username = "";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		//String currentPrincipalName = authentication.getName();
+		if(!(authentication instanceof AnonymousAuthenticationToken)){
+			username = authentication.getName();
+		}else{
+			return "redirect:../login";
+		}
+		User user = userDao.getUserByUsername(username);
 		user.getFavorites().add(movieDao.getMovie(movieId));
 		userDao.saveUser(user);
 		return "redirect:/user/home.html?username=" + user.getUsername();
@@ -131,8 +150,15 @@ public class UserController {
 	}
 	
 	@RequestMapping("user/addWL")
-	public String addWL(@RequestParam int userId, @RequestParam int movieId){
-		User user = userDao.getUser(userId);
+	public String addWL(@RequestParam int movieId){
+		String username = "";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(!(authentication instanceof AnonymousAuthenticationToken)){
+			username = authentication.getName();
+		}else{
+			return "redirect:../login";
+		}
+		User user = userDao.getUserByUsername(username);
 		user.getWatchLater().add(movieDao.getMovie(movieId));
 		userDao.saveUser(user);
 		return "redirect:/user/home.html?username=" + user.getUsername();
