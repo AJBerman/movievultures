@@ -1,5 +1,6 @@
 package movievultures.model.dao.jpa;
 
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.List;
 
@@ -139,14 +140,26 @@ public class MovieDaoImpl implements MovieDao{
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Movie> getMoviesGreaterUserRating(double userRating) {
-		return null;
+		return entityManager
+			.createQuery("select m from Movie m join fetch m.reviews r group by m.movieId having avg(r.rating) > :rating order by avg(r.rating) desc", Movie.class )
+			.setParameter("rating", userRating)
+			.getResultList();
 	}
 
 	@Override
 	public List<Movie> getMovieEqualUserRating(double userRating) {
 		return null;
+	}
+	
+	@Override
+	public Long getTotalRateTimes(int movieId) {
+		BigInteger totalRates = (BigInteger)entityManager
+			.createNativeQuery("select count(*) from reviews where movie_movieid=:movieid")
+			.setParameter("movieid", movieId).getSingleResult();
+		return totalRates.longValue();
 	}
 
 	@Override

@@ -36,5 +36,7 @@ public interface MovieDao {
 	List<Movie> getMovieEqualEloRating(double eloRating);
 	
 	Movie saveMovie(Movie movie);
+
+	Long getTotalRateTimes(int movieId);
 	
 }
