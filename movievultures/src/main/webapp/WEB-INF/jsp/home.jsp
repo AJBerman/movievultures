@@ -13,5 +13,9 @@
 		<li><a href="user/register.html">Register</a></li>
 		<li><a href="movies.html">Movies</a></li>
 	</ul>
+	
+	<ul>
+		<li><a href="search/searchMovies.html">Search Movie</a></li>
+	</ul>
 </body>
 </html>

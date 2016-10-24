@@ -1,6 +1,8 @@
 package movievultures.model.dao.jpa;
 
 import java.util.ArrayList;
+import java.math.BigInteger;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -40,7 +42,7 @@ public class MovieDaoImpl implements MovieDao{
 			.setMaxResults(i)
 			.getResultList();
 	}
-
+    
     @Override
 	public List<Movie> getMoviesByTitle(String title) {
 		return entityManager
@@ -61,16 +63,16 @@ public class MovieDaoImpl implements MovieDao{
     @Override
 	public List<Movie> getMoviesByActor(String actor) {
 		return entityManager
-			.createQuery( "from Movie join movie_cast on movie_cast.movieid=Movie.movieid where movie_cast.actor LIKE :actor group by Movie.movieid", Movie.class )
-			.setParameter("actor", "%" + actor + "%")
+			.createQuery( "from Movie mv where :actor in elements(mv.actors)", Movie.class )
+			.setParameter("actor", actor)
 			.getResultList();
 	}
 
     @Override
 	public List<Movie> getMoviesByActor(String actor, int limit) {
 		return entityManager
-			.createQuery( "from Movie join movie_cast on movie_cast.movieid=Movie.movieid where movie_cast.actor LIKE :actor group by Movie.movieid", Movie.class )
-			.setParameter("actor", "%" + actor + "%")
+			.createQuery( "from Movie mv where :actor in elements(mv.actors)", Movie.class )
+			.setParameter("actor", actor)
 			.setMaxResults(limit)
 			.getResultList();
 	}
@@ -78,16 +80,16 @@ public class MovieDaoImpl implements MovieDao{
     @Override
 	public List<Movie> getMoviesByDirector(String director) {
 		return entityManager
-			.createQuery( "from Movie join movie_directors on movie_directors.movieid=Movie.movieid where moviedirectors.director LIKE :director GROUP BY Movie.movieid", Movie.class )
-			.setParameter("director", "%" + director + "%")
+			.createQuery( "from Movie mv where :director in elements(mv.directors)", Movie.class )
+			.setParameter("director", director)
 			.getResultList();
 	}
 
     @Override
 	public List<Movie> getMoviesByDirector(String director, int limit) {
 		return entityManager
-			.createQuery( "from Movie join movie_directors on movie_directors.movieid=Movie.movieid where moviedirectors.director LIKE :director GROUP BY Movie.movieid", Movie.class )
-			.setParameter("director", "%" + director + "%")
+			.createQuery( "from Movie mv where :director in elements(mv.directors)", Movie.class )
+			.setParameter("director", director)
 			.setMaxResults(limit)
 			.getResultList();
 	}
@@ -95,16 +97,16 @@ public class MovieDaoImpl implements MovieDao{
     @Override
 	public List<Movie> getMoviesByGenre(String genre) {
 		return entityManager
-			.createQuery( "from Movie join movie_genres on movie_genres.movieid=Movie.movieid where movie_genres.genre LIKE :genre GROUP BY Movie.movieid", Movie.class )
-			.setParameter("genre", "%" + genre + "%")
+			.createQuery( "from Movie mv where :genre in elements(mv.genres)", Movie.class )
+			.setParameter("genre", genre)
 			.getResultList();
 	}
     
     @Override
 	public List<Movie> getMoviesByGenre(String genre, int limit) {
 		return entityManager
-			.createQuery( "from Movie join movie_genres on movie_genres.movieid=Movie.movieid where movie_genres.genre LIKE :genre GROUP BY Movie.movieid", Movie.class )
-			.setParameter("genre", "%" + genre + "%")
+			.createQuery( "from Movie mv where :genre in elements(mv.genres)", Movie.class )
+			.setParameter("genre", genre)
 			.setMaxResults(limit)
 			.getResultList();
 	}
@@ -144,6 +146,81 @@ public class MovieDaoImpl implements MovieDao{
     @Transactional
 	public void updateElos(EloRunoff runoff) {
     	this.updateElos(runoff.getWinner(), runoff.getLoser());
+    }
+    
+	@Override
+	public List<Movie> getMoviesSmallerYear(int year) {
+		return entityManager
+			.createQuery( "from Movie where year(date) < :year", Movie.class )
+			.setParameter("year", year)
+			.getResultList();
+	}
+
+	@Override
+	public List<Movie> getMoviesGreaterYear(int year) {
+		return entityManager
+			.createQuery( "from Movie where year(date) > :year", Movie.class )
+			.setParameter("year", year)
+			.getResultList();
+	}
+
+	@Override
+	public List<Movie> getMovieEqualYear(int year) {
+		return entityManager
+			.createQuery( "from Movie where year(date) = :year", Movie.class )
+			.setParameter("year", year)
+			.getResultList();
+	}
+
+	@Override
+	public List<Movie> getMoviesSmallerUserRating(double userRating) {
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Movie> getMoviesGreaterUserRating(double userRating) {
+		return entityManager
+			.createQuery("select m from Movie m join fetch m.reviews r group by m.movieId having avg(r.rating) > :rating order by avg(r.rating) desc", Movie.class )
+			.setParameter("rating", userRating)
+			.getResultList();
+	}
+
+	@Override
+	public List<Movie> getMovieEqualUserRating(double userRating) {
+		return null;
+	}
+	
+	@Override
+	public Long getTotalRateTimes(int movieId) {
+		BigInteger totalRates = (BigInteger)entityManager
+			.createNativeQuery("select count(*) from reviews where movie_movieid=:movieid")
+			.setParameter("movieid", movieId).getSingleResult();
+		return totalRates.longValue();
+	}
+
+	@Override
+	public List<Movie> getMoviesSmallerEloRating(double eloRating) {
+		return entityManager
+			.createQuery( "from Movie where eloRating < :eloRating", Movie.class )
+			.setParameter("eloRating", eloRating)
+			.getResultList();
+	}
+
+	@Override
+	public List<Movie> getMoviesGreaterEloRating(double eloRating) {
+		return entityManager
+			.createQuery( "from Movie where eloRating > :eloRating", Movie.class )
+			.setParameter("eloRating", eloRating)
+			.getResultList();
+	}
+
+	@Override
+	public List<Movie> getMovieEqualEloRating(double eloRating) {
+		return entityManager
+			.createQuery( "from Movie where eloRating = :eloRating", Movie.class )
+			.setParameter("eloRating", eloRating)
+			.getResultList();
 	}
     
 }
