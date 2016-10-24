@@ -25,13 +25,13 @@ public class SearchController {
 		return "search/searchMovies";
 	}
 	
-	@RequestMapping(value = "/search/searchResults.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/search/searchMovies.html", method = RequestMethod.GET)
 	public String search()
 	{
-		return "search/searchResults";
+		return "search/searchMovies";
 	}
 	
-	@RequestMapping(value = "search/searchResults.html", method = RequestMethod.POST)
+	@RequestMapping(value = "search/searchMovies.html", method = RequestMethod.POST)
 	public String search( ModelMap models, @RequestParam String searchTerm, @RequestParam Integer type )
 	{
 		//System.out.println("Search Term: " + searchTerm);
@@ -116,7 +116,7 @@ public class SearchController {
 				break;
 		}
 		
-		return "search/searchResults";
+		return "search/searchMovies";
 	}
 	
 }
