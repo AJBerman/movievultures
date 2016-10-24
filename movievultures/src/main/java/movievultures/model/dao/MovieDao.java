@@ -36,6 +36,4 @@ public interface MovieDao {
 	
 	void delMovie(Movie movie);
 	
-	
-	
 }

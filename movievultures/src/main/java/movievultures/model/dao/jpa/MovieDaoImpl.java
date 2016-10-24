@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -115,6 +116,7 @@ public class MovieDaoImpl implements MovieDao{
 	
 	@Override
 	@Transactional
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void delMovie(Movie movie)
 	{
 		movie.setHidden(true); //we hide instead of delete so as not to violate db constraints
@@ -143,4 +145,5 @@ public class MovieDaoImpl implements MovieDao{
 	public void updateElos(EloRunoff runoff) {
     	this.updateElos(runoff.getWinner(), runoff.getLoser());
 	}
+    
 }
