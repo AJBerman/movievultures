@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import movievultures.model.EloRunoff;
 import movievultures.model.Movie;
@@ -19,6 +20,7 @@ import movievultures.model.dao.UserDao;
 import movievultures.security.SecurityUtils;
 
 @Controller
+@SessionAttributes({"movie1", "movie2"})
 public class EloController {
 	@Autowired
 	private MovieDao movieDao;
@@ -39,12 +41,14 @@ public class EloController {
 			models.put("movie1", movieDao.getMovie(movie1id));
 			models.put("movie2", movieDao.getMovie(movie2id));
 		}
+		System.out.println(((Movie)models.get("movie1")).getMovieId());
         return "elo/add";
     }
 	
 	@RequestMapping(value = "/elo/add.html", method = RequestMethod.POST)
     public String addpost( @RequestParam("winner") int winner, ModelMap models )
     {
+		System.out.println(((Movie)models.get("movie1")).getMovieId());
 		EloRunoff runoff = new EloRunoff();
 		runoff.setDate(new Date());
 		runoff.setUser(SecurityUtils.getUser());
@@ -57,7 +61,7 @@ public class EloController {
 		}
 		movieDao.updateElos(runoff);
 		eloDao.saveEloRunoff(runoff);
-        return "home";
+        return "redirect:add.html";
     }
 
 	@RequestMapping(value = "/elo/view.html", method = RequestMethod.GET)

@@ -124,14 +124,15 @@ public class MovieDaoImpl implements MovieDao{
     	Long loserCount = (Long) entityManager.createQuery("SELECT COUNT(*) FROM EloRunoff WHERE winner_movieid=:movieid OR loser_movieid=:movieid").setParameter("movieid", loser.getMovieId()).getSingleResult();
     	double winnerEloRating = winner.getEloRating(); //saving this for updating loser after updating winner
     	if(winnerCount > 0) winner.setEloRating(((winnerEloRating*winnerCount)+loser.getEloRating()+400)/(winnerCount+1));
-    	else winner.setEloRating(((winnerEloRating)+loser.getEloRating()+400)/1);
+    	else winner.setEloRating((loser.getEloRating()+400)/1);
     	if(loserCount > 0) loser.setEloRating(((loser.getEloRating()*loserCount)+winnerEloRating-400)/(loserCount+1));
-    	else loser.setEloRating(((loser.getEloRating())+winnerEloRating-400)/1);
+    	else loser.setEloRating((winnerEloRating-400)/1);
     	this.saveMovie(winner);
     	this.saveMovie(loser);
 	}
     
     @Override
+    @Transactional
 	public void updateElos(EloRunoff runoff) {
     	this.updateElos(runoff.getWinner(), runoff.getLoser());
 	}

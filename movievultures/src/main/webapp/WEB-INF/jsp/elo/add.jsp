@@ -23,7 +23,7 @@
 <tr><td></td><td>${movie1.actors[loop.index]}</td><td>${movie2.actors[loop.index]}</td></tr>
 </c:forEach>
 <tr><th>EloRating</th><td>${movie1.eloRating}</td><td>${movie2.eloRating}</td></tr>
-<tr><th>Vote</th><td><form method="POST"><input type="hidden" name="winner" value="1"><input type="submit" value="Better"></form method="POST"></td><td><form><input type="hidden" name="winner" value="2"><input type="submit" value="Better"></form></td></tr>
+<tr><th>Vote</th><td><form method="POST"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/><input type="hidden" name="winner" value="1"><input type="submit" value="Better"></form></td><td><form method="POST"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/><input type="hidden" name="winner" value="2"><input type="submit" value="Better"></form></td></tr>
 </table>
 </body>
 </html>

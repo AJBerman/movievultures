@@ -45,7 +45,6 @@
     </security:authentication-manager>
 
     <security:http auto-config="true" use-expressions="true">
-    	<security:intercept-url pattern="/user/**" access="authenticated" />
     	<security:logout logout-success-url="/" />
   	</security:http>
   	
