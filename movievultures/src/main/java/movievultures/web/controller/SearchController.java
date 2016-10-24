@@ -57,6 +57,7 @@ public class SearchController {
 				//get all movies with this actor/actress
 				List <Movie> movieArtist = movieDao.getMoviesByActor(searchTerm);
 				models.put("movieResults", movieArtist);
+				break;
 			case 5:
 				//get all movies less than this year of release
 				int sT1 = Integer.parseInt(searchTerm);

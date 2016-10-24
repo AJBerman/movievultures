@@ -76,7 +76,7 @@ public class Movie {
 			joinColumns=@JoinColumn(name="movieId")
 			)
 	@Column(name="actor")
-	private List<String>actors;
+	private List<String> actors;
 	
 	@Column(columnDefinition = "text")
 	private String plot;
