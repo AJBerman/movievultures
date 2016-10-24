@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,9 +12,9 @@
 <title>Search for a Movie</title>
 </head>
 <body>
-	<h2>Movies</h2>
+	<h2>Search for Movies</h2>
 	 
-	 <form action ="searchResults.html" method="post">
+	 <form action ="searchMovies.html" method="post">
 	 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	 	Search: <input type="text" name="searchTerm" />
 	 	
@@ -34,6 +36,41 @@
 	 	
 	 	<input name="search" type="submit" value="Go"/>
 	 </form>
+	
+	<br />
+	<hr>
+	<hr>
+	
+	<h2><u>MOVIE RESULTS</u> (${fn:length(movieResults)} result(s))</h2>
+	<hr>
+	<hr>
+	<br />
+	
+	<c:choose>
+		<c:when test="${ not empty movieResults }">
+			<c:forEach items="${ movieResults }" var="movieResult" varStatus="status" begin="0" end="20">
+				<c:if test="${ !movieResult.hidden }">
+					<b>Movie Title</b>: ${ movieResult.title }<br />
+					<b>Year of Release</b>: <fmt:formatDate value="${ movieResult.date }" pattern="yyyy" /><br />
+					<b>Total Elo Rating</b>: ${ movieResult.eloRating }<br />
+					<b>Total User Rating</b>: <br />
+					<b>Genres</b>: <c:forEach items="${ movieResult.genres }" var="g">| ${g} |</c:forEach><br />
+					<b>Directors</b>: <c:forEach items="${ movieResult.directors }" var="d">| ${d} |</c:forEach><br />
+					<b>Artists</b>: <c:forEach items="${ movieResult.actors }" var="a">| ${a} |</c:forEach><br />
+					<br />
+					<b>===== Short Plot Summary =====</b><br />
+						${movieResult.plot}
+					<br />
+					<br />
+					<hr>
+					<br />
+				</c:if>
+			</c:forEach>
+		</c:when>
+		<c:otherwise>
+			No results were found.
+		</c:otherwise>
+	</c:choose>
 	
 </body>
 </html>
