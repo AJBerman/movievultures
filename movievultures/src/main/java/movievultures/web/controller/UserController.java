@@ -79,6 +79,7 @@ public class UserController {
 			return "user/register";
 		//If no errors save user
 		userDao.saveUser(user);
+		userDao.saveNewUser(user.getUsername());
 		//free resources
 		status.setComplete();
 		
