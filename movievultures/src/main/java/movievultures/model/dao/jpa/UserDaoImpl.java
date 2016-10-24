@@ -9,24 +9,25 @@ import org.springframework.stereotype.Repository;
 
 import movievultures.model.Movie;
 import movievultures.model.User;
+import movievultures.model.dao.UserDao;
 
 
 @Repository
-public class UserDaoImpl {
+public class UserDaoImpl implements UserDao{
     @PersistenceContext
     private EntityManager entityManager;
 
 	public User getUser(Long id) {
         return entityManager.find( User.class, id );
 	}
-	User getUserByUsername(String username) {
+	public User getUserByUsername(String username) {
 		return entityManager
 			.createQuery( "from users where username=:username", User.class )
 			.setParameter("username",username)
 			.getResultList()
 			.get(0);
 	}
-	List<User> getUsersByUsername(String username) {
+	public List<User> getUsersByUsername(String username) {
 		return entityManager
 			.createQuery( "from users where username LIKE '%:username%'", User.class )
 			.setParameter("username",username)
@@ -36,4 +37,6 @@ public class UserDaoImpl {
 	public User saveUser(User user) {
         return entityManager.merge( user );
 	}
+	
+	
 }

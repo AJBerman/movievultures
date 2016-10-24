@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface MovieDao {
 	
-	Movie getMovie(Long id);
+	Movie getMovie(int id);
 	
 	Movie getRandomMovie();
 	
@@ -18,5 +18,9 @@ public interface MovieDao {
 	List<Movie> getMoviesByDirector(String director);
 	
 	Movie saveMovie(Movie movie);
+	
+	void delMovie(Movie movie);
+	
+	
 	
 }
