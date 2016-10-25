@@ -70,7 +70,10 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<a href="../review/add.html?id=${movie.movieId}">Make your voice heard!</a>
+		
+		<c:if test="${not empty user}">
+			<a href="../review/add.html?id=${movie.movieId}">Make your voice heard!</a>
+		</c:if>
 
 	</div>
 </body>

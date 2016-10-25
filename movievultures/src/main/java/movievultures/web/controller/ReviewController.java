@@ -49,7 +49,7 @@ public class ReviewController {
     public String add( @ModelAttribute("review") Review review ) // e.g. /rate?id=5267
     {
 		reviewDao.saveReview(review);
-        return "redirect:movie.html?id=" + review.getMovie().getMovieId();
+        return "redirect:../movies/details.html?id=" + review.getMovie().getMovieId();
     }
 
 	@RequestMapping(value = "/review/edit.html", method = RequestMethod.GET)
@@ -77,7 +77,7 @@ public class ReviewController {
 	public String edit( @ModelAttribute("review") Review review ) 
 	{
 		reviewDao.saveReview(review);
-        return "redirect:movie.html?id=" + review.getMovie().getMovieId();
+        return "redirect:../movies/details.html?id=" + review.getMovie().getMovieId();
 	}
 
 	@InitBinder

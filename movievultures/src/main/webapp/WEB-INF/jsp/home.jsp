@@ -16,6 +16,7 @@
 		<li><a href="search/searchMovies.html">Search Movie</a></li>
 		<c:if test="${not empty username}">
 			<li><a href="user/home.html?username=${username}" >${username}</a></li>
+			<li><a href="elo/add.html">Elo Rate two random movies</a></li>
 		</c:if>
 	</ul>
 
