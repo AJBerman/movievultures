@@ -39,7 +39,7 @@
 		<b>Plot</b><br />
 		<p>${movie.plot}</p>
 		<br /> <b>Genre</b><br />
-		<c:forEach items="${genres}" var="genre">
+		<c:forEach items="${movie.genres}" var="genre">
 			${genre} ,
 		</c:forEach>
 		<br />
@@ -47,7 +47,7 @@
 			<tr>
 				<th>Cast</th>
 			</tr>
-			<c:forEach items="${cast}" var="c">
+			<c:forEach items="${movie.actors}" var="c">
 				<tr>
 					<td>${c}</td>
 				</tr>
@@ -56,15 +56,15 @@
 		<br /> 
 		<table>
 			<tr><th>Director(s)</th></tr>
-			<c:forEach items="${directors}" var="director">
+			<c:forEach items="${movie.directors}" var="director">
 				<tr><td>${director}</td></tr>
 			</c:forEach>
 		</table><br /> 
 		<table>
 			<tr><th>Reviews</th></tr>
-			<c:forEach items="${reviews}" var="r" varStatus="status">
+			<c:forEach items="${movie.reviews}" var="r">
 				<tr>
-					<td>By: ${users[status.index].username} - ${r.review}</td>
+					<td>By: ${r.user.username} - ${r.review}</td>
 					<td>${r.rating}<td>
 				</tr>
 			</c:forEach>

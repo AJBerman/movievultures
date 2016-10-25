@@ -74,7 +74,7 @@ public class MovieController {
 		// Date d=format.parse(source)
 		System.out.println(format.parse(addmovie_date));
 		movie.setDate(format.parse(addmovie_date));
-		movie.setEloRating(0.0);
+		movie.setEloRating(1200.0); //1200 is the default Elo Rating
 		movie.setHidden(false);
 
 		List<String> genres = new ArrayList<>();
@@ -123,20 +123,7 @@ public class MovieController {
 		int Id = Integer.parseInt(id);
 		// System.out.println("in here");
 		Movie movie = movieDao.getMovie(Id);
-		List<String> genres = movieDao.getMovie(Id).getGenres();
-		List<String> cast = movieDao.getMovie(Id).getActors();
-		List<String> directors = movieDao.getMovie(Id).getDirectors();
-		List<Review> reviews = reviewDao.getReviewsByMovie(movie);
-		List<User> users = new ArrayList<>();
-		for (int i = 0; i < reviews.size(); i++) {
-			users.add(reviews.get(i).getUser());
-		}
-		models.put("genres", genres);
 		models.put("movie", movie);
-		models.put("cast", cast);
-		models.put("directors", directors);
-		models.put("reviews", reviews);
-		models.put("users", users);
 		return "movies/details";
 	}
 
