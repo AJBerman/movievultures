@@ -28,6 +28,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
 <body>
+<h5><a href="/movievultures/home.html">Home</a></h5>
+
 	<h1>Add Movie</h1>
 	<div class="container">
 		<form action="add.html" method="post">

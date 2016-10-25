@@ -26,6 +26,8 @@
 	crossorigin="anonymous"></script>
 
 <body>
+<h5><a href="/movievultures/home.html">Home</a></h5>
+
 	<div class="container">
 		<div class="jumbotron">
 			<h1>${movie.title}</h1>

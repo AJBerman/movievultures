@@ -9,6 +9,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Elo Rating: ${movie1.title} vs ${movie2.title}</title>
 </head>
+<h5><a href="/movievultures/home.html">Home</a></h5>
+
 <body>
 <table border="1">
 <tr><th>Title</th><td>${movie1.title}</td><td>${movie2.title}</td></tr>

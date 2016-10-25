@@ -9,6 +9,8 @@
 <title>"There's no place like home"</title>
 </head>
 <body>
+<h5><a href="/movievultures/home.html">Home</a></h5>
+
 	<h2>Welcome ${user.username}</h2>
 	<h5><a href="/movievultures/home.html">Home</a></h5>
 	

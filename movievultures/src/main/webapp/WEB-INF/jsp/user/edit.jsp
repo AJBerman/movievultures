@@ -10,6 +10,8 @@
 <title>Go ahead, make my day.</title>
 </head>
 <body>
+<h5><a href="/movievultures/home.html">Home</a></h5>
+
 	<form:form modelAttribute="user">
 	Username: ${user.username}<br />
 	Password: <form:input path="password" /><br />

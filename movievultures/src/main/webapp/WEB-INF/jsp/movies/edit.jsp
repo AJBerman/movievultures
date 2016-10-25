@@ -26,6 +26,8 @@
 	crossorigin="anonymous"></script>
 
 <body>
+<h5><a href="/movievultures/home.html">Home</a></h5>
+
 	<div class="container">
 		<form action="edit.html?id=${movie.movieId}" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

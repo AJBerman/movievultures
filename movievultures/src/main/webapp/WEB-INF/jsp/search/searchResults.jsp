@@ -11,6 +11,8 @@
 <title>Search Results</title>
 </head>
 <body>
+<h5><a href="/movievultures/home.html">Home</a></h5>
+
 	<h2>Movie Results (${fn:length(movieResults)} result(s) returned)</h2>
 	
 	<c:choose>

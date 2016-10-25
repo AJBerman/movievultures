@@ -26,6 +26,7 @@
 	crossorigin="anonymous"></script>
 
 <body>
+<h5><a href="/movievultures/home.html">Home</a></h5>
 	<h1>Movies</h1>
 	<div class="container">
 		<form action="movies/add.html">

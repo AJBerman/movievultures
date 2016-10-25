@@ -9,6 +9,8 @@
 <title>Willkommen, Bienvenue, Welcome</title>
 </head>
 <body>
+<h5><a href="/movievultures/home.html">Home</a></h5>
+
 	<form:form modelAttribute="user">
 		Username: <form:input path="username" /> <font color="red"><form:errors path="username" /></font> <br />
 		E-mail: <form:input path="email" />  <font color="red"><form:errors path="email" /> </font><br />

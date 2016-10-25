@@ -10,6 +10,8 @@
 <title>Curiouser and Curiouser</title>
 </head>
 <body>
+<h5><a href="/movievultures/home.html">Home</a></h5>
+
 	<h2>${user.username}</h2>
 	
 	<br />

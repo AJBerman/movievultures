@@ -10,6 +10,8 @@
 <title>List of Users</title>
 </head>
 <body>
+<h5><a href="/movievultures/home.html">Home</a></h5>
+
 	<form action="/movievultures/logout" method="POST">
   		<input name="_csrf" type="hidden" value="${_csrf.token}" />
   		<input name="submit" type="submit" value="Logout" />
