@@ -65,10 +65,12 @@
 			<c:forEach items="${movie.reviews}" var="r">
 				<tr>
 					<td>By: ${r.user.username} - ${r.review}</td>
-					<td>${r.rating}<td>
+					<td>${r.rating}</td>
+					<c:if test="${r.user.username=user.username}"><td><a href="../review/edit.html?id=${movie.movieId}">Changed your mind?</a></td></c:if>
 				</tr>
 			</c:forEach>
 		</table>
+		<a href="../review/add.html?id=${movie.movieId}">Make your voice heard!</a>
 
 	</div>
 </body>

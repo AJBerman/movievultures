@@ -20,6 +20,7 @@ import movievultures.model.User;
 import movievultures.model.dao.MovieDao;
 import movievultures.model.dao.ReviewDao;
 import movievultures.model.dao.UserDao;
+import movievultures.security.SecurityUtils;
 
 @Controller
 public class MovieController {
@@ -121,6 +122,7 @@ public class MovieController {
 		// System.out.println("in here");
 		Movie movie = movieDao.getMovie(Id);
 		models.put("movie", movie);
+		models.put("user", SecurityUtils.getUser());
 		return "movies/details";
 	}
 
