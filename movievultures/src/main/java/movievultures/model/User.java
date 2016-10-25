@@ -30,9 +30,9 @@ public class User implements UserDetails {
 	@Id
 	@TableGenerator(name = "EVENT_GEN",
             table = "SEQUENCES",
-	pkColumnName = "SEQ_NAME",
+            pkColumnName = "SEQ_NAME",
             valueColumnName = "SEQ_NUMBER",
-	pkColumnValue = "SEQUENCE",
+            pkColumnValue = "SEQUENCE",
             allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "EVENT_GEN")
 	private int userId;
