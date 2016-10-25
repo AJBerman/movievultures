@@ -28,6 +28,7 @@
 <body>
 	<div class="container">
 		<form action="edit.html?id=${movie.movieId}" method="post">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Title of the Movie</div>
 				<div class="col-xs-10">
