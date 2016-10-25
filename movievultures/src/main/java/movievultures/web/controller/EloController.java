@@ -26,6 +26,8 @@ public class EloController {
 	private MovieDao movieDao;
 	@Autowired
 	private EloRunoffDao eloDao; 
+	@Autowired
+	private UserDao userDao; 
 	
 	@RequestMapping(value = "/elo/add.html", method = RequestMethod.GET)
     public String add( @RequestParam(value="movie1", required = false) Integer movie1id, @RequestParam(value="movie2", required = false) Integer movie2id, ModelMap models )
@@ -51,7 +53,7 @@ public class EloController {
 		System.out.println(((Movie)models.get("movie1")).getMovieId());
 		EloRunoff runoff = new EloRunoff();
 		runoff.setDate(new Date());
-		runoff.setUser(SecurityUtils.getUser());
+		runoff.setUser(userDao.getUserByUsername(SecurityUtils.getUser()));
 		if (winner == 1) {
 			runoff.setWinner((Movie) models.get("movie1")); 
 			runoff.setLoser((Movie) models.get("movie2")); 

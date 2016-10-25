@@ -66,12 +66,12 @@
 				<tr>
 					<td>By: ${r.user.username} - ${r.review}</td>
 					<td>${r.rating}</td>
-					<c:if test="${r.user.username=user.username}"><td><a href="../review/edit.html?id=${movie.movieId}">Changed your mind?</a></td></c:if>
+					<c:if test="${r.user.username==username}"><td><a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a></td></c:if>
 				</tr>
 			</c:forEach>
 		</table>
 		
-		<c:if test="${not empty user}">
+		<c:if test="${not empty username}">
 			<a href="../review/add.html?id=${movie.movieId}">Make your voice heard!</a>
 		</c:if>
 

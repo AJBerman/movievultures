@@ -39,6 +39,14 @@ public class ReviewDaoImpl implements ReviewDao {
 				.setParameter("movieid",movie.getMovieId())
 				.getResultList();
 	}
+
+	public Review getReviewByUserAndMovie(Movie movie, User user) {
+		return entityManager
+				.createQuery( "from Review r where r.movie.movieId=:movieid AND r.user.userId=:userid", Review.class )
+				.setParameter("movieid",movie.getMovieId())
+				.setParameter("userid", user.getUserId())
+				.getSingleResult();
+	}
     
     @Override
     @Transactional

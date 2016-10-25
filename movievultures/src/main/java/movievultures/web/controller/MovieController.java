@@ -125,7 +125,7 @@ public class MovieController {
 		// System.out.println("in here");
 		Movie movie = movieDao.getMovie(Id);
 		models.put("movie", movie);
-		models.put("user", SecurityUtils.getUser());
+		models.put("username", SecurityUtils.getUser());
 		return "movies/details";
 	}
 
