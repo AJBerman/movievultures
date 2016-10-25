@@ -20,6 +20,7 @@ import movievultures.model.User;
 import movievultures.model.dao.MovieDao;
 import movievultures.model.dao.ReviewDao;
 import movievultures.model.dao.UserDao;
+import movievultures.security.SecurityUtils;
 
 @Controller
 public class MovieController {
@@ -56,6 +57,8 @@ public class MovieController {
 
 	@RequestMapping(value = "/movies/add.html", method = RequestMethod.GET)
 	public String getAddMovies() {
+		if(!SecurityUtils.isAuthenticated())
+			return "redirect:../login";
 		return "movies/add";
 	}
 
@@ -159,6 +162,8 @@ public class MovieController {
 	@RequestMapping(value="/movies/edit.html",method=RequestMethod.GET)
 	public String getEdit(@RequestParam String id, ModelMap models)
 	{
+		if(!SecurityUtils.isAuthenticated())
+			return "redirect:../login";
 		int Id=Integer.parseInt(id);
 		Movie movie=movieDao.getMovie(Id);
 		int i;

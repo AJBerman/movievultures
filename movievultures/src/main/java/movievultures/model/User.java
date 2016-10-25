@@ -1,9 +1,14 @@
 package movievultures.model;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,10 +19,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name="users")
 
-public class User {
+public class User implements UserDetails {
 	@Id
 	@TableGenerator(name = "EVENT_GEN",
             table = "SEQUENCES",
@@ -51,7 +60,19 @@ public class User {
 	joinColumns={@JoinColumn(name="userId")},
 	inverseJoinColumns={@JoinColumn(name="movieId")})
 	private List<Movie> watchLater;
-	
+	//authorities!
+    @ElementCollection
+    @CollectionTable(name = "authorities",
+        joinColumns = @JoinColumn(name = "userid"))
+    @Column(name = "authority")
+    private Set<String> roles;
+    
+	public Set<String> getRoles() {
+		return roles;
+	}
+	public void setRoles(Set<String> roles) {
+		this.roles = roles;
+	}
 	public int getUserId() {
 		return userId;
 	}
@@ -105,6 +126,25 @@ public class User {
 	}
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+        for( String role : roles )
+            authorities.add( new SimpleGrantedAuthority( role ) );
+        return authorities;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
 	}
 
 	

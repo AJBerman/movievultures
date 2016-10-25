@@ -102,7 +102,7 @@
 	</c:if>	
 	<br />		
 	
-	<form action="/movievultures/logout" method="POST">
+	<form action="<c:url value='/logout' />" method="POST">
   		<input name="_csrf" type="hidden" value="${_csrf.token}" />
   		<input name="submit" type="submit" value="Logout" />
 	</form>
