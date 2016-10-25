@@ -27,7 +27,7 @@ public class EloRunoffDaoImpl implements EloRunoffDao {
     @Override
 	public List<EloRunoff> getEloRunoffsByMovie(Movie movie) {
 		return entityManager
-			.createQuery( "from EloRunoff where winner_movieid=:movieid OR loser_movieid=:movieid", EloRunoff.class )
+			.createQuery( "from EloRunoff er where er.winner.movieId=:movieid OR er.loser.movieId=:movieid", EloRunoff.class )
 			.setParameter("movieid", movie.getMovieId())
 			.getResultList();
 	}
@@ -59,7 +59,7 @@ public class EloRunoffDaoImpl implements EloRunoffDao {
     @Override
     public List<EloRunoff> getEloRunoffsByUser(User user) {
 		return entityManager
-				.createQuery( "from EloRunoff where user_userid=:userid", EloRunoff.class )
+				.createQuery( "from EloRunoff er where er.user.userId=:userid", EloRunoff.class )
 				.setParameter("userid", user.getUserId())
 				.getResultList();
 	}
