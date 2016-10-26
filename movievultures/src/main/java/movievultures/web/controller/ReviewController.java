@@ -62,7 +62,6 @@ public class ReviewController {
         Review review = reviewDao.getReview(id);
         //for testing
         if(user.equals(review.getUser())) {
-            models.put("movie", review.getMovie());
             models.put("review", review);
     		return "review/edit";
         }

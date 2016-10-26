@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Editing ${movie.title} review</title>
+<title>Editing ${review.movie.title} review</title>
 <link rel="stylesheet" type="text/css" href="/movievultures/res/css/starrating.css">
 </head>
 <body>
@@ -15,11 +15,11 @@
 <table border="1">
 <tr>
   <td>Movie Title</td>
-  <td>${movie.title}</td>
+  <td>${review.movie.title}</td>
 </tr>
 <tr>
   <td>Released</td>
-  <td><fmt:formatDate value="${movie.date}" pattern="yyyy" /></td>
+  <td><fmt:formatDate value="${review.movie.date}" pattern="yyyy" /></td>
 </tr>
 </table>
 <fieldset class="rating">
