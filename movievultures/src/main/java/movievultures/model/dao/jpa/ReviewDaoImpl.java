@@ -40,6 +40,7 @@ public class ReviewDaoImpl implements ReviewDao {
 				.getResultList();
 	}
 
+    @Override
 	public Review getReviewByUserAndMovie(Movie movie, User user) {
 		return entityManager
 				.createQuery( "from Review r where r.movie.movieId=:movieid AND r.user.userId=:userid", Review.class )
@@ -53,4 +54,10 @@ public class ReviewDaoImpl implements ReviewDao {
 	public Review saveReview( Review review ) {
         return entityManager.merge( review );
 	}
+
+    @Override
+    @Transactional
+	public void delReview(Review review) {
+    	entityManager.remove(entityManager.contains(review) ? review : entityManager.merge(review));
+    }
 }

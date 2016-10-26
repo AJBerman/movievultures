@@ -24,7 +24,7 @@ import movievultures.model.dao.UserDao;
 import movievultures.security.SecurityUtils;
 
 @Controller
-@SessionAttributes({"user", "review"})
+@SessionAttributes({"oldreview", "review"})
 public class ReviewController {
 	@Autowired
 	private MovieDao movieDao;
@@ -59,14 +59,19 @@ public class ReviewController {
 	{
         User user = userDao.getUserByUsername(SecurityUtils.getUser());
 		//User user = userDao.getUser(12); //just for testing
-        Review review = reviewDao.getReviewByUserAndMovie(movieDao.getMovie(id), user);
+        Review review = reviewDao.getReview(id);
         //for testing
-        models.put("movie", review.getMovie());
-        models.put("review", review);
-		return "review/edit";
+        if(user.equals(review.getUser())) {
+            models.put("movie", review.getMovie());
+            models.put("review", review);
+    		return "review/edit";
+        }
+        else {
+        	return "../home.html";
+        }
 	}
 	@RequestMapping(value = "/review/edit.html", method = RequestMethod.POST)
-	public String edit( @ModelAttribute("review") Review review ) 
+	public String edit( @ModelAttribute("review") Review review, ModelMap models ) 
 	{
 		reviewDao.saveReview(review);
         return "redirect:../movies/details.html?id=" + review.getMovie().getMovieId();
