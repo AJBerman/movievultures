@@ -11,6 +11,4 @@ public interface ReviewDao {
 	List<Review> getReviewsByUser( User user );
 	List<Review> getReviewsByMovie( Movie movie );
 	Review saveReview( Review review );
-	Review getReviewByUserAndMovie(Movie movie, User user);
-	void delReview(Review review);
 }
