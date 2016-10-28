@@ -27,6 +27,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name="users")
 
 public class User implements UserDetails {
+
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@TableGenerator(name = "EVENT_GEN",
             table = "SEQUENCES",

@@ -103,10 +103,6 @@
 	</table>
 	</c:if>	
 	<br />		
-	
-	<form action="<c:url value='/logout' />" method="POST">
-  		<input name="_csrf" type="hidden" value="${_csrf.token}" />
-  		<input name="submit" type="submit" value="Logout" />
-	</form>
+	<a href="logout">Logout</a>
 </body>
 </html>
