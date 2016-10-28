@@ -8,13 +8,14 @@
 </head>
 <body>
 <br />
-	<h1>Welcome to Movie Vultures!</h1>
+	<p align="right"><a href="user/register.html">Register</a> | Login</p>
+	<jsp:include page="./search/searchMovies2.jsp" />
+	
+	<p><img src="./images/MV_banner.png" alt="Banner of Movie Vultures" /></p>
 	<ul>
-		<li><a href="user/list.html">User Management</a></li>
-		<li><a href="user/register.html">Register</a></li>
-		<li><a href="movies.html">Movies</a></li>
-		<li><a href="search/searchMovies.html">Search Movie</a></li>
+		<li><a href="movies/movies.html">Movies</a></li>
 		<c:if test="${not empty username}">
+			<li><a href="user/list.html">User Management</a></li>
 			<li><a href="user/home.html?username=${username}" >${username}</a></li>
 			<li><a href="elo/add.html">Elo Rate two random movies</a></li>
 		</c:if>
