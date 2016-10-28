@@ -1,6 +1,8 @@
 package movievultures.web.controller;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -78,11 +80,12 @@ public class UserController {
 		if(result.hasErrors())
 			return "user/register";
 		//If no errors save user
+		Set<String> roles = new HashSet<String>();
+		roles.add("ROLE_USER");
+		user.setRoles(roles);
 		userDao.saveUser(user);
-		userDao.saveNewUser(user.getUsername());
 		//free resources
 		status.setComplete();
-		
 		return "redirect:list.html";
 	}
 	
@@ -109,7 +112,6 @@ public class UserController {
 	public String addFav(@RequestParam int movieId){
 		String username = "";
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		//String currentPrincipalName = authentication.getName();
 		if(!(authentication instanceof AnonymousAuthenticationToken)){
 			username = authentication.getName();
 		}else{
@@ -162,6 +164,15 @@ public class UserController {
 		user.getWatchLater().add(movieDao.getMovie(movieId));
 		userDao.saveUser(user);
 		return "redirect:/user/home.html?username=" + user.getUsername();
+	}
+	
+	//authorize user
+	@RequestMapping("user/authorize")
+	public String authorize(@RequestParam int userid){
+		User user = userDao.getUser(userid);
+		user.getRoles().add("ROLE_ADMIN");
+		userDao.saveUser(user);
+		return "redirect:/user/list.html";
 	}
 
 }

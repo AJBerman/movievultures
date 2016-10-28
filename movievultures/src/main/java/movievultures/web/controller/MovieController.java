@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +21,7 @@ import movievultures.model.User;
 import movievultures.model.dao.MovieDao;
 import movievultures.model.dao.ReviewDao;
 import movievultures.model.dao.UserDao;
+import movievultures.security.SecurityUtils;
 
 @Controller
 public class MovieController {
@@ -56,6 +58,8 @@ public class MovieController {
 
 	@RequestMapping(value = "/movies/add.html", method = RequestMethod.GET)
 	public String getAddMovies() {
+		if(!SecurityUtils.isAuthenticated())
+			return "redirect:../login";
 		return "movies/add";
 	}
 
@@ -121,6 +125,7 @@ public class MovieController {
 		// System.out.println("in here");
 		Movie movie = movieDao.getMovie(Id);
 		models.put("movie", movie);
+		models.put("username", SecurityUtils.getUser());
 		return "movies/details";
 	}
 
@@ -146,6 +151,8 @@ public class MovieController {
 	@RequestMapping(value="/movies/edit.html",method=RequestMethod.GET)
 	public String getEdit(@RequestParam String id, ModelMap models)
 	{
+		if(!SecurityUtils.isAuthenticated())
+			return "redirect:../login";
 		int Id=Integer.parseInt(id);
 		Movie movie=movieDao.getMovie(Id);
 		int i;

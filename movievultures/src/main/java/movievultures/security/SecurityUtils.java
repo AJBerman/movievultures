@@ -1,7 +1,9 @@
 package movievultures.security;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import movievultures.model.User;
@@ -21,11 +23,14 @@ public class SecurityUtils {
         return !isAnonymous();
     }
 
-    public static User getUser()
+    public static String getUser()
     {
-        return isAuthenticated() ? (User) SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getPrincipal() : null;
+		String username_sec ="";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(!(authentication instanceof AnonymousAuthenticationToken)){
+			username_sec = authentication.getName();
+		}
+		return username_sec;
     }
 
 }

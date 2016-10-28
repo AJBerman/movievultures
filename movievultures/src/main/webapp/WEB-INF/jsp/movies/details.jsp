@@ -67,10 +67,18 @@
 			<c:forEach items="${movie.reviews}" var="r">
 				<tr>
 					<td>By: ${r.user.username} - ${r.review}</td>
-					<td>${r.rating}<td>
+					<td>${r.rating}</td>
+					<c:if test="${r.user.username==username}"><td><a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a></td></c:if>
 				</tr>
 			</c:forEach>
 		</table>
+		
+		<c:if test="${not empty username}">
+			<br />
+			<a href="../review/add.html?id=${movie.movieId}">Make your voice heard!</a>
+			<br />
+			<a href="../elo/add.html?movie1=${movie.movieId}">Where does this movie stack up?</a>
+		</c:if>
 
 	</div>
 </body>

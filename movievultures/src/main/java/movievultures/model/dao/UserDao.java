@@ -10,5 +10,5 @@ public interface UserDao {
 	List<User> getUsersByUsername(String username);
 	User saveUser(User user);
 	List<User> getUsers();
-	void saveNewUser(String username);
+	//void saveNewUser(String username);
 }

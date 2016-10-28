@@ -9,18 +9,26 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 @Entity
 @Table(name="movies")
 public class Movie {
 	@Id
-	@GeneratedValue
+	@TableGenerator(name = "EVENT_GEN2",
+    	table = "SEQUENCES",
+    	pkColumnName = "SEQ_NAME",
+    	valueColumnName = "SEQ_NUMBER",
+    	pkColumnValue = "SEQ_MOVIE",
+    	allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "EVENT_GEN2")
 	private int movieId;
 	private String title;
 	@OneToMany(mappedBy="movie",

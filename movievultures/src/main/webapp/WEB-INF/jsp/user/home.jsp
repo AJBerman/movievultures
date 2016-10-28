@@ -12,7 +12,7 @@
 <h5><a href="/movievultures/home.html">Home</a></h5>
 
 	<h2>Welcome ${user.username}</h2>
-	<h5><a href="/movievultures/home.html">Home</a></h5>
+	<h3><a href="/movievultures/home.html">Home</a></h3>
 	
 	<h3>Profile:</h3>
 	<table border=1>
@@ -104,7 +104,7 @@
 	</c:if>	
 	<br />		
 	
-	<form action="/movievultures/logout" method="POST">
+	<form action="<c:url value='/logout' />" method="POST">
   		<input name="_csrf" type="hidden" value="${_csrf.token}" />
   		<input name="submit" type="submit" value="Logout" />
 	</form>

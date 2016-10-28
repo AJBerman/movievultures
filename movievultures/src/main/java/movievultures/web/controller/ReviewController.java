@@ -30,11 +30,13 @@ public class ReviewController {
 	private MovieDao movieDao;
 	@Autowired
 	private ReviewDao reviewDao;
+	@Autowired
+	private UserDao userDao;
 	
 	@RequestMapping(value = "/review/add.html", method = RequestMethod.GET)
     public String add(@RequestParam("id") int id, ModelMap models ) // e.g. /rate?id=5267
     {
-        User user = SecurityUtils.getUser();
+        User user = userDao.getUserByUsername(SecurityUtils.getUser());
 		//User user = userDao.getUser(12); //just for testing
         Review review = new Review();
         review.setUser(user);
@@ -49,35 +51,25 @@ public class ReviewController {
     public String add( @ModelAttribute("review") Review review ) // e.g. /rate?id=5267
     {
 		reviewDao.saveReview(review);
-        return "redirect:movie.html?id=" + review.getMovie().getMovieId();
+        return "redirect:../movies/details.html?id=" + review.getMovie().getMovieId();
     }
 
 	@RequestMapping(value = "/review/edit.html", method = RequestMethod.GET)
 	public String edit(@RequestParam("id") int id, ModelMap models ) 
 	{
-        User user = SecurityUtils.getUser();
+        User user = userDao.getUserByUsername(SecurityUtils.getUser());
 		//User user = userDao.getUser(12); //just for testing
-        Review review = reviewDao.getReview(id);
+        Review review = reviewDao.getReviewByUserAndMovie(movieDao.getMovie(id), user);
         //for testing
         models.put("movie", review.getMovie());
         models.put("review", review);
 		return "review/edit";
-		/*if(user.equals(review.getUser())) 
-		{
-	        models.put("movie", review.getMovie());
-	        models.put("review", review);
-			return "review/edit";
-		}
-		else 
-		{
-			return "redirect:movie.html?id=${movie.id}";
-		}*/
 	}
 	@RequestMapping(value = "/review/edit.html", method = RequestMethod.POST)
 	public String edit( @ModelAttribute("review") Review review ) 
 	{
 		reviewDao.saveReview(review);
-        return "redirect:movie.html?id=" + review.getMovie().getMovieId();
+        return "redirect:../movies/details.html?id=" + review.getMovie().getMovieId();
 	}
 
 	@InitBinder
