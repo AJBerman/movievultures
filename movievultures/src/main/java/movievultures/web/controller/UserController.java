@@ -25,6 +25,7 @@ import movievultures.web.validator.EditUserValidator;
 import movievultures.web.validator.UserValidator;
 
 @Controller
+@SessionAttributes("user")
 public class UserController {
 	
 	@Autowired
@@ -86,7 +87,7 @@ public class UserController {
 		userDao.saveUser(user);
 		//free resources
 		status.setComplete();
-		return "redirect:list.html";
+		return "redirect:../home.html";
 	}
 	
 	//updateProfile

@@ -53,7 +53,7 @@ public class EloController {
 		System.out.println(((Movie)models.get("movie1")).getMovieId());
 		EloRunoff runoff = new EloRunoff();
 		runoff.setDate(new Date());
-		runoff.setUser(userDao.getUserByUsername(SecurityUtils.getUser()));
+		runoff.setUser(userDao.getUserByUsername(SecurityUtils.getUserName()));
 		if (winner == 1) {
 			runoff.setWinner((Movie) models.get("movie1")); 
 			runoff.setLoser((Movie) models.get("movie2")); 

@@ -37,7 +37,6 @@
   <br />
   <br />
   <form:textarea type="text" path="review" rows="6" />
-  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
   <input type="submit" value="Submit">
 </form:form>
 	<h3><a href="/movievultures/home.html">Home</a></h3>

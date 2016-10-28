@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 
 import movievultures.model.Movie;
@@ -36,7 +37,7 @@ public class ReviewController {
 	@RequestMapping(value = "/review/add.html", method = RequestMethod.GET)
     public String add(@RequestParam("id") int id, ModelMap models ) // e.g. /rate?id=5267
     {
-        User user = userDao.getUserByUsername(SecurityUtils.getUser());
+        User user = userDao.getUserByUsername(SecurityUtils.getUserName());
 		//User user = userDao.getUser(12); //just for testing
         Review review = new Review();
         review.setUser(user);
@@ -47,6 +48,7 @@ public class ReviewController {
         models.put("review", review);
         return "review/add";
     }
+	
 	@RequestMapping(value = "/review/add.html", method = RequestMethod.POST)
     public String add( @ModelAttribute("review") Review review ) // e.g. /rate?id=5267
     {
@@ -57,7 +59,7 @@ public class ReviewController {
 	@RequestMapping(value = "/review/edit.html", method = RequestMethod.GET)
 	public String edit(@RequestParam("id") int id, ModelMap models ) 
 	{
-        User user = userDao.getUserByUsername(SecurityUtils.getUser());
+        User user = userDao.getUserByUsername(SecurityUtils.getUserName());
 		//User user = userDao.getUser(12); //just for testing
         Review review = reviewDao.getReviewByUserAndMovie(movieDao.getMovie(id), user);
         //for testing
@@ -65,10 +67,12 @@ public class ReviewController {
         models.put("review", review);
 		return "review/edit";
 	}
+	
 	@RequestMapping(value = "/review/edit.html", method = RequestMethod.POST)
-	public String edit( @ModelAttribute("review") Review review ) 
+	public String edit( @ModelAttribute Review review, SessionStatus status ) 
 	{
 		reviewDao.saveReview(review);
+		status.setComplete();
         return "redirect:../movies/details.html?id=" + review.getMovie().getMovieId();
 	}
 

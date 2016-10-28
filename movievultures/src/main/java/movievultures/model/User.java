@@ -20,12 +20,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name="users")
-
+@Scope("session")
 public class User implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
