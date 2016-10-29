@@ -71,7 +71,7 @@ public class ReviewController {
 	@RequestMapping(value = "/review/edit.html", method = RequestMethod.POST)
 	public String edit( @ModelAttribute Review review, SessionStatus status ) 
 	{
-		reviewDao.saveReview(review);
+		review = reviewDao.saveReview(review);
 		status.setComplete();
         return "redirect:../movies/details.html?id=" + review.getMovie().getMovieId();
 	}

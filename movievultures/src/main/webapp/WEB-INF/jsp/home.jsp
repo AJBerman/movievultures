@@ -30,14 +30,17 @@
 	<ul>
 		<%-- <li><a href="movies/movies.html">Movies</a></li> --%>
 		
+		<sec:authorize access="isAuthenticated()">
+			<li><a href="elo/add.html">Elo Rate two random movies</a></li>
+		</sec:authorize>
+
+		
 		<%-- ===== DISPLAY RANDOM MOVIES ===== --%>
 		
 		<br /><p>===== DISPLAY RANDOM MOVIES ======</p>
 		
 		<jsp:include page="movies/movies2.jsp" />
-		<sec:authorize access="isAuthenticated()">
-			<li><a href="elo/add.html">Elo Rate two random movies</a></li>
-		</sec:authorize>
+
 	</ul>
 
 	
