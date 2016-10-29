@@ -25,7 +25,7 @@ import movievultures.model.dao.UserDao;
 import movievultures.security.SecurityUtils;
 
 @Controller
-@SessionAttributes({"user", "review"})
+@SessionAttributes("review")
 public class ReviewController {
 	@Autowired
 	private MovieDao movieDao;

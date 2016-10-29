@@ -30,16 +30,21 @@ public class EloController {
 	private UserDao userDao; 
 	
 	@RequestMapping(value = "/elo/add.html", method = RequestMethod.GET)
-    public String add( @RequestParam(value="movie1", required = false) Integer movie1id, @RequestParam(value="movie2", required = false) Integer movie2id, ModelMap models )
+    public String add( @RequestParam(value="movie1", required = false) Integer movie1id,
+    		@RequestParam(value="movie2", required = false) Integer movie2id, 
+    		ModelMap models )
     {
-		if( movie1id == null ) { //using Integer so we can check for nullity
+		if( movie1id == null && movie2id == null) { //using Integer so we can check for nullity
 			List<Movie> movies = movieDao.getRandomMovies(2);
 			models.put("movie1", movies.get(0));
 			models.put("movie2", movies.get(1));
-		} else if ( movie2id == null ) {
+		} else if ( movie2id == null && movie1id != null ) {
 			models.put("movie1", movieDao.getMovie(movie1id));
 			models.put("movie2", movieDao.getRandomMovie());
-		} else {
+		} else if(movie2id != null && movie1id == null) {
+			models.put("movie1", movieDao.getRandomMovie());
+			models.put("movie2", movieDao.getMovie(movie2id));
+		}else {
 			models.put("movie1", movieDao.getMovie(movie1id));
 			models.put("movie2", movieDao.getMovie(movie2id));
 		}

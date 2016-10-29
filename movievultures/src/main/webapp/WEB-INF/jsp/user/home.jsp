@@ -14,7 +14,7 @@
 	<p align="right">
 		<security:authorize access="isAuthenticated()">
 			<a href="<c:url value='/' /> ">Main</a> |
-			<a href="logout">Logout</a> |
+			<a href="<c:url value='/logout' />">Logout</a> 
 		</security:authorize>
 	</p>
 
@@ -107,7 +107,5 @@
 		</c:forEach>
 	</table>
 	</c:if>	
-	<br />		
-	<a href="logout">Logout</a>
 </body>
 </html>

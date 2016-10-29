@@ -37,6 +37,7 @@
   <br />
   <br />
   <form:textarea type="text" path="review" rows="6" />
+  <form:input path="reviewId" type="hidden" value="${review.reviewId}" />
   <input type="submit" value="Submit">
 </form:form>
 	<h3><a href="/movievultures/home.html">Home</a></h3>
