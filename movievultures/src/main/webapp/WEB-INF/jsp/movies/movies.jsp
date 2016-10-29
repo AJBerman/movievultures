@@ -29,7 +29,7 @@
 <h5><a href="/movievultures/home.html">Home</a></h5>
 	<h1>Movies</h1>
 	<div class="container">
-		<form action="movies/add.html">
+		<form action="add.html">
 			<input type="submit" class="btn btn-primary" value="Add Movies" />
 		</form>
 		<br />
@@ -43,14 +43,14 @@
 			</tr>
 			<c:forEach items="${movies}" var="movie">
 				<tr>
-					<td><a href="movies/details.html?id=${movie.movieId}">${movie.title}</a></td>
+					<td><a href="details.html?id=${movie.movieId}">${movie.title}</a></td>
 					<td>${movie.plot}</td>
 					<td>${movie.date}</td>
 					<td>${movie.eloRating}</td>
 					<td>
 						<small>
-						<a href="user/addFav.html?movieId=${movie.movieId}">Favorite?</a> |
-						<a href="user/addWL.html?movieId=${movie.movieId}">WatchLater?</a>
+						<a href="../user/addFav.html?movieId=${movie.movieId}">Favorite?</a> |
+						<a href="../user/addWL.html?movieId=${movie.movieId}">WatchLater?</a>
 						</small>
 					</td>
 				</tr>

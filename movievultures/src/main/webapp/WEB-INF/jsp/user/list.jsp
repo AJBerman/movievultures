@@ -11,10 +11,13 @@
 <title>List of Users</title>
 </head>
 <body>
-	<form action="<c:url value='/logout' />" method="POST">
-  		<input name="_csrf" type="hidden" value="${_csrf.token}" />
-  		<input name="submit" type="submit" value="Logout" />
-	</form>
+	<p align="right">
+		<a href="<c:url value='/logout'/>" >Logout</a> | 
+		<a href="<c:url value='/' />" >Main</a> |
+		<a href="home.html?username=<security:authentication property="principal.username" />"> 
+			<security:authentication property="principal.username" />
+		</a>
+	</p>
 
 	<table border=1>
 	<tr><th>User ID</th> <th>Username</th></tr>

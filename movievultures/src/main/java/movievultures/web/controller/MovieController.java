@@ -35,15 +35,16 @@ public class MovieController {
 	@Autowired
 	private UserDao userDao;
 
-	@RequestMapping(value = "/home.html", method = RequestMethod.GET)
-	public String getHome() {
-		return "home";
-	}
+//	@RequestMapping(value = "/home.html", method = RequestMethod.GET)
+//	public String getHome() {
+//		return "home";
+//	}
 
-	@RequestMapping(value = "/movies.html", method = RequestMethod.GET)
+	@RequestMapping("/movies/movies")
 	public String getMovies(ModelMap models) {
 
 		List<Movie> movies = movieDao.getRandomMovies(10);
+		System.out.println(movies.size());
 		for (int i = 0; i < movies.size(); i++) {
 			// to remove {" and "} at the beginning an d end of the plot
 			if (movies.get(i).getPlot().contains("{")) {
@@ -53,7 +54,7 @@ public class MovieController {
 			movies.get(i).setPlot(movies.get(i).getPlot().replace(" [\",\"] ", ""));
 		}
 		models.put("movies", movies);
-		return "movies";
+		return "movies/movies";
 	}
 
 	@RequestMapping(value = "/movies/add.html", method = RequestMethod.GET)
@@ -125,7 +126,7 @@ public class MovieController {
 		// System.out.println("in here");
 		Movie movie = movieDao.getMovie(Id);
 		models.put("movie", movie);
-		models.put("username", SecurityUtils.getUser());
+		models.put("username", SecurityUtils.getUserName());
 		return "movies/details";
 	}
 

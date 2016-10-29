@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,10 +10,15 @@
 <title>"There's no place like home"</title>
 </head>
 <body>
-<h5><a href="/movievultures/home.html">Home</a></h5>
+
+	<p align="right">
+		<security:authorize access="isAuthenticated()">
+			<a href="<c:url value='/' /> ">Main</a> |
+			<a href="<c:url value='/logout' />">Logout</a> 
+		</security:authorize>
+	</p>
 
 	<h2>Welcome ${user.username}</h2>
-	<h3><a href="/movievultures/home.html">Home</a></h3>
 	
 	<h3>Profile:</h3>
 	<table border=1>
@@ -95,18 +101,11 @@
 				<td>${review.movie.title}</td>
 				<td>${review.rating }</td>
 				<td>
-					<!--  <a href="/review/view.html">View</a> |-->
-					<a href="../review/edit.html?id=${review.reviewId}">Edit</a>
+					<a href="../review/edit.html?id=${review.movie.movieId}">Edit</a>
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
 	</c:if>	
-	<br />		
-	
-	<form action="<c:url value='/logout' />" method="POST">
-  		<input name="_csrf" type="hidden" value="${_csrf.token}" />
-  		<input name="submit" type="submit" value="Logout" />
-	</form>
 </body>
 </html>

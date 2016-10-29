@@ -23,7 +23,7 @@ public class SecurityUtils {
         return !isAnonymous();
     }
 
-    public static String getUser()
+    public static String getUserName()
     {
 		String username_sec ="";
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
