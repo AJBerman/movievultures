@@ -22,11 +22,19 @@
 	</sec:authorize>
 	</p>
 	
+	<%-- ========= CONTENT VISIBLE ON PAGE =========== --%>
+	
 	<jsp:include page="./search/searchMovies2.jsp" />
 	
-	<p><img src="./images/MV_banner.png" alt="Banner of Movie Vultures" /></p>
+	<p><a href="/movievultures/home.html"><img src="./images/MV_banner.png" alt="Banner of Movie Vultures" /></a></p>
 	<ul>
-		<li><a href="movies/movies.html">Movies</a></li>
+		<%-- <li><a href="movies/movies.html">Movies</a></li> --%>
+		
+		<%-- ===== DISPLAY RANDOM MOVIES ===== --%>
+		
+		<br /><p>===== DISPLAY RANDOM MOVIES ======</p>
+		
+		<jsp:include page="movies/movies2.jsp" />
 		<sec:authorize access="isAuthenticated()">
 			<li><a href="elo/add.html">Elo Rate two random movies</a></li>
 		</sec:authorize>

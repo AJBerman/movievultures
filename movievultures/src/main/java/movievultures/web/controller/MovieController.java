@@ -120,14 +120,14 @@ public class MovieController {
 		return "redirect:../movies.html";
 	}
 
-	@RequestMapping(value = "/movies/details.html")
+	@RequestMapping(value = "/movies/details2.html")
 	public String getDetails(@RequestParam String id, ModelMap models) {
 		int Id = Integer.parseInt(id);
 		// System.out.println("in here");
 		Movie movie = movieDao.getMovie(Id);
 		models.put("movie", movie);
 		models.put("username", SecurityUtils.getUserName());
-		return "movies/details";
+		return "movies/details2";
 	}
 
 	@RequestMapping(value = "/movies/delete.html")
@@ -240,7 +240,7 @@ public class MovieController {
 		
 		movie=movieDao.saveMovie(movie);
 
-		return "redirect:../movies/details.html?id="+Id;
+		return "redirect:../movies/details2.html?id="+Id;
 	}
 	
 }

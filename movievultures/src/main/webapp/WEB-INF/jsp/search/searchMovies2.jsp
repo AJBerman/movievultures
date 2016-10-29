@@ -12,7 +12,7 @@
 <title>Search for a Movie</title>
 </head>
 <body>	 
-	 <form action ="searchMovies.html" method="post">
+	 <form action ="search/searchMovies4.html" method="post">
 	 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	 	Search: <input type="text" name="searchTerm" />
 	 	
