@@ -21,7 +21,7 @@
 		<tr><th>Title</th><th>rating</th></tr>
 		<c:forEach items="${user.reviewedMovies}" var="review" varStatus="status" >
 			<tr>
-				<td><a href="../movies/details.html?id=${review.movie.movieId}">${review.movie.title}</a></td>
+				<td><a href="../movies/details2.html?id=${review.movie.movieId}">${review.movie.title}</a></td>
 				<td>${review.rating }</td>
 			</tr>
 		</c:forEach>

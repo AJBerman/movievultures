@@ -21,8 +21,10 @@
 		<sec:authorize access="isAuthenticated()">
 			<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >
 			 	<sec:authentication property="principal.username" /></a> |
-			<a href="<c:url value='/logout'/>"   >Logout</a> |
-			<a href="../user/list.html">Users</a>
+			<a href="<c:url value='/logout'/>"   >Logout</a>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+				| <a href="../user/list.html">All Users</a>
 		</sec:authorize>
 	</p>
 	
@@ -45,7 +47,14 @@
 			</sec:authorize>
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
 				| <a href="delete.html?id=${movie.movieId}" class="btn btn-primary">Delete Movie</a>
-			</sec:authorize>	
+			</sec:authorize>
+			<c:if test="${not empty user.username}"> |
+			<a href="../review/add.html?id=${movie.movieId}">Make your voice heard!</a> |
+			<a href="../elo/add.html?movie1=${movie.movieId}">Where does this movie stack up?</a> |
+			<a href="../user/addFav.html?movieId=${movie.movieId}">Add to Favorites?</a> |
+			<a href="../user/addWL.html?movieId=${movie.movieId}">Add to WatchList?</a> 
+		</c:if>
+				
 		</div>
 
 		<br />
@@ -84,25 +93,27 @@
 		<table>
 			<tr><th>User Reviews</th></tr>
 			<c:forEach items="${movie.reviews}" var="r">
-				<tr>
-					<td>${r.user.username} - ${r.review}</td>
-					<td>${r.rating}</td>
-					<c:if test="${r.user.username==username}"><td><a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a></td></c:if>
-				</tr>
+				<tr><td>
+				<!--
+					<td>${r.user.username} - ${r.rating}</td>
+					<td>${r.review}</td>
+					<c:if test="${r.user.username==username}">
+						<td>
+							<a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
+						</td>
+					</c:if>
+				  -->
+				  ${r.user.username} - ${r.rating}
+				  <c:if test="${r.user.username == user.username}">
+				  	 | <a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
+				  </c:if>
+				   <br />
+				  ${r.review}<br /> 
+				  
+				</td></tr>
 			</c:forEach>
 		</table>
-		
-		<c:if test="${not empty username}">
-			<br />
-			<a href="../review/add.html?id=${movie.movieId}">Make your voice heard!</a>
-			<br />
-			<a href="../elo/add.html?movie1=${movie.movieId}">Where does this movie stack up?</a>
-			<br />
-			<a href="../user/addFav.html?movieId=${movie.movieId}">Add to Favorites?</a>
-			<br />
-			<a href="../user/addWL.html?movieId=${movie.movieId}">Add to WatchList?</a>
-		</c:if>
-
+	
 	</div>
 </body>
 </html>

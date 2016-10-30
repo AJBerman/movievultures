@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,7 +27,22 @@
 	crossorigin="anonymous"></script>
 
 <body>
-<h5><a href="/movievultures/home.html">Home</a></h5>
+
+	<p align="right">
+		<a href="<c:url value='/' />" >Main</a> |
+		
+		<sec:authorize access="!isFullyAuthenticated()">
+			<a href="../user/register.html">Register</a> |
+			<a href= "<c:url value='/login'/>"  >Login</a>
+		</sec:authorize>
+		
+		<sec:authorize access="isAuthenticated()">
+			<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >
+			 	<sec:authentication property="principal.username" /></a> |
+			<a href="details2.html?id=${movie.movieId}">${movie.title}</a> |
+			<a href="<c:url value='/logout'/>"   >Logout</a>
+		</sec:authorize>
+	</p>
 
 	<div class="container">
 		<form action="edit.html?id=${movie.movieId}" method="post">

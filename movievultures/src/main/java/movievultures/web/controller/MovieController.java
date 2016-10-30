@@ -117,16 +117,20 @@ public class MovieController {
 		}
 
 		models.put("movies", movies);
-		return "redirect:../movies.html";
+		return "redirect:../home.html";
 	}
 
 	@RequestMapping(value = "/movies/details2.html")
 	public String getDetails(@RequestParam String id, ModelMap models) {
 		int Id = Integer.parseInt(id);
 		// System.out.println("in here");
+		
 		Movie movie = movieDao.getMovie(Id);
 		models.put("movie", movie);
-		models.put("username", SecurityUtils.getUserName());
+		if(SecurityUtils.isAuthenticated())
+			models.put("user", userDao.getUserByUsername(SecurityUtils.getUserName()));
+		else
+			models.put("user", null);
 		return "movies/details2";
 	}
 
@@ -146,7 +150,7 @@ public class MovieController {
 			movies.get(i).setPlot(movies.get(i).getPlot().replace(" [\",\"] ", ""));
 		}
 		models.put("movies", movies);
-		return "redirect:../movies.html";
+		return "redirect:../home.html";
 	}
 
 	@RequestMapping(value="/movies/edit.html",method=RequestMethod.GET)

@@ -72,7 +72,7 @@ public class EloController {
     }
 
 	@RequestMapping(value = "/elo/view.html", method = RequestMethod.GET)
-    public String view( @RequestParam("movie1") int movie1id, @RequestParam("movie2") int movie2id, @RequestParam("userid") int userid, ModelMap models )
+    public String view( @RequestParam("movie1") Integer movie1id, @RequestParam("movie2") Integer movie2id, @RequestParam("userid") int userid, ModelMap models )
     {
 		models.put("runoff", eloDao.getEloRunoffByUserAndMovies(userid, movie1id, movie2id));
         return "elo/view";

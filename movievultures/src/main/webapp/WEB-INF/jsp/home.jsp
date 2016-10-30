@@ -18,8 +18,10 @@
 		<sec:authorize access="isAuthenticated()">
 			<a href="user/home.html?username=<sec:authentication property="principal.username" />" >
 			 	<sec:authentication property="principal.username" /></a> |
-			<a href="logout">Logout</a> |
-			<a href="user/list.html">All Users</a>
+			<a href="logout">Logout</a> 
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+				| <a href="user/list.html">All Users</a>
 		</sec:authorize>
 	</p>
 	
@@ -31,7 +33,8 @@
 	<%-- ===== LOGIN AUTHENTICATION ===== --%>
 	<br />
 	<sec:authorize access="isAuthenticated()">
-		<li><a href="elo/add.html">Elo Rate two random movies</a></li>
+		<a href="elo/add.html">Elo Rate two random movies</a> |
+		<a href="movies/add.html">Add a new movie</a>
 	</sec:authorize>
 	
 	<sec:authorize access = "isAuthenticated()">
