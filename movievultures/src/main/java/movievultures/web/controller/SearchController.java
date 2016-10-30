@@ -35,7 +35,7 @@ public class SearchController {
 	public String search( ModelMap models, @RequestParam String searchTerm, @RequestParam Integer type )
 	{
 		//System.out.println("Search Term: " + searchTerm);
-		//System.out.println("Type of Seach: " + type);
+		//System.out.println("Type of Search: " + type);
 		
 		switch( type ) {
 			case 1:

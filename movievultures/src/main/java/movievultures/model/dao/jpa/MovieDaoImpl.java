@@ -174,21 +174,27 @@ public class MovieDaoImpl implements MovieDao{
 
 	@Override
 	public List<Movie> getMoviesSmallerUserRating(double userRating) {
-		return null;
+		return entityManager
+				.createQuery("select m from Movie m join m.reviews r group by m.movieId having avg(r.rating) < :rating order by avg(r.rating) desc", Movie.class )
+				.setParameter("rating", userRating)
+				.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Movie> getMoviesGreaterUserRating(double userRating) {
 		return entityManager
-			.createQuery("select m from Movie m join fetch m.reviews r group by m.movieId having avg(r.rating) > :rating order by avg(r.rating) desc", Movie.class )
+			.createQuery("select m from Movie m join m.reviews r group by m.movieId having avg(r.rating) > :rating order by avg(r.rating) desc", Movie.class )
 			.setParameter("rating", userRating)
 			.getResultList();
 	}
 
 	@Override
 	public List<Movie> getMovieEqualUserRating(double userRating) {
-		return null;
+		return entityManager
+				.createQuery("select m from Movie m join m.reviews r group by m.movieId having avg(r.rating) = :rating order by avg(r.rating) desc", Movie.class )
+				.setParameter("rating", userRating)
+				.getResultList();
 	}
 	
 	@Override
