@@ -31,7 +31,7 @@ public class SearchController {
 		return "search/searchMovies4";
 	}
 	
-	@RequestMapping(value = "search/searchMovies4.html", method = RequestMethod.POST)
+	@RequestMapping(value = "/search/searchMovies4.html", method = RequestMethod.POST)
 	public String search( ModelMap models, @RequestParam String searchTerm, @RequestParam Integer type )
 	{
 		//System.out.println("Search Term: " + searchTerm);

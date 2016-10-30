@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,14 +13,15 @@
 	<p align="right"> 
 	<sec:authorize access="!isFullyAuthenticated()">
 		<a href="user/register.html">Register</a> |
-		<a href="login">Login</a>
+		<a href= "<c:url value='/login'/>"  >Login</a>
 	</sec:authorize>
 	<sec:authorize access="isAuthenticated()">
-		<a href="user/home.html?username=<sec:authentication property="principal.username" />" >
+		<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >
 		 	<sec:authentication property="principal.username" /> </a> |
-		<a href="logout">Logout</a> |
-		<a href="user/list.html">Users</a>
+		<a href="<c:url value='/logout'/>"   >Logout</a> |
+		<a href="../user/list.html">Users</a>
 	</sec:authorize>
+	| <a href="<c:url value='/' />" >Home</a>
 	</p>
 	
 	<jsp:include page="../search/searchMovies2.jsp" />
@@ -28,15 +30,20 @@
 
 
 	<div class="container">
+	
 		<div class="jumbotron">
 			<h1>${movie.title}</h1>
 		</div>
+		
+		
+		
 		<div class="col-md-6">
 			<a href="edit.html?id=${movie.movieId}" class="btn btn-primary">Edit</a>
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				| <a href="delete.html?id=${movie.movieId}" class="btn btn-primary">Delete</a>
+			</sec:authorize>	
 		</div>
-		<div class="col=md-6">
-			<a href="delete.html?id=${movie.movieId}" class="btn btn-primary">Delete</a>
-		</div>
+
 		<br />
 		<b>Plot</b><br />
 		<p>${movie.plot}</p>
@@ -78,6 +85,10 @@
 			<a href="../review/add.html?id=${movie.movieId}">Make your voice heard!</a>
 			<br />
 			<a href="../elo/add.html?movie1=${movie.movieId}">Where does this movie stack up?</a>
+			<br />
+			<a href="../user/addFav.html?movieId=${movie.movieId}">Add to Favorites?</a>
+			<br />
+			<a href="../user/addWL.html?movieId=${movie.movieId}">Add to WatchList?</a>
 		</c:if>
 
 	</div>

@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,6 +12,19 @@
 <title>Search Results</title>
 </head>
 <body>
+	<p align="right"> 
+	<sec:authorize access="!isFullyAuthenticated()">
+		<a href="../user/register.html">Register</a> |
+		<a href="<c:url value='/login'/>">Login</a>
+	</sec:authorize>
+	<sec:authorize access="isAuthenticated()">
+		<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >
+		 	<sec:authentication property="principal.username" /> </a> |
+		<a href="<c:url value='/logout'/>">Logout</a> |
+		<a href="../user/list.html">Users</a>
+	</sec:authorize>
+	</p>
+	
 	<h2>Movie Results (${fn:length(movieResults)} result(s) returned)</h2>
 	
 	<c:choose>
