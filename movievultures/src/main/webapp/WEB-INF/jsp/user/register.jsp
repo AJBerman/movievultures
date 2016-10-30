@@ -9,12 +9,20 @@
 <title>Willkommen, Bienvenue, Welcome</title>
 </head>
 <body>
-<h5><a href="/movievultures/home.html">Home</a></h5>
+	<p align="right">
+		<a href="<c:url value='/' />" >Main</a> |
+		
+		<sec:authorize access="!isFullyAuthenticated()">
+			<a href= "<c:url value='/login'/>"  >Login</a>
+		</sec:authorize>
+	</p>
+	
+	<h2>Please Fill Out the Form to Register</h2>
 
 	<form:form modelAttribute="user">
-		Username: <form:input path="username" /> <font color="red"><form:errors path="username" /></font> <br />
-		E-mail: <form:input path="email" />  <font color="red"><form:errors path="email" /> </font><br />
-		Password: <form:input path="password" /> <font color="red"><form:errors path="password" /> </font><br />
+		Username: <form:input path="username" /> <font color="red"><form:errors path="username" /></font> <br /><br />
+		E-mail: <form:input path="email" />  <font color="red"><form:errors path="email" /> </font><br /><br />
+		Password: <form:input path="password" /> <font color="red"><form:errors path="password" /> </font><br /><br />
 		<input type="submit" name="add" value="add" />
 	</form:form>
 </body>

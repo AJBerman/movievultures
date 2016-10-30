@@ -22,7 +22,7 @@ public class SearchController {
 	@RequestMapping("/search/searchMovies2.html")
 	public String noSearch( ModelMap models )
 	{
-		return "search/searchMovies4";
+		return "../search/searchMovies4";
 	}
 	
 	@RequestMapping(value = "/search/searchMovies4.html", method = RequestMethod.GET)

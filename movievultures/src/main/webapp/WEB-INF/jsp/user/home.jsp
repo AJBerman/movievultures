@@ -38,7 +38,7 @@
 			<tr><th>Title</th></tr>
 			<c:forEach items="${user.recommendations}" var="movie" varStatus="status" >
 				<tr>
-					<td>${movie.title }</td>
+					<td>${movie.title}</td>
 					<td><a href="movie/view.html">view</a></td>
 				</tr>
 			</c:forEach>
@@ -56,7 +56,7 @@
 			<tr><th>Title</th><th>action</th></tr>
 			<c:forEach items="${user.favorites}" var="movie" varStatus="status" >
 				<tr>
-					<td>${movie.title }</td>
+					<td><a href="../movies/details2.html?id=${ movie.movieId }">${movie.title }</a></td>
 					<td>
 						<a href="removeFav.html?index=${status.index}&userId=${user.userId}">
 							<img src="../images/delete.png"></img>
@@ -78,7 +78,7 @@
 			<tr><th>Title</th><th>action</th></tr>
 			<c:forEach items="${user.watchLater}" var="movie" varStatus="status" >
 				<tr>
-					<td>${movie.title }</td>
+					<td><a href="../movies/details2.html?id=${ movie.movieId }">${movie.title }</a></td>
 					<td>
 						<a href="removeWL.html?index=${status.index}&userId=${user.userId}">
 							<img src="../images/delete.png"></img>
@@ -98,7 +98,7 @@
 		<tr><th>Movie Title</th> <th>Rating</th><th>Operations</th></tr>
 		<c:forEach items="${user.reviewedMovies}" var="review" varStatus="status">
 			<tr>
-				<td>${review.movie.title}</td>
+				<td><a href="../movies/details2.html?id=${ review.movie.movieId }">${review.movie.title}</a></td>
 				<td>${review.rating }</td>
 				<td>
 					<a href="../review/edit.html?id=${review.movie.movieId}">Edit</a>

@@ -10,25 +10,27 @@
 </head>
 
 <body>
-	<p align="right"> 
-	<sec:authorize access="!isFullyAuthenticated()">
-		<a href="user/register.html">Register</a> |
-		<a href= "<c:url value='/login'/>"  >Login</a>
-	</sec:authorize>
-	<sec:authorize access="isAuthenticated()">
-		<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >
-		 	<sec:authentication property="principal.username" /> </a> |
-		<a href="<c:url value='/logout'/>"   >Logout</a> |
-		<a href="../user/list.html">Users</a>
-	</sec:authorize>
-	| <a href="<c:url value='/' />" >Home</a>
+	<p align="right">
+		<a href="<c:url value='/' />" >Main</a> |
+		
+		<sec:authorize access="!isFullyAuthenticated()">
+			<a href="../user/register.html">Register</a> |
+			<a href= "<c:url value='/login'/>"  >Login</a>
+		</sec:authorize>
+		
+		<sec:authorize access="isAuthenticated()">
+			<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >
+			 	<sec:authentication property="principal.username" /></a> |
+			<a href="<c:url value='/logout'/>"   >Logout</a> |
+			<a href="../user/list.html">Users</a>
+		</sec:authorize>
 	</p>
 	
 	<jsp:include page="../search/searchMovies2.jsp" />
-	
 	<p><a href="/movievultures/home.html"><img src="../images/MV_banner.png" alt="Banner of Movie Vultures" /></a></p>
 
 
+	<%-- ===== MOVIE DETAILS DISPLAY ===== --%>
 	<div class="container">
 	
 		<div class="jumbotron">
@@ -38,9 +40,11 @@
 		
 		
 		<div class="col-md-6">
-			<a href="edit.html?id=${movie.movieId}" class="btn btn-primary">Edit</a>
+			<sec:authorize access = "isAuthenticated()">
+			<a href="edit.html?id=${movie.movieId}" class="btn btn-primary">Edit Movie</a>
+			</sec:authorize>
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				| <a href="delete.html?id=${movie.movieId}" class="btn btn-primary">Delete</a>
+				| <a href="delete.html?id=${movie.movieId}" class="btn btn-primary">Delete Movie</a>
 			</sec:authorize>	
 		</div>
 
@@ -48,9 +52,17 @@
 		<b>Plot</b><br />
 		<p>${movie.plot}</p>
 		<br /> <b>Genre</b><br />
-		<c:forEach items="${movie.genres}" var="genre">
-			${genre} ,
-		</c:forEach>
+		<c:choose>
+			<c:when test="${ not empty movie.genres }">
+				<c:forEach items="${movie.genres}" var="genre">
+					<ul><li>${genre}</li></ul>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				Please help by adding Genres to this movie.
+			</c:otherwise>
+		</c:choose>
+		<br />
 		<br />
 		<table>
 			<tr>
@@ -70,10 +82,10 @@
 			</c:forEach>
 		</table><br /> 
 		<table>
-			<tr><th>Reviews</th></tr>
+			<tr><th>User Reviews</th></tr>
 			<c:forEach items="${movie.reviews}" var="r">
 				<tr>
-					<td>By: ${r.user.username} - ${r.review}</td>
+					<td>${r.user.username} - ${r.review}</td>
 					<td>${r.rating}</td>
 					<c:if test="${r.user.username==username}"><td><a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a></td></c:if>
 				</tr>

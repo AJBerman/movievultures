@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,8 +11,17 @@
 <title>Profile</title>
 </head>
 <body>
-<h5><a href="/movievultures/home.html">Home</a></h5>
-
+	<p align="right">
+		<sec:authorize access="isAuthenticated()">
+			<a href="<c:url value='/' />" >Main</a> |
+			<a href="<c:url value='/'/>/user/home.html?username=<security:authentication property="principal.username" />" >
+				<sec:authentication property="principal.username" /></a> |
+			<a href="<c:url value='/logout' />">Logout</a> 
+		</sec:authorize>
+	</p>
+	
+	<h2>User Profile</h2>
+	
 	<form:form modelAttribute="user">
 		Username: ${user.username}<br />
 				<form:input path="username" type="hidden" value="${user.username }" />

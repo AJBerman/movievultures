@@ -15,44 +15,60 @@
 	<p align="right">
 		<security:authorize access="isAuthenticated()">
 			<a href="<c:url value='/'/>/user/home.html?username=<security:authentication property="principal.username" />" >
-				<security:authentication property="principal.username" /> </a> |
+				<security:authentication property="principal.username" /></a> |
 			<a href="<c:url value='/' /> ">Main</a> |
 			<a href="<c:url value='/logout' />">Logout</a> 
 		</security:authorize>
 	</p>
-<table border="1">
-<tr><th>Title</th><td>${movie1.title}</td><td>${movie2.title}</td></tr>
-<tr><th>Year</th><td><fmt:formatDate value="${movie1.date}" pattern="yyyy" /></td><td><fmt:formatDate value="${movie2.date}" pattern="yyyy" /></td></tr>
-<tr><th>Plot</th><td>${movie1.plot}</td><td>${movie2.plot}</td></tr>
-<tr><th>Director(s)</th><td>${movie1.directors[0]}</td><td>${movie2.directors[0]}</td></tr>
-<c:forEach begin="1" end="${fn:length(movie1.directors) > fn:length(movie2.directors) ? fn:length(movie1.directors) : fn:length(movie2.directors) }" varStatus="loop">
-<tr><td></td><td>${movie1.directors[loop.index]}</td><td>${movie2.directors[loop.index]}</td></tr>
-</c:forEach>
-<tr><th>Cast</th><td>${movie1.actors[0]}</td><td>${movie2.actors[0]}</td></tr>
-<c:forEach begin="1" end="${fn:length(movie1.actors) > fn:length(movie2.actors) ? fn:length(movie1.actors) : fn:length(movie2.actors) }" varStatus="loop">
-<tr><td></td><td>${movie1.actors[loop.index]}</td><td>${movie2.actors[loop.index]}</td></tr>
-</c:forEach>
-<tr><th>EloRating</th><td>${movie1.eloRating}</td><td>${movie2.eloRating}</td></tr>
-<tr><th>Vote</th>
-	<td><form method="POST">
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-		<input type="hidden" name="winner" value="1">
-		<input type="submit" value="Better">
-	</form></td>
-	<td>
-		<form method="POST">
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-		<input type="hidden" name="winner" value="2">
-		<input type="submit" value="Better">
-		</form></td></tr>
-	<tr><th>Different Match</th>
-		<td> 
-			<a href="add.html?movie2=${movie2.movieId}">Switch First Movie?</a> |
-			<a href="add.html?movie1=${movie1.movieId}">Switch Second Movie?</a>
-		 </td>
-		<td><a href="add.html">New Match?</a></td>
-	</tr>
-</table>
+	
+	<h3>From the choices below, please select the movie you believe is better.</h3>
+	
+	<table border="1">
+		<tr><th>Title</th><td><a href="../movies/details2.html?id=${ movie1.movieId }" target="_blank">${movie1.title}</a></td><td><a href="../movies/details2.html?id=${ movie2.movieId }" target="_blank">${movie2.title}</a></td></tr>
+		<tr><th>Year</th><td><fmt:formatDate value="${movie1.date}" pattern="yyyy" /></td><td><fmt:formatDate value="${movie2.date}" pattern="yyyy" /></td></tr>
+		<tr><th>Plot</th><td>${movie1.plot}</td><td>${movie2.plot}</td></tr>
+		<tr><th>Director(s)</th><td>${movie1.directors[0]}</td><td>${movie2.directors[0]}</td></tr>
+		
+		<c:forEach begin="1" end="${fn:length(movie1.directors) > fn:length(movie2.directors) ? fn:length(movie1.directors) : fn:length(movie2.directors) }" varStatus="loop">
+			<tr><td></td><td>${movie1.directors[loop.index]}</td><td>${movie2.directors[loop.index]}</td></tr>
+		</c:forEach>
+		
+		<tr><th>Cast</th><td>${movie1.actors[0]}</td><td>${movie2.actors[0]}</td></tr>
+	
+		<c:forEach begin="1" end="${fn:length(movie1.actors) > fn:length(movie2.actors) ? fn:length(movie1.actors) : fn:length(movie2.actors) }" varStatus="loop">
+			<tr><td></td><td>${movie1.actors[loop.index]}</td><td>${movie2.actors[loop.index]}</td></tr>
+		</c:forEach>
+	
+		<tr><th>EloRating</th><td>${movie1.eloRating}</td><td>${movie2.eloRating}</td></tr>
+		<tr>
+			<th>Vote</th>
+			
+			<td><form method="POST">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				<input type="hidden" name="winner" value="1">
+				<input type="submit" value="Better">
+			</form></td>
+			
+			<td>
+				<form method="POST">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				<input type="hidden" name="winner" value="2">
+				<input type="submit" value="Better">
+				</form>
+			</td>
+		</tr>
+		
+		<tr bgcolor="#FFEB99">
+			<th>Different Match</th>
+			
+			<td> 
+				<a href="add.html?movie2=${movie2.movieId}">Switch First Movie?</a> |
+				<a href="add.html?movie1=${movie1.movieId}">Switch Second Movie?</a>
+			 </td>
+			 
+			<td><a href="add.html">New Match?</a></td>
+		</tr>
+	</table>
 
 </body>
 </html>
