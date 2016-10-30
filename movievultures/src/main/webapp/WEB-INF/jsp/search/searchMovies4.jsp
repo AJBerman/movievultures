@@ -43,7 +43,13 @@
 					<b>Movie Title</b>: <a href="../movies/details2.html?id=${ movieResult.movieId }">${ movieResult.title }</a><br />
 					<b>Year of Release</b>: <fmt:formatDate value="${ movieResult.date }" pattern="yyyy" /><br />
 					<b>Total Elo Rating</b>: ${ movieResult.eloRating }<br />
-					<b>Total User Rating</b>: <br />
+					
+					<c:set var="sum" value="0" />
+					<c:forEach items="${ movieResult.reviews }" var="r">
+						<c:set var="sum" value="${ sum + r.rating }" />
+					</c:forEach>
+					<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movieResult.reviews)}"/><br />
+					
 					<b>Genres</b>: <c:forEach items="${ movieResult.genres }" var="g">| ${g} |</c:forEach><br />
 					<b>Directors</b>: <c:forEach items="${ movieResult.directors }" var="d">| ${d} |</c:forEach><br />
 					<b>Artists</b>: <c:forEach items="${ movieResult.actors }" var="a">| ${a} |</c:forEach><br />

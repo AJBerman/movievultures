@@ -175,24 +175,29 @@ public class MovieDaoImpl implements MovieDao{
 	@Override
 	public List<Movie> getMoviesSmallerUserRating(double userRating) {
 		return entityManager
-				.createQuery("select m from Movie m join m.reviews r group by m.movieId having avg(r.rating) < :rating order by avg(r.rating) desc", Movie.class )
+				.createQuery("select m from Movie m where :rating > (select AVG(r.rating) from Review r)", Movie.class )
 				.setParameter("rating", userRating)
 				.getResultList();
+		//select movieId from Movies where 4.0 > (select AVG(rating) from reviews);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Movie> getMoviesGreaterUserRating(double userRating) {
-		return entityManager
+		/*return entityManager
 			.createQuery("select m from Movie m join m.reviews r group by m.movieId having avg(r.rating) > :rating order by avg(r.rating) desc", Movie.class )
 			.setParameter("rating", userRating)
 			.getResultList();
+		*/
+		return entityManager
+				.createQuery("select m from Movie m where :rating < (select AVG(r.rating) from Review r)", Movie.class )
+				.setParameter("rating", userRating)
+				.getResultList();
 	}
 
 	@Override
 	public List<Movie> getMovieEqualUserRating(double userRating) {
 		return entityManager
-				.createQuery("select m from Movie m join m.reviews r group by m.movieId having avg(r.rating) = :rating order by avg(r.rating) desc", Movie.class )
+				.createQuery("select m from Movie m where :rating = (select AVG(r.rating) from Review r)", Movie.class )
 				.setParameter("rating", userRating)
 				.getResultList();
 	}
@@ -203,6 +208,14 @@ public class MovieDaoImpl implements MovieDao{
 			.createNativeQuery("select count(*) from reviews where movie_movieid=:movieid")
 			.setParameter("movieid", movieId).getSingleResult();
 		return totalRates.longValue();
+	}
+	
+	@Override
+	public Double getAverageRating(int movieId) {
+		double totalRates = (Double)entityManager
+			.createNativeQuery("select AVG(rating) from reviews where movie_movieid=:movieid")
+			.setParameter("movieid", movieId).getSingleResult();
+		return totalRates;
 	}
 
 	@Override

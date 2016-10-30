@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import movievultures.model.Movie;
+import movievultures.model.Review;
+import movievultures.model.User;
 import movievultures.model.dao.MovieDao;
+import movievultures.model.dao.ReviewDao;
+import movievultures.security.SecurityUtils;
 
 @Controller
 public class SearchController {
@@ -36,6 +40,7 @@ public class SearchController {
 	{
 		//System.out.println("Search Term: " + searchTerm);
 		//System.out.println("Type of Search: " + type);
+		//System.out.println(movieDao.getAverageRating(1));
 		
 		switch( type ) {
 			case 1:

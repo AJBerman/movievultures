@@ -45,5 +45,7 @@ public interface MovieDao {
 	void delMovie(Movie movie);
 
 	Long getTotalRateTimes(int movieId);
+
+	Double getAverageRating(int movieId);
 	
 }
