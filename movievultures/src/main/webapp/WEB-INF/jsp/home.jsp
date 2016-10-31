@@ -55,6 +55,20 @@
 								<c:forEach items="${movie.actors}" var="actor" varStatus="status">
 									${actor}, 
 								</c:forEach><br />
+								
+							<b>Genre:</b>
+							<c:choose>
+								<c:when test="${ not empty movie.genres }">
+									<c:forEach items="${movie.genres}" var="genre" varStatus="status">
+										| ${genre} |
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									Not available.
+								</c:otherwise>
+							</c:choose>
+							<br /><br />
+								
 							<b>Plot:</b> <p>${movie.plot}</p>
 							</td>
 						</tr>
@@ -87,6 +101,20 @@
 								<c:forEach items="${movie.actors}" var="actor" varStatus="status">
 									${actor}, 
 								</c:forEach><br />
+								
+							<b>Genre:</b>
+							<c:choose>
+								<c:when test="${ not empty movie.genres }">
+									<c:forEach items="${movie.genres}" var="genre" varStatus="status">
+										| ${genre} |
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									Not available.
+								</c:otherwise>
+							</c:choose>
+							<br /><br />
+								
 							<b>Plot:</b> <p>${movie.plot}</p>
 							</td>
 						</tr>
@@ -116,6 +144,20 @@
 								<c:forEach items="${movie2.actors}" var="actor2" varStatus="status">
 									${actor2}, 
 								</c:forEach><br />
+								
+							<b>Genre:</b>
+							<c:choose>
+								<c:when test="${ not empty movie2.genres }">
+									<c:forEach items="${movie2.genres}" var="genre" varStatus="status">
+										| ${genre} |
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									Not available.
+								</c:otherwise>
+							</c:choose>
+							<br /><br />
+							
 							<b>Plot:</b> <p>${movie2.plot}</p>
 							</td>
 						</tr>

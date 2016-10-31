@@ -51,7 +51,7 @@
 		<a href="../user/addWL.html?movieId=${movie.movieId}">Add to WatchList?</a> 
 	</c:if>
 				
-	<b>Year of Release</b>: <fmt:formatDate value="${ movie.date }" pattern="yyyy" /><br />
+	<p><b>Year of Release</b>: <fmt:formatDate value="${ movie.date }" pattern="yyyy" /></p>
 				
 	<br /><b>Plot</b><br />
 	<p>${movie.plot}</p>
@@ -80,7 +80,9 @@
 		</c:forEach>
 	<br />
 	
-	<p><b>===== RATINGS AND REVIEWS =====</b></p>
+	<p><b>================================</b><br />
+	<b>===== RATINGS AND REVIEWS =====</b><br />
+	<b>================================</b></p>
 	
 	<c:set var="sum" value="0" />
 	<c:forEach items="${ movie.reviews }" var="r">
@@ -92,12 +94,14 @@
 		<c:when test="${ not empty movie.reviews }">
 			<br /><b>User Reviews</b><br />
 			<c:forEach items="${movie.reviews}" var="r">
+				<ul><li>
 				  ${r.user.username} - ${r.rating}
 				  <c:if test="${r.user.username == user.username}">
 				  	 | <a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
 				  </c:if>
 				  <br />
 				  ${r.review}<br />
+				 </li></ul>
 			</c:forEach>
 		</c:when>
 		<c:otherwise>
@@ -105,22 +109,24 @@
 		</c:otherwise>
 	</c:choose>
 	
-	<p><b>Elo Rating</b>: ${movie.eloRating}</p>
+	<p><b>Total Elo Rating Score</b>: ${movie.eloRating}</p>
 
 	<c:choose>
 		<c:when test="${ not empty eloratings }">
-			<tr><th>Elo Ratings</th></tr>
+			<tr><th><b>Elo Ratings</b></th></tr>
 			<c:forEach items="${eloratings}" var="r">
-				<tr><td>${movie.title}</td>
-				<c:choose>
-					<c:when test="${r.winner.movieId == movie.movieId}">
-					<td>></td><td>${r.loser.title}</td>
-				</c:when>    
-				<c:otherwise>
-					<td><</td><td>${r.winner.title}</td>
-				</c:otherwise>
-				</c:choose>
-				<td> -${r.user.username}</td></tr>
+				<ul><li>
+					<tr><td>${movie.title}</td>
+					<c:choose>
+						<c:when test="${r.winner.movieId == movie.movieId}">
+						<td> > </td><td>${r.loser.title}</td>
+					</c:when>    
+					<c:otherwise>
+						<td> < </td><td>${r.winner.title}</td>
+					</c:otherwise>
+					</c:choose>
+					<td> - <i>Rated By: ${r.user.username}</i></td></tr>
+				</li></ul>
 			</c:forEach>
 		</c:when>
 		<c:otherwise>
