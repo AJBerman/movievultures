@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,7 +10,23 @@
 <title>Curiouser and Curiouser</title>
 </head>
 <body>
-<h5><a href="/movievultures/home.html">Home</a></h5>
+	<p align="right">
+		<a href="<c:url value='/' />" >Main</a> |
+		
+		<sec:authorize access="!isFullyAuthenticated()">
+			<a href="../user/register.html">Register</a> |
+			<a href= "<c:url value='/login'/>"  >Login</a>
+		</sec:authorize>
+		
+		<sec:authorize access="isAuthenticated()">
+			<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >
+			 	<sec:authentication property="principal.username" /></a> |
+			<a href="<c:url value='/logout'/>"   >Logout</a>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+				| <a href="../user/list.html">All Users</a>
+		</sec:authorize>
+	</p>
 
 	<h2>${user.username}</h2>
 	

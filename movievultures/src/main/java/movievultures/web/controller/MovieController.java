@@ -218,7 +218,8 @@ public class MovieController {
 		Movie movie=movieDao.getMovie(Id);
 		movie.setTitle(editmovie_title);
 		movie.setPlot(editmovie_plot);
-		DateFormat format = new SimpleDateFormat("yyyy-MM-DD");
+		//DateFormat format = new SimpleDateFormat("yyyy-MM-DD");
+		DateFormat format = new SimpleDateFormat("yyyy");
 		movie.setDate(format.parse(editmovie_date));
 		
 		List<String> genres = new ArrayList<>();

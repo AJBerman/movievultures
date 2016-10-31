@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -60,6 +63,7 @@
 		<br />
 		<b>Plot</b><br />
 		<p>${movie.plot}</p>
+		
 		<br /> <b>Genre</b><br />
 		<c:choose>
 			<c:when test="${ not empty movie.genres }">
@@ -73,6 +77,18 @@
 		</c:choose>
 		<br />
 		<br />
+		
+		<b>Year of Release</b>: <fmt:formatDate value="${ movie.date }" pattern="yyyy" /><br />
+		<br />
+		<b>Total Elo Rating</b>: ${ movie.eloRating }<br />
+		<br />
+		<c:set var="sum" value="0" />
+		<c:forEach items="${ movie.reviews }" var="r">
+			<c:set var="sum" value="${ sum + r.rating }" />
+		</c:forEach>
+		<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movie.reviews)}"/><br />
+		<br />
+		
 		<table>
 			<tr>
 				<th>Cast</th>

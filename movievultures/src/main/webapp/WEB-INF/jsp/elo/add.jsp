@@ -21,6 +21,8 @@
 		</security:authorize>
 	</p>
 	
+	<p><a href="/movievultures/home.html"><img src="../images/MV_banner.png" alt="Banner of Movie Vultures" /></a></p>
+	
 	<h3>From the choices below, please select the movie you believe is better.</h3>
 	
 	<table border="1">

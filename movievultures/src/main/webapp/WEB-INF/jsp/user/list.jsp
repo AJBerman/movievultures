@@ -12,11 +12,10 @@
 </head>
 <body>
 	<p align="right">
-		<a href="<c:url value='/logout'/>" >Logout</a> | 
 		<a href="<c:url value='/' />" >Main</a> |
 		<a href="home.html?username=<security:authentication property="principal.username" />"> 
-			<security:authentication property="principal.username" />
-		</a>
+			<security:authentication property="principal.username" /></a> |
+		<a href="<c:url value='/logout'/>" >Logout</a> | 
 	</p>
 
 	<table border=1>
