@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import movievultures.model.Movie;
 import movievultures.model.Review;
 import movievultures.model.User;
+import movievultures.model.dao.EloRunoffDao;
 import movievultures.model.dao.MovieDao;
 import movievultures.model.dao.ReviewDao;
 import movievultures.model.dao.UserDao;
@@ -35,6 +36,9 @@ public class MovieController {
 	@Autowired
 	private UserDao userDao;
 
+	@Autowired
+	private EloRunoffDao eloRunoffDao;
+	
 //	@RequestMapping(value = "/home.html", method = RequestMethod.GET)
 //	public String getHome() {
 //		return "home";
@@ -131,6 +135,7 @@ public class MovieController {
 			models.put("user", userDao.getUserByUsername(SecurityUtils.getUserName()));
 		else
 			models.put("user", null);
+		models.put("eloratings", eloRunoffDao.getEloRunoffsByMovie(movie));
 		return "movies/details2";
 	}
 
