@@ -2,6 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +11,23 @@
 <link rel="stylesheet" type="text/css" href="/movievultures/res/css/starrating.css">
 </head>
 <body>
-<h2><a href="../index.html">Home</a></h2>
+	<p align="right">
+		<a href="<c:url value='/' />" >Main</a> |
+		
+		<sec:authorize access="!isFullyAuthenticated()">
+			<a href="../user/register.html">Register</a> |
+			<a href= "<c:url value='/login'/>"  >Login</a>
+		</sec:authorize>
+		
+		<sec:authorize access="isAuthenticated()">
+			<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >
+			 	<sec:authentication property="principal.username" /></a> |
+			<a href="../movies/details2.html?id=${review.movie.movieId}">${review.movie.title}</a> |
+			<a href="<c:url value='/logout'/>" >Logout</a>
+		</sec:authorize>
+	</p>
+
+
 <form:form modelAttribute="review">
 <table border="1">
 <tr>
@@ -37,7 +54,7 @@
   <br />
   <br />
   <form:textarea type="text" path="review" rows="6" />
-  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+  <form:input path="reviewId" type="hidden" value="${review.reviewId}" />
   <input type="submit" value="Submit">
 </form:form>
 </body>

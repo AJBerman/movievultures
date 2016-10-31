@@ -10,6 +10,8 @@
 <title>Curiouser and Curiouser</title>
 </head>
 <body>
+<h5><a href="/movievultures/home.html">Home</a></h5>
+
 	<h2>${user.username}</h2>
 	
 	<br />
@@ -19,7 +21,7 @@
 		<tr><th>Title</th><th>rating</th></tr>
 		<c:forEach items="${user.reviewedMovies}" var="review" varStatus="status" >
 			<tr>
-				<td><a href="../movies/details.html?id=${review.movie.movieId}">${review.movie.title}</a></td>
+				<td><a href="../movies/details2.html?id=${review.movie.movieId}">${review.movie.title}</a></td>
 				<td>${review.rating }</td>
 			</tr>
 		</c:forEach>

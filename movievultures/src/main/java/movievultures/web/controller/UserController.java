@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import movievultures.model.Movie;
 import movievultures.model.User;
 import movievultures.model.dao.MovieDao;
 import movievultures.model.dao.UserDao;
@@ -25,6 +26,7 @@ import movievultures.web.validator.EditUserValidator;
 import movievultures.web.validator.UserValidator;
 
 @Controller
+@SessionAttributes("user")
 public class UserController {
 	
 	@Autowired
@@ -51,14 +53,16 @@ public class UserController {
 	public String home(@RequestParam String username, ModelMap models){
 		String username_sec = "";
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if(!(authentication instanceof AnonymousAuthenticationToken)){
+		if(!(authentication instanceof AnonymousAuthenticationToken) && username.equals(authentication.getName())){
 			username_sec = authentication.getName();
+			models.put("user", userDao.getUserByUsername(username));
+			return "user/home";
+		}else if(!(authentication instanceof AnonymousAuthenticationToken) && !username.equals(authentication.getName())){
+			return "redirect:../";
 		}else{
 			return "redirect:../login";
 		}
-		models.put("user", userDao.getUserByUsername(username));
 		
-		return "user/home";
 	}
 	
 	//Can view other users movie ratings? Can't edit.
@@ -86,7 +90,7 @@ public class UserController {
 		userDao.saveUser(user);
 		//free resources
 		status.setComplete();
-		return "redirect:list.html";
+		return "redirect:../home.html";
 	}
 	
 	//updateProfile
@@ -118,7 +122,9 @@ public class UserController {
 			return "redirect:../login";
 		}
 		User user = userDao.getUserByUsername(username);
-		user.getFavorites().add(movieDao.getMovie(movieId));
+		Movie movie = movieDao.getMovie(movieId);
+		if(!user.getFavorites().contains(movie))
+			user.getFavorites().add(movie);
 		userDao.saveUser(user);
 		return "redirect:/user/home.html?username=" + user.getUsername();
 	}
@@ -161,7 +167,9 @@ public class UserController {
 			return "redirect:../login";
 		}
 		User user = userDao.getUserByUsername(username);
-		user.getWatchLater().add(movieDao.getMovie(movieId));
+		Movie movie = movieDao.getMovie(movieId);
+		if(!user.getWatchLater().contains(movie))
+			user.getWatchLater().add(movie);
 		userDao.saveUser(user);
 		return "redirect:/user/home.html?username=" + user.getUsername();
 	}

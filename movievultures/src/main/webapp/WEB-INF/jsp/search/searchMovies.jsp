@@ -12,6 +12,8 @@
 <title>Search for a Movie</title>
 </head>
 <body>
+<h5><a href="/movievultures/home.html">Home</a></h5>
+
 	<h2>Search for Movies</h2>
 	 
 	 <form action ="searchMovies.html" method="post">

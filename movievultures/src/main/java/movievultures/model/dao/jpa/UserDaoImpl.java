@@ -50,14 +50,4 @@ public class UserDaoImpl implements UserDao {
 		return entityManager.createQuery("from User order by id", User.class).getResultList();
 	}
 
-//	@Override
-//	@Transactional
-//	public void saveNewUser(String username) {
-//		entityManager.createNativeQuery(
-//			    "INSERT INTO authorities (username, authority) VALUES (?, ?)")
-//			    .setParameter(1, username)
-//			    .setParameter(2, "ROLE_USER")
-//			    .executeUpdate();
-//		
-//	}
 }

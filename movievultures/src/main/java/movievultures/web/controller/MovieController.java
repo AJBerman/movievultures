@@ -35,15 +35,16 @@ public class MovieController {
 	@Autowired
 	private UserDao userDao;
 
-	@RequestMapping(value = "/home.html", method = RequestMethod.GET)
-	public String getHome() {
-		return "home";
-	}
+//	@RequestMapping(value = "/home.html", method = RequestMethod.GET)
+//	public String getHome() {
+//		return "home";
+//	}
 
-	@RequestMapping(value = "/movies.html", method = RequestMethod.GET)
+	@RequestMapping("/movies/movies")
 	public String getMovies(ModelMap models) {
 
 		List<Movie> movies = movieDao.getRandomMovies(10);
+		System.out.println(movies.size());
 		for (int i = 0; i < movies.size(); i++) {
 			// to remove {" and "} at the beginning an d end of the plot
 			if (movies.get(i).getPlot().contains("{")) {
@@ -53,7 +54,7 @@ public class MovieController {
 			movies.get(i).setPlot(movies.get(i).getPlot().replace(" [\",\"] ", ""));
 		}
 		models.put("movies", movies);
-		return "movies";
+		return "movies/movies";
 	}
 
 	@RequestMapping(value = "/movies/add.html", method = RequestMethod.GET)
@@ -116,17 +117,21 @@ public class MovieController {
 		}
 
 		models.put("movies", movies);
-		return "redirect:../movies.html";
+		return "redirect:../home.html";
 	}
 
-	@RequestMapping(value = "/movies/details.html")
+	@RequestMapping(value = "/movies/details2.html")
 	public String getDetails(@RequestParam String id, ModelMap models) {
 		int Id = Integer.parseInt(id);
 		// System.out.println("in here");
+		
 		Movie movie = movieDao.getMovie(Id);
 		models.put("movie", movie);
-		models.put("username", SecurityUtils.getUser());
-		return "movies/details";
+		if(SecurityUtils.isAuthenticated())
+			models.put("user", userDao.getUserByUsername(SecurityUtils.getUserName()));
+		else
+			models.put("user", null);
+		return "movies/details2";
 	}
 
 	@RequestMapping(value = "/movies/delete.html")
@@ -145,7 +150,7 @@ public class MovieController {
 			movies.get(i).setPlot(movies.get(i).getPlot().replace(" [\",\"] ", ""));
 		}
 		models.put("movies", movies);
-		return "redirect:../movies.html";
+		return "redirect:../home.html";
 	}
 
 	@RequestMapping(value="/movies/edit.html",method=RequestMethod.GET)
@@ -239,7 +244,7 @@ public class MovieController {
 		
 		movie=movieDao.saveMovie(movie);
 
-		return "redirect:../movies/details.html?id="+Id;
+		return "redirect:../movies/details2.html?id="+Id;
 	}
 	
 }
