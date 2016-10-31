@@ -46,7 +46,7 @@ public class MovieDaoImpl implements MovieDao{
     @Override
 	public List<Movie> getMoviesByTitle(String title) {
 		return entityManager
-			.createQuery( "from Movie where title LIKE :title", Movie.class )
+			.createQuery( "from Movie where lower(title) LIKE lower(:title)", Movie.class )
 			.setParameter("title", '%' + title + '%')
 			.getResultList();
 	}
@@ -54,13 +54,14 @@ public class MovieDaoImpl implements MovieDao{
     @Override
 	public List<Movie> getMoviesByTitle(String title, int limit) {
 		return entityManager
-			.createQuery( "from Movie where title LIKE :title", Movie.class )
+			.createQuery( "from Movie where lower(title) LIKE lower(:title)", Movie.class )
 			.setParameter("title", '%' + title + '%')
 			.setMaxResults(limit)
 			.getResultList();
 	}
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
 	public List<Movie> getMoviesByActor(String actor) {
 		return entityManager
 				.createNativeQuery("select "
@@ -79,7 +80,8 @@ public class MovieDaoImpl implements MovieDao{
 				.getResultList();
 	}
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
 	public List<Movie> getMoviesByActor(String actor, int limit) {
 		return entityManager
 				.createNativeQuery("select "
@@ -99,7 +101,8 @@ public class MovieDaoImpl implements MovieDao{
 				.getResultList();
 	}
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
 	public List<Movie> getMoviesByDirector(String director) {
 		return entityManager
 				.createNativeQuery("select "
@@ -118,7 +121,8 @@ public class MovieDaoImpl implements MovieDao{
 				.getResultList();
 	}
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
 	public List<Movie> getMoviesByDirector(String director, int limit) {
 		return entityManager
 			.createNativeQuery("select "
@@ -138,7 +142,8 @@ public class MovieDaoImpl implements MovieDao{
 			.getResultList();
 	}
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
 	public List<Movie> getMoviesByGenre(String genre) {
 		return entityManager
 				.createNativeQuery("select "
@@ -157,7 +162,8 @@ public class MovieDaoImpl implements MovieDao{
 				.getResultList();
 	}
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
 	public List<Movie> getMoviesByGenre(String genre, int limit) {
 		return entityManager
 				.createNativeQuery("select "
@@ -223,7 +229,8 @@ public class MovieDaoImpl implements MovieDao{
     }
 
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
 	public List<Movie> getMoviesByUserRating(double userRating, String comparator) {
 		return entityManager
 				.createNativeQuery("select "

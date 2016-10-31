@@ -37,42 +37,96 @@
 		<a href="movies/add.html">Add a new movie</a>
 	</sec:authorize>
 	
-	<sec:authorize access = "isAuthenticated()">
-		<h2>Favorites</h2>
-	</sec:authorize>
-	
-	
 	<%-- ===== NOT LOGGED IN ===== --%>
 	<sec:authorize access = "!isFullyAuthenticated()">
 		<h2>Films</h2>
+		<c:choose>
+			<c:when test="${ not empty movies }">
+				<table border=1>
+					<c:forEach items="${movies}" var="movie" varStatus="status">
+						<tr>
+							<td>
+							<b>Title:</b> <a href="movies/details2.html?id=${movie.movieId}">${movie.title}</a> <br />
+							<b>Director(s):</b>
+								<c:forEach items="${movie.directors}" var="dir" varStatus="status">
+									${dir},  
+								</c:forEach><br />
+							<b>Cast:</b>
+								<c:forEach items="${movie.actors}" var="actor" varStatus="status">
+									${actor}, 
+								</c:forEach><br />
+							<b>Plot:</b> <p>${movie.plot}</p>
+							</td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:when>
+			<c:otherwise>
+				There are no movies to display.
+			</c:otherwise>
+		</c:choose>
 	</sec:authorize>
 	
 	<%-- ===== DISPLAY MOVIES OF: RANDOM (not logged in) / FAVORITES (logged in) ===== --%>
-	<c:choose>
-		<c:when test="${ not empty movies }">
-			<table border=1>
-				<c:forEach items="${movies}" var="movie" varStatus="status">
-					<tr>
-						<td>
-						<b>Title:</b> <a href="movies/details2.html?id=${movie.movieId}">${movie.title}</a> <br />
-						<b>Director(s):</b>
-							<c:forEach items="${movie.directors}" var="dir" varStatus="status">
-								${dir},  
-							</c:forEach><br />
-						<b>Cast:</b>
-							<c:forEach items="${movie.actors}" var="actor" varStatus="status">
-								${actor}, 
-							</c:forEach><br />
-						<b>Plot:</b> <p>${movie.plot}</p>
-						</td>
-					</tr>
-				</c:forEach>
-			</table>
-		</c:when>
-		<c:otherwise>
-			There are no movies to display.
-		</c:otherwise>
-	</c:choose>
+	
+	<sec:authorize access="isAuthenticated()">
+		<h2>Favorites</h2>
+		
+		<c:choose>
+			<c:when test="${ not empty movies }">
+				<table border=1>
+					<c:forEach items="${movies}" var="movie" varStatus="status">
+						<tr>
+							<td>
+							<b>Title:</b> <a href="movies/details2.html?id=${movie.movieId}">${movie.title}</a> <br />
+							<b>Director(s):</b>
+								<c:forEach items="${movie.directors}" var="dir" varStatus="status">
+									${dir},  
+								</c:forEach><br />
+							<b>Cast:</b>
+								<c:forEach items="${movie.actors}" var="actor" varStatus="status">
+									${actor}, 
+								</c:forEach><br />
+							<b>Plot:</b> <p>${movie.plot}</p>
+							</td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:when>
+			<c:otherwise>
+				There are no movies to display.
+			</c:otherwise>
+		</c:choose>
+		<br />
+		
+		<h2>Watch Later</h2>
+		
+		<c:choose>
+			<c:when test="${ not empty movies2 }">
+				<table border=1>
+					<c:forEach items="${movies2}" var="movie2" varStatus="status">
+						<tr>
+							<td>
+							<b>Title:</b> <a href="movies/details2.html?id=${movie2.movieId}">${movie2.title}</a> <br />
+							<b>Director(s):</b>
+								<c:forEach items="${movie2.directors}" var="dir2" varStatus="status">
+									${dir2},  
+								</c:forEach><br />
+							<b>Cast:</b>
+								<c:forEach items="${movie2.actors}" var="actor2" varStatus="status">
+									${actor2}, 
+								</c:forEach><br />
+							<b>Plot:</b> <p>${movie2.plot}</p>
+							</td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:when>
+			<c:otherwise>
+				There are no movies to display.
+			</c:otherwise>
+		</c:choose>
+	</sec:authorize>
 			
 </body>
 </html>

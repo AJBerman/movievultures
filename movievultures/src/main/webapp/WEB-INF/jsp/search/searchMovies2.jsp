@@ -25,12 +25,14 @@
 	 		<option value="5">Year of Release</option>
 	 		<option value="6">User Rating</option>
 	 		<option value="7">Elo Rating</option>
+	 		<option value="8">Random Movies</option>
 	 	</select>
+	 	
 	 	<select id="comparator" name="comparator">
 	 		<option value="1">></option>
 	 		<option value="2"><</option>
 	 		<option value="3">=</option>
-	 		<option value="3">!=</option>
+	 		<option value="4">!=</option>
 	 	</select>
 	 	
 	 	<input name="search" type="submit" value="Go"/>
@@ -38,7 +40,7 @@
 	<script>
     $("#comparator").hide();
 	$("#searchType").bind("change", function() {
-	    if ($(this).val() >= "4") {
+	    if ($(this).val() > "4" && $(this).val() < "8") {
 	        $("#comparator").show();
 	    }
 	    else {

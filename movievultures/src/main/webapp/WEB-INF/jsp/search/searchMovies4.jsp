@@ -34,7 +34,15 @@
 	
 	<p><a href="/movievultures/home.html"><img src="../images/MV_banner.png" alt="Banner of Movie Vultures" /></a></p>
 	
-	<h2><u>MOVIE RESULTS</u> ( ${fn:length(movieResults)} result(s) )</h2>
+		<c:set var="res" value="0" />
+		<c:forEach items="${ movieResults }" var="movieResult">
+			<c:if test="${ !movieResult.hidden }">
+				<c:set var="res" value="${ res + 1 }" />			
+			</c:if>
+		</c:forEach>
+		
+	<h2><u>MOVIE RESULTS</u>: ( ${ res } result(s) )</h2>
+	
 	<hr>
 	<hr>
 	<br />

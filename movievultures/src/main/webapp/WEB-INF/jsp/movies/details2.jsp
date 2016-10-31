@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -60,6 +63,7 @@
 		<br />
 		<b>Plot</b><br />
 		<p>${movie.plot}</p>
+		
 		<br /> <b>Genre</b><br />
 		<c:choose>
 			<c:when test="${ not empty movie.genres }">
@@ -73,6 +77,10 @@
 		</c:choose>
 		<br />
 		<br />
+		
+		<b>Year of Release</b>: <fmt:formatDate value="${ movie.date }" pattern="yyyy" /><br />
+		<br />
+		
 		<table>
 			<tr>
 				<th>Cast</th>
@@ -89,32 +97,51 @@
 			<c:forEach items="${movie.directors}" var="director">
 				<tr><td>${director}</td></tr>
 			</c:forEach>
-		</table><br /> 
+		</table><br />
+		
+		<c:set var="sum" value="0" />
+		<c:forEach items="${ movie.reviews }" var="r">
+			<c:set var="sum" value="${ sum + r.rating }" />
+		</c:forEach>
+		<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movie.reviews)}"/><br />
+		<br />
+		
 		<table>
-			<tr><th>User Reviews</th></tr>
-			<c:forEach items="${movie.reviews}" var="r">
-				<tr><td>
-				<!--
-					<td>${r.user.username} - ${r.rating}</td>
-					<td>${r.review}</td>
-					<c:if test="${r.user.username==username}">
-						<td>
-							<a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
-						</td>
-					</c:if>
-				  -->
-				  ${r.user.username} - ${r.rating}
-				  <c:if test="${r.user.username == user.username}">
-				  	 | <a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
-				  </c:if>
-				   <br />
-				  ${r.review}<br /> 
-				  
-				</td></tr>
-			</c:forEach>
+		<c:choose>
+			<c:when test="${ not empty movie.reviews }">
+				<tr><th>User Reviews</th></tr>
+				<c:forEach items="${movie.reviews}" var="r">
+					<tr><td>
+					<!--
+						<td>${r.user.username} - ${r.rating}</td>
+						<td>${r.review}</td>
+						<c:if test="${r.user.username==username}">
+							<td>
+								<a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
+							</td>
+						</c:if>
+					  -->
+					  ${r.user.username} - ${r.rating}
+					  <c:if test="${r.user.username == user.username}">
+					  	 | <a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
+					  </c:if>
+					   <br />
+					  ${r.review}<br /> 
+					  
+					</td></tr>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				There are no Reviews available for this movie.
+			</c:otherwise>
+		</c:choose>
 		</table>
+		
 		<p><b>Elo Rating: ${movie.eloRating}</b><p>
+		
 		<table>
+		<c:choose>
+		<c:when test="${ not empty eloratings }">
 			<tr><th>Elo Ratings</th></tr>
 			<c:forEach items="${eloratings}" var="r">
 				<tr><td>${movie.title}</td>
@@ -128,6 +155,11 @@
 				   </c:choose>
 				<td> -${r.user.username}</td></tr>
 			</c:forEach>
+			</c:when>
+			<c:otherwise>
+				There are no Elo Ratings avaliable for this movie.
+			</c:otherwise>
+		</c:choose>
 		</table>
 	
 	</div>

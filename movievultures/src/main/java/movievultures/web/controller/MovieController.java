@@ -76,7 +76,7 @@ public class MovieController {
 		Movie movie = new Movie();
 		movie.setTitle(addmovie_title);
 		movie.setPlot(addmovie_plot);
-		DateFormat format = new SimpleDateFormat("yyyy-MM-DD");
+		DateFormat format = new SimpleDateFormat("yyyy");
 		// Date d=format.parse(source)
 		System.out.println(format.parse(addmovie_date));
 		movie.setDate(format.parse(addmovie_date));
@@ -223,7 +223,8 @@ public class MovieController {
 		Movie movie=movieDao.getMovie(Id);
 		movie.setTitle(editmovie_title);
 		movie.setPlot(editmovie_plot);
-		DateFormat format = new SimpleDateFormat("yyyy-MM-DD");
+		//DateFormat format = new SimpleDateFormat("yyyy-MM-DD");
+		DateFormat format = new SimpleDateFormat("yyyy");
 		movie.setDate(format.parse(editmovie_date));
 		
 		List<String> genres = new ArrayList<>();

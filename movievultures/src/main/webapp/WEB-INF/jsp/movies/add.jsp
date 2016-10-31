@@ -9,40 +9,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Add Movies</title>
 </head>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
 <body>
 	<p align="right">
 		<a href="<c:url value='/' />" >Main</a> |
-		<!-- Links if not logged in -->
+		
 		<sec:authorize access="!isFullyAuthenticated()">
 			<a href="../user/register.html">Register</a> |
 			<a href= "<c:url value='/login'/>"  >Login</a>
 		</sec:authorize>
-		<!-- Links if logged in -->
+		
 		<sec:authorize access="isAuthenticated()">
 			<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >
 			 	<sec:authentication property="principal.username" /></a> |
 			<a href="<c:url value='/logout'/>"   >Logout</a>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+				| <a href="../user/list.html">All Users</a>
 		</sec:authorize>
 	</p>
 
@@ -70,7 +53,7 @@
 				<div class="col-xs-2 col-form-label">Date</div>
 				<div class="col-xs-10">
 					<input type="date" name="addmovie_date" id="moviedate" 
-					placeholder="YYYY-MM-DD"
+					placeholder="YYYY"
 					required />
 				</div>
 			</div>

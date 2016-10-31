@@ -41,6 +41,7 @@ public class SearchController {
 		//System.out.println("Search Term: " + searchTerm);
 		//System.out.println("Type of Search: " + type);
 		//System.out.println(movieDao.getAverageRating(1));
+		
 		String comp = "";
 		switch( comparator ) {
 			case 1:
@@ -59,6 +60,7 @@ public class SearchController {
 				comp="=";
 				break;
 		}
+		
 		switch( type ) {
 			case 1:
 				// get all movies with this title
@@ -92,11 +94,16 @@ public class SearchController {
 				List<Movie> smlMovieUR = movieDao.getMoviesByUserRating(sT4, comp);
 				models.put("movieResults", smlMovieUR);
 				break;
-			case 11:
+			case 7:
 				//get all movies by total elo rating
 				double sT7 = Double.parseDouble(searchTerm);
 				List<Movie> smlMovieER = movieDao.getMoviesByEloRating(sT7, comp);
 				models.put("movieResults", smlMovieER);
+				break;
+			case 8:
+				//get random list of movies
+				List<Movie> ranMovies = movieDao.getRandomMovies(20);
+				models.put("movieResults", ranMovies);
 				break;
 			default:
 				break;
