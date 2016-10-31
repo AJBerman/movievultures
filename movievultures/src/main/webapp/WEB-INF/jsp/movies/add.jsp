@@ -28,6 +28,10 @@
 				| <a href="../user/list.html">All Users</a>
 		</sec:authorize>
 	</p>
+	
+	<p align="left">
+		<a href="/movievultures/">Back</a>
+	</p>
 
 	<h1>Add a New Movie</h1>
 	<div class="container">
