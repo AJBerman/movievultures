@@ -31,13 +31,13 @@
 		<tr><th>Plot</th><td>${movie1.plot}</td><td>${movie2.plot}</td></tr>
 		<tr><th>Director(s)</th><td>${movie1.directors[0]}</td><td>${movie2.directors[0]}</td></tr>
 		
-		<c:forEach begin="1" end="${fn:length(movie1.directors) > fn:length(movie2.directors) ? fn:length(movie1.directors) : fn:length(movie2.directors) }" varStatus="loop">
+		<c:forEach begin="1" end="${fn:length(movie1.directors) > fn:length(movie2.directors) ? fn:length(movie1.directors)-1 : fn:length(movie2.directors)-1 }" varStatus="loop">
 			<tr><td></td><td>${movie1.directors[loop.index]}</td><td>${movie2.directors[loop.index]}</td></tr>
 		</c:forEach>
 		
 		<tr><th>Cast</th><td>${movie1.actors[0]}</td><td>${movie2.actors[0]}</td></tr>
 	
-		<c:forEach begin="1" end="${fn:length(movie1.actors) > fn:length(movie2.actors) ? fn:length(movie1.actors) : fn:length(movie2.actors) }" varStatus="loop">
+		<c:forEach begin="1" end="${fn:length(movie1.actors) > fn:length(movie2.actors) ? fn:length(movie1.actors)-1 : fn:length(movie2.actors)-1 }" varStatus="loop">
 			<tr><td></td><td>${movie1.actors[loop.index]}</td><td>${movie2.actors[loop.index]}</td></tr>
 		</c:forEach>
 	

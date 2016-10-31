@@ -129,6 +129,22 @@
 				</td></tr>
 			</c:forEach>
 		</table>
+		<p><b>Elo Rating: ${movie.eloRating}</b><p>
+		<table>
+			<tr><th>Elo Ratings</th></tr>
+			<c:forEach items="${eloratings}" var="r">
+				<tr><td>${movie.title}</td>
+				  <c:choose>
+    			    <c:when test="${r.winner.movieId == movie.movieId}">
+    			      <td>></td><td>${r.loser.title}</td>
+    				</c:when>    
+    			    <c:otherwise>
+    			      <td><</td><td>${r.winner.title}</td>
+    				</c:otherwise>
+				   </c:choose>
+				<td> -${r.user.username}</td></tr>
+			</c:forEach>
+		</table>
 	
 	</div>
 </body>

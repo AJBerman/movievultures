@@ -68,7 +68,7 @@
 				<tr>
 					<td>By: ${r.user.username} - ${r.review}</td>
 					<td>${r.rating}</td>
-					<c:if test="${r.user.username==username}"><td><a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a></td></c:if>
+					<c:if test="${r.user.username==username}"><td><a href="../review/edit.html?id=${r.reviewId}"> Changed your mind?</a></td></c:if>
 				</tr>
 			</c:forEach>
 		</table>

@@ -20,13 +20,13 @@
 		<tr><th>Plot</th><td>${runoff.winner.plot}</td><td>${runoff.loser.plot}</td></tr>
 		<tr><th>director(s)</th><td>${runoff.winner.directors[0]}</td><td>${runoff.loser.directors[0]}</td></tr>
 		
-		<c:forEach begin="1" end="${fn:length(runoff.winner.directors) > fn:length(runoff.loser.directors) ? fn:length(runoff.winner.directors) : fn:length(runoff.loser.directors) }" varStatus="loop">
+		<c:forEach begin="1" end="${fn:length(runoff.winner.directors) > fn:length(runoff.loser.directors) ? fn:length(runoff.winner.directors)-1 : fn:length(runoff.loser.directors)-1 }" varStatus="loop">
 			<tr><td></td><td>${runoff.winner.directors[loop.index]}</td><td>${runoff.loser.directors[loop.index]}</td></tr>
 		</c:forEach>
 		
 		<tr><th>Cast</th><td>${runoff.winner.actors[0]}</td><td>${runoff.loser.actors[0]}</td></tr>
 		
-		<c:forEach begin="1" end="${fn:length(runoff.winner.actors) > fn:length(runoff.loser.actors) ? fn:length(runoff.winner.actors) : fn:length(runoff.loser.actors) }" varStatus="loop">
+		<c:forEach begin="1" end="${fn:length(runoff.winner.actors) > fn:length(runoff.loser.actors) ? fn:length(runoff.winner.actors)-1 : fn:length(runoff.loser.actors)-1 }" varStatus="loop">
 			<tr><td></td><td>${runoff.winner.actors[loop.index]}</td><td>${runoff.loser.actors[loop.index]}</td></tr>
 		</c:forEach>
 		

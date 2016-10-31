@@ -8,6 +8,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Search for a Movie</title>
 </head>
@@ -16,24 +17,34 @@
 	 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	 	Search: <input type="text" name="searchTerm" />
 	 	
-	 	<select name="type">
+	 	<select id="searchType" name="type">
 	 		<option value="1">Title</option>
 	 		<option value="2">Genre</option>
 	 		<option value="3">Director</option>
 	 		<option value="4">Artist (Actor/Actress)</option>
-	 		<option value="5">Less Than this Year of Release</option>
-	 		<option value="6">Greater Than this Year of Release</option>
-	 		<option value="7">Equal to this Year of Release</option>
-	 		<option value="8">Less Than this User Rating (WORK IN PROGRESS)</option>
-	 		<option value="9">Greater Than this User Rating (WORK IN PROGRESS)</option>
-	 		<option value="10">Equal to this User Rating (WORK IN PROGRESS)</option>
-	 		<option value="11">Less Than this Elo Rating</option>
-	 		<option value="12">Greater Thank this Elo Rating</option>
-	 		<option value="13">Equal to this Elo Rating</option>
+	 		<option value="5">Year of Release</option>
+	 		<option value="6">User Rating</option>
+	 		<option value="7">Elo Rating</option>
+	 	</select>
+	 	<select id="comparator" name="comparator">
+	 		<option value="1">></option>
+	 		<option value="2"><</option>
+	 		<option value="3">=</option>
+	 		<option value="3">!=</option>
 	 	</select>
 	 	
 	 	<input name="search" type="submit" value="Go"/>
 	 </form>
+	<script>
+    $("#comparator").hide();
+	$("#searchType").bind("change", function() {
+	    if ($(this).val() >= "4") {
+	        $("#comparator").show();
+	    }
+	    else {
+	        $("#comparator").hide();
+	    }
+	});</script>
 	
 </body>
 </html>
