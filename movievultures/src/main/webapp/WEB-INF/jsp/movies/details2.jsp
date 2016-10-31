@@ -80,14 +80,6 @@
 		
 		<b>Year of Release</b>: <fmt:formatDate value="${ movie.date }" pattern="yyyy" /><br />
 		<br />
-		<b>Total Elo Rating</b>: ${ movie.eloRating }<br />
-		<br />
-		<c:set var="sum" value="0" />
-		<c:forEach items="${ movie.reviews }" var="r">
-			<c:set var="sum" value="${ sum + r.rating }" />
-		</c:forEach>
-		<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movie.reviews)}"/><br />
-		<br />
 		
 		<table>
 			<tr>
@@ -105,32 +97,51 @@
 			<c:forEach items="${movie.directors}" var="director">
 				<tr><td>${director}</td></tr>
 			</c:forEach>
-		</table><br /> 
+		</table><br />
+		
+		<c:set var="sum" value="0" />
+		<c:forEach items="${ movie.reviews }" var="r">
+			<c:set var="sum" value="${ sum + r.rating }" />
+		</c:forEach>
+		<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movie.reviews)}"/><br />
+		<br />
+		
 		<table>
-			<tr><th>User Reviews</th></tr>
-			<c:forEach items="${movie.reviews}" var="r">
-				<tr><td>
-				<!--
-					<td>${r.user.username} - ${r.rating}</td>
-					<td>${r.review}</td>
-					<c:if test="${r.user.username==username}">
-						<td>
-							<a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
-						</td>
-					</c:if>
-				  -->
-				  ${r.user.username} - ${r.rating}
-				  <c:if test="${r.user.username == user.username}">
-				  	 | <a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
-				  </c:if>
-				   <br />
-				  ${r.review}<br /> 
-				  
-				</td></tr>
-			</c:forEach>
+		<c:choose>
+			<c:when test="${ not empty movie.reviews }">
+				<tr><th>User Reviews</th></tr>
+				<c:forEach items="${movie.reviews}" var="r">
+					<tr><td>
+					<!--
+						<td>${r.user.username} - ${r.rating}</td>
+						<td>${r.review}</td>
+						<c:if test="${r.user.username==username}">
+							<td>
+								<a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
+							</td>
+						</c:if>
+					  -->
+					  ${r.user.username} - ${r.rating}
+					  <c:if test="${r.user.username == user.username}">
+					  	 | <a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
+					  </c:if>
+					   <br />
+					  ${r.review}<br /> 
+					  
+					</td></tr>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				There are no Reviews available for this movie.
+			</c:otherwise>
+		</c:choose>
 		</table>
+		
 		<p><b>Elo Rating: ${movie.eloRating}</b><p>
+		
 		<table>
+		<c:choose>
+		<c:when test="${ not empty eloratings }">
 			<tr><th>Elo Ratings</th></tr>
 			<c:forEach items="${eloratings}" var="r">
 				<tr><td>${movie.title}</td>
@@ -144,6 +155,11 @@
 				   </c:choose>
 				<td> -${r.user.username}</td></tr>
 			</c:forEach>
+			</c:when>
+			<c:otherwise>
+				There are no Elo Ratings avaliable for this movie.
+			</c:otherwise>
+		</c:choose>
 		</table>
 	
 	</div>

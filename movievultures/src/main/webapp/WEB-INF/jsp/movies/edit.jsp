@@ -23,8 +23,10 @@
 		<sec:authorize access="isAuthenticated()">
 			<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >
 			 	<sec:authentication property="principal.username" /></a> |
-			<a href="details2.html?id=${movie.movieId}">${movie.title}</a> |
 			<a href="<c:url value='/logout'/>"   >Logout</a>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+				| <a href="../user/list.html">All Users</a>
 		</sec:authorize>
 	</p>
 
