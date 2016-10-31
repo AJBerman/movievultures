@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
 	<p align="right">
 		<a href="<c:url value='/' />" >Main</a> |
 		
@@ -29,7 +28,12 @@
 				| <a href="../user/list.html">All Users</a>
 		</sec:authorize>
 	</p>
+	
+	<p align="left">
+		<a href="../movies/details2.html?id=${ movie.movieId }">Back</a>
+	</p>
 
+	<h1>${ movie.title }</h1>
 	<div class="container">
 		<form action="edit.html?id=${movie.movieId}" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -40,20 +44,23 @@
 						placeholder="Enter title of the movie" value="${movie.title}"name="editmovie_title"
 						required />
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Plot</div>
 				<div class="col-xs-10">
-					<textarea class="form-control"
+					<textarea style="width: 50%; height: 300px;" class="form-control"
 						placeholder="Enter plot of the movie" name="editmovie_plot"
 						required>${movie.plot}</textarea>
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Date</div>
 				<div class="col-xs-10">
 					<input type="date" value="<fmt:formatDate value="${ movie.date }" pattern="yyyy" />" name="editmovie_date" id="moviedate" required />
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Genre</div>
@@ -61,6 +68,7 @@
 					<input type="text" class="form-control"
 						placeholder="Genre1, Genre2,....." name="editmovie_genres" value="${genres}" required>
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Cast</div>
@@ -68,6 +76,7 @@
 					<input type="text" class="form-control"
 						placeholder="Actor1, Actor2...." value="${actors}"name="editmovie_actors" required>
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Director(s)</div>
@@ -76,6 +85,7 @@
 						placeholder="Director1,Director2...." value="${directors}" name="editmovie_directors"
 						required>
 				</div>
+				<br />
 			</div>
 			<input type="submit" class="btn btn-primary" value="Update"/>
 

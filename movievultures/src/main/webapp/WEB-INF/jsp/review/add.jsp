@@ -19,6 +19,12 @@
 			<a href="<c:url value='/logout' />">Logout</a> 
 		</security:authorize>
 	</p>
+	
+	<p align="left">
+		<a href="../movies/details2.html?id=${ movie.movieId }">Back</a>
+	</p>
+	
+	<h2>Leave a Review for "${ review.movie.title }"</h2>
 
 	<form:form modelAttribute="review">
 		<table border="1">

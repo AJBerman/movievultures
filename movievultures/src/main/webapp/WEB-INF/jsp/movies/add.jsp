@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Add Movies</title>
+<title>Add a New Movie</title>
 </head>
 
 <body>
@@ -28,8 +28,12 @@
 				| <a href="../user/list.html">All Users</a>
 		</sec:authorize>
 	</p>
+	
+	<p align="left">
+		<a href="/movievultures/">Back</a>
+	</p>
 
-	<h1>Add Movie</h1>
+	<h1>Add a New Movie</h1>
 	<div class="container">
 		<form action="add.html" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -40,14 +44,16 @@
 						placeholder="Enter title of the movie" name="addmovie_title"
 						required />
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Plot</div>
 				<div class="col-xs-10">
-					<textarea class="form-control"
+					<textarea style="width: 50%; height: 300px;" class="form-control"
 						placeholder="Enter plot of the movie" name="addmovie_plot"
 						required></textarea>
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Date</div>
@@ -56,6 +62,7 @@
 					placeholder="YYYY"
 					required />
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Genre</div>
@@ -64,6 +71,7 @@
 						placeholder="Genre1, Genre2,....." name="addmovie_genres"
 						required>
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Cast</div>
@@ -72,6 +80,7 @@
 						placeholder="Actor1, Actor2...." name="addmovie_actors"
 						required>
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Director(s)</div>
@@ -80,6 +89,7 @@
 						placeholder="Director1,Director2...." name="addmovie_directors"
 						required>
 				</div>
+				<br />
 			</div>
 			<input type="submit" class="btn btn-primary" />
 		</form>
