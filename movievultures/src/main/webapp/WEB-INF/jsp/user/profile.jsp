@@ -14,7 +14,7 @@
 	<p align="right">
 		<sec:authorize access="isAuthenticated()">
 			<a href="<c:url value='/' />" >Main</a> |
-			<a href="<c:url value='/'/>/user/home.html?username=<security:authentication property="principal.username" />" >
+			<a href="home.html?username=<sec:authentication property="principal.username" />" >
 				<sec:authentication property="principal.username" /></a> |
 			<a href="<c:url value='/logout' />">Logout</a> 
 		</sec:authorize>

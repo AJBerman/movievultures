@@ -2,6 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,7 @@
 	<p align="right">
 		<security:authorize access="isAuthenticated()">
 			<a href="<c:url value='/'/>/user/home.html?username=<security:authentication property="principal.username" />" >
-				<security:authentication property="principal.username" /> </a> |
+		<security:authentication property="principal.username" /> </a> |
 			<a href="<c:url value='/' /> ">Main</a> |
 			<a href="<c:url value='/logout' />">Logout</a> 
 		</security:authorize>

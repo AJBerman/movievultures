@@ -24,11 +24,15 @@ public class Review {
 	private String review;
 	private Date date;
 	
-	public int getreviewId() {
+
+	public int getReviewId() {
 		return reviewId;
 	}
-	public void setId(int reviewId) {
+	public void setReviewId(int reviewId) {
 		this.reviewId = reviewId;
+	}
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 	public User getUser() {
 		return user;

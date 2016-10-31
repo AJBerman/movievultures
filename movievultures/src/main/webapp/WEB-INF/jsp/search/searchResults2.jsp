@@ -20,9 +20,12 @@
 	<sec:authorize access="isAuthenticated()">
 		<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >
 		 	<sec:authentication property="principal.username" /> </a> |
-		<a href="<c:url value='/logout'/>">Logout</a> |
-		<a href="../user/list.html">Users</a>
+		<a href="<c:url value='/logout'/>">Logout</a>
 	</sec:authorize>
+	
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+				| <a href="../user/list.html">Users</a>
+		</sec:authorize>
 	</p>
 	
 	<h2>Movie Results (${fn:length(movieResults)} result(s) returned)</h2>

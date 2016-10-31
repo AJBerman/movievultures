@@ -53,7 +53,7 @@ public class ReviewController {
     public String add( @ModelAttribute("review") Review review ) // e.g. /rate?id=5267
     {
 		reviewDao.saveReview(review);
-        return "redirect:../movies/details.html?id=" + review.getMovie().getMovieId();
+        return "redirect:../movies/details2.html?id=" + review.getMovie().getMovieId();
     }
 
 	@RequestMapping(value = "/review/edit.html", method = RequestMethod.GET)
@@ -62,8 +62,6 @@ public class ReviewController {
         User user = userDao.getUserByUsername(SecurityUtils.getUserName());
 		//User user = userDao.getUser(12); //just for testing
         Review review = reviewDao.getReviewByUserAndMovie(movieDao.getMovie(id), user);
-        //for testing
-        models.put("movie", review.getMovie());
         models.put("review", review);
 		return "review/edit";
 	}
@@ -71,9 +69,11 @@ public class ReviewController {
 	@RequestMapping(value = "/review/edit.html", method = RequestMethod.POST)
 	public String edit( @ModelAttribute Review review, SessionStatus status ) 
 	{
+		//Debugging statement
+		//System.out.println("Review ID: " + review.getReviewId());
 		review = reviewDao.saveReview(review);
 		status.setComplete();
-        return "redirect:../movies/details.html?id=" + review.getMovie().getMovieId();
+        return "redirect:../movies/details2.html?id=" + review.getMovie().getMovieId();
 	}
 
 	@InitBinder
