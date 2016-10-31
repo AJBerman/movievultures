@@ -214,32 +214,17 @@ public class MovieDaoImpl implements MovieDao{
     	this.updateElos(runoff.getWinner(), runoff.getLoser());
     }
     
-	@Override
-	public List<Movie> getMoviesSmallerYear(int year) {
+    @Override
+	public List<Movie> getMoviesByYear(int year, String comparator) {
 		return entityManager
-			.createQuery( "from Movie where year(date) < :year", Movie.class )
-			.setParameter("year", year)
-			.getResultList();
-	}
+				.createQuery( "from Movie where year(date) " + comparator + " :year", Movie.class )
+				.setParameter("year", year)
+				.getResultList();
+    }
 
-	@Override
-	public List<Movie> getMoviesGreaterYear(int year) {
-		return entityManager
-			.createQuery( "from Movie where year(date) > :year", Movie.class )
-			.setParameter("year", year)
-			.getResultList();
-	}
 
-	@Override
-	public List<Movie> getMovieEqualYear(int year) {
-		return entityManager
-			.createQuery( "from Movie where year(date) = :year", Movie.class )
-			.setParameter("year", year)
-			.getResultList();
-	}
-
-	@Override
-	public List<Movie> getMoviesSmallerUserRating(double userRating) {
+    @Override
+	public List<Movie> getMoviesByUserRating(double userRating, String comparator) {
 		return entityManager
 				.createNativeQuery("select "
 						+ "movie0_.movieId as movieId, "
@@ -252,49 +237,19 @@ public class MovieDaoImpl implements MovieDao{
 						+ "inner join reviews review0_ "
 						+ "on review0_.movie_movieId=movie0_.movieId "
 						+ "group by movie0_.movieId "
-						+ "having :rating > avg(review0_.rating) ", Movie.class)
+						+ "having avg(review0_.rating) " + comparator + " :rating", Movie.class)
 				.setParameter("rating", userRating)
 				.getResultList();
-	}
+    }
 
-	@Override
-	public List<Movie> getMoviesGreaterUserRating(double userRating) {
+    @Override
+	public List<Movie> getMoviesByEloRating(double eloRating, String comparator) {
 		return entityManager
-				.createNativeQuery("select "
-						+ "movie0_.movieId as movieId, "
-						+ "movie0_.date as date, "
-						+ "movie0_.eloRating as eloRating, "
-						+ "movie0_.is_hidden as is_hidden, "
-						+ "movie0_.plot as plot, "
-						+ "movie0_.title as title "
-						+ "from movies movie0_ "
-						+ "inner join reviews review0_ "
-						+ "on review0_.movie_movieId=movie0_.movieId "
-						+ "group by movie0_.movieId "
-						+ "having :rating < avg(review0_.rating) ", Movie.class)
-				.setParameter("rating", userRating)
+				.createQuery( "from Movie where eloRating " + comparator + " :eloRating", Movie.class )
+				.setParameter("eloRating", eloRating)
 				.getResultList();
-	}
-
-	@Override
-	public List<Movie> getMovieEqualUserRating(double userRating) {
-		return entityManager
-				.createNativeQuery("select "
-						+ "movie0_.movieId as movieId, "
-						+ "movie0_.date as date, "
-						+ "movie0_.eloRating as eloRating, "
-						+ "movie0_.is_hidden as is_hidden, "
-						+ "movie0_.plot as plot, "
-						+ "movie0_.title as title "
-						+ "from movies movie0_ "
-						+ "inner join reviews review0_ "
-						+ "on review0_.movie_movieId=movie0_.movieId "
-						+ "group by movie0_.movieId "
-						+ "having :rating = avg(review0_.rating) ", Movie.class)
-				.setParameter("rating", userRating)
-				.getResultList();
-	}
-	
+    }
+    
 	@Override
 	public Long getTotalRateTimes(int movieId) {
 		BigInteger totalRates = (BigInteger)entityManager
@@ -309,30 +264,6 @@ public class MovieDaoImpl implements MovieDao{
 			.createNativeQuery("select AVG(rating) from reviews where movie_movieid=:movieid")
 			.setParameter("movieid", movieId).getSingleResult();
 		return totalRates;
-	}
-
-	@Override
-	public List<Movie> getMoviesSmallerEloRating(double eloRating) {
-		return entityManager
-			.createQuery( "from Movie where eloRating < :eloRating", Movie.class )
-			.setParameter("eloRating", eloRating)
-			.getResultList();
-	}
-
-	@Override
-	public List<Movie> getMoviesGreaterEloRating(double eloRating) {
-		return entityManager
-			.createQuery( "from Movie where eloRating > :eloRating", Movie.class )
-			.setParameter("eloRating", eloRating)
-			.getResultList();
-	}
-
-	@Override
-	public List<Movie> getMovieEqualEloRating(double eloRating) {
-		return entityManager
-			.createQuery( "from Movie where eloRating = :eloRating", Movie.class )
-			.setParameter("eloRating", eloRating)
-			.getResultList();
 	}
     
 }
