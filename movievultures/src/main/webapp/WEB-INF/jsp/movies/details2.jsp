@@ -150,6 +150,7 @@ window.onload = function() {
 
 	<c:choose>
 		<c:when test="${ not empty movie.reviews }">
+			<!-- Client-Side Pagination. This is "bad" in some regards, but it's much simpler to implement. This was tested up to 10,000 reviews and works "okay" at that point (2 mb page weight and 5-ish second load time). We don't expect to have anywhere near 10,000 reviews any time soon. -->
 			<br /><b>User Reviews</b><br />
 			<ul id="reviews">
 			<c:forEach items="${movie.reviews}" var="r" varStatus="varStatus">
