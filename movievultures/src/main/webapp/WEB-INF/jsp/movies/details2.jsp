@@ -10,6 +10,64 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Details</title>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+var current_page_reviews = 1;
+var records_per_page = 10;
+
+function changePageBy(num) {
+	if(current_page_reviews+num >= 1 && current_page_reviews+num <= numPagesReviews()) {
+		current_page_reviews += num;
+        changePageReviews(current_page_reviews);
+	}
+}
+
+function changePageReviews(page)
+{
+    // Validate page
+    if (page < 1) page = 1;
+    if (page > numPagesReviews()) page = numPagesReviews();
+
+    $(".review").hide();
+	$(".reviewpage"+page).show();
+    $("#reviewpageno").html(page);
+    for(var i = 1; i <= 4; i++) {
+    	if(page-i >= 1) {
+    		$("#reviewpageno-"+i).show().html(page-i);
+    		
+    	} else {
+    		$("#reviewpageno-"+i).hide();
+    	}
+    	console.log($("#reviewpageno"+i));
+    	if(page+i <= numPagesReviews()) {
+    		$("#reviewpageno"+i).show().html(page+i);
+    	} else {
+    		$("#reviewpageno"+i).hide();
+    	}
+    }
+
+    if (page == 1) {
+        $("#review_btn_prev").hide();
+    } else {
+        $("#review_btn_prev").show();
+    }
+
+    if (page == numPagesReviews()) {
+        $("#review_btn_next").hide();
+    } else {
+        $("#review_btn_next").show();
+    }
+}
+
+function numPagesReviews()
+{
+	console.log(Math.ceil($("#reviews > li").length / records_per_page));
+    return Math.ceil($("#reviews > li").length / records_per_page);
+}
+
+window.onload = function() {
+	changePageReviews(1);
+};</script>
 </head>
 
 <body>
@@ -93,16 +151,29 @@
 	<c:choose>
 		<c:when test="${ not empty movie.reviews }">
 			<br /><b>User Reviews</b><br />
-			<c:forEach items="${movie.reviews}" var="r">
-				<ul><li>
+			<ul id="reviews">
+			<c:forEach items="${movie.reviews}" var="r" varStatus="varStatus">
+				  <li class="review reviewpage${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')}" >
 				  ${r.user.username} - ${r.rating}
 				  <c:if test="${r.user.username == user.username}">
 				  	 | <a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
 				  </c:if>
 				  <br />
 				  ${r.review}<br />
-				 </li></ul>
+				  </li>
 			</c:forEach>
+			</ul>
+			<a href="javascript:changePageBy(-1)" id="review_btn_prev">Prev</a>
+			<a href="javascript:changePageBy(-4)" id="reviewpageno-4" style="display: none;" ></a>
+			<a href="javascript:changePageBy(-3)" id="reviewpageno-3" style="display: none;"></a>
+			<a href="javascript:changePageBy(-2)" id="reviewpageno-2" style="display: none;"></a>
+			<a href="javascript:changePageBy(-1)" id="reviewpageno-1" style="display: none;"></a>
+			<a id="reviewpageno"></a>
+			<a href="javascript:changePageBy(1)" id="reviewpageno1" style="display: none;"></a>
+			<a href="javascript:changePageBy(2)" id="reviewpageno2" style="display: none;"></a>
+			<a href="javascript:changePageBy(3)" id="reviewpageno3" style="display: none;"></a>
+			<a href="javascript:changePageBy(4)" id="reviewpageno4" style="display: none;"></a>
+			<a href="javascript:changePageBy(1)" id="review_btn_next">Next</a>
 		</c:when>
 		<c:otherwise>
 			There are no Reviews available for this movie.
@@ -119,10 +190,10 @@
 					<tr><td>${movie.title}</td>
 					<c:choose>
 						<c:when test="${r.winner.movieId == movie.movieId}">
-						<td> > </td><td>${r.loser.title}</td>
+						<td> > </td><td><a href="${r.loser.movieId}">${r.loser.title}</a></td>
 					</c:when>    
 					<c:otherwise>
-						<td> < </td><td>${r.winner.title}</td>
+						<td> < </td><td><a href="${r.winner.movieId}">${r.winner.title}</a></td>
 					</c:otherwise>
 					</c:choose>
 					<td> - <i>Rated By: ${r.user.username}</i></td></tr>
