@@ -28,7 +28,7 @@ function changePageReviews(page)
     if (page < 1) page = 1;
     if (page > numPagesReviews()) page = numPagesReviews();
 
-    $(".review").hide();
+    $(".review").filter(":not(.userReview)").hide();
 	$(".reviewpage"+page).show();
     $("#reviewpageno").html(page);
     for(var i = 1; i <= 4; i++) {
@@ -139,8 +139,8 @@ window.onload = function() {
 	<br />
 	
 	<p><b>================================</b><br />
-	<b>===== RATINGS AND REVIEWS =====</b><br />
-	<b>================================</b></p>
+	   <b>===== RATINGS AND REVIEWS =====</b><br />
+	   <b>================================</b></p>
 	
 	<c:set var="sum" value="0" />
 	<c:forEach items="${ movie.reviews }" var="r">
@@ -153,7 +153,7 @@ window.onload = function() {
 			<br /><b>User Reviews</b><br />
 			<ul id="reviews">
 			<c:forEach items="${movie.reviews}" var="r" varStatus="varStatus">
-				  <li class="review reviewpage${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')}" >
+				  <li class="review reviewpage${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')} ${r.user.username == user.username ? 'userReview' : ''}" style="${r.user.username == user.username ? '' : 'display: none;'}">
 				  ${r.user.username} - ${r.rating}
 				  <c:if test="${r.user.username == user.username}">
 				  	 | <a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
@@ -164,7 +164,7 @@ window.onload = function() {
 			</c:forEach>
 			</ul>
 			<a href="javascript:changePageBy(-1)" id="review_btn_prev">Prev</a>
-			<a href="javascript:changePageBy(-4)" id="reviewpageno-4" style="display: none;" ></a>
+			<a href="javascript:changePageBy(-4)" id="reviewpageno-4" style="display: none;"></a>
 			<a href="javascript:changePageBy(-3)" id="reviewpageno-3" style="display: none;"></a>
 			<a href="javascript:changePageBy(-2)" id="reviewpageno-2" style="display: none;"></a>
 			<a href="javascript:changePageBy(-1)" id="reviewpageno-1" style="display: none;"></a>
@@ -180,13 +180,12 @@ window.onload = function() {
 		</c:otherwise>
 	</c:choose>
 	
-	<p><b>Total Elo Rating Score</b>: ${movie.eloRating}</p>
+	<p><b>Total Elo Rating Score</b>: <fmt:formatNumber value="${movie.eloRating}" type="number" maxFractionDigits="0"/></p>
 
 	<c:choose>
 		<c:when test="${ not empty eloratings }">
 			<tr><th><b>Elo Ratings</b></th></tr>
 			<c:forEach items="${eloratings}" var="r">
-				<ul><li>
 					<tr><td>${movie.title}</td>
 					<c:choose>
 						<c:when test="${r.winner.movieId == movie.movieId}">
@@ -197,7 +196,6 @@ window.onload = function() {
 					</c:otherwise>
 					</c:choose>
 					<td> - <i>Rated By: ${r.user.username}</i></td></tr>
-				</li></ul>
 			</c:forEach>
 		</c:when>
 		<c:otherwise>
