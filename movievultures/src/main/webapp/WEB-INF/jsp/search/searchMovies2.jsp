@@ -29,10 +29,10 @@
 	 	</select>
 	 	
 	 	<select id="comparator" name="comparator">
+	 		<option value="3" selected="selected">=</option>
+	 		<option value="4">!=</option>
 	 		<option value="1">></option>
 	 		<option value="2"><</option>
-	 		<option value="3">=</option>
-	 		<option value="4">!=</option>
 	 	</select>
 	 	
 	 	<input name="search" type="submit" value="Go"/>
