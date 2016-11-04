@@ -62,13 +62,13 @@ mark {
 				<c:if test="${ !movieResult.hidden }">
 					<b>Movie Title</b>: <a class="movieTitle" href="../movies/details2.html?id=${ movieResult.movieId }">${ movieResult.title }</a><br />
 					<b>Year of Release</b>: <span class="movieYear"><fmt:formatDate value="${ movieResult.date }" pattern="yyyy" /></span><br />
-					<b>Total Elo Rating</b>: <span class="movieElo">${ movieResult.eloRating}</span><br />
+					<b>Total Elo Rating</b>: <span class="movieElo"><fmt:formatNumber type="number" maxFractionDigits="2" value="${movieResult.eloRating}"/></span><br />
 					
 					<c:set var="sum" value="0" />
 					<c:forEach items="${ movieResult.reviews }" var="r">
 						<c:set var="sum" value="${ sum + r.rating }" />
 					</c:forEach>
-					<b>Total User Rating</b>: <span class="movieRating"><fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movieResult.reviews)}"/></span><br />
+					<b>Total User Rating</b>: <span class="movieRating"><fmt:formatNumber type="number" maxFractionDigits="0" value="${sum/fn:length(movieResult.reviews)}"/></span><br />
 					
 					<b>Genres</b>: <c:forEach items="${ movieResult.genres }" var="g">| <span class="movieGenre">${g}</span> |</c:forEach><br />
 					<b>Directors</b>: <c:forEach items="${ movieResult.directors }" var="d">| <span class="movieDirector">${d}</span> |</c:forEach><br />
