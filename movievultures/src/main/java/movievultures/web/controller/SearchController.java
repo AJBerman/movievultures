@@ -30,12 +30,6 @@ public class SearchController {
 	}
 	
 	@RequestMapping(value = "/search/searchMovies4.html", method = RequestMethod.GET)
-	public String search()
-	{
-		return "search/searchMovies4";
-	}
-	
-	@RequestMapping(value = "/search/searchMovies4.html", method = RequestMethod.POST)
 	public String search( ModelMap models, @RequestParam String searchTerm, @RequestParam Integer type, @RequestParam Integer comparator )
 	{
 		//System.out.println("Search Term: " + searchTerm);
@@ -117,7 +111,6 @@ public class SearchController {
 			default:
 				break;
 		}
-		
 		return "search/searchMovies4";
 	}
 	

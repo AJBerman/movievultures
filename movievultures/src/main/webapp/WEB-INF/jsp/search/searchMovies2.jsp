@@ -13,7 +13,7 @@
 <title>Search for a Movie</title>
 </head>
 <body>	 
-	 <form action ="/movievultures/search/searchMovies4.html" method="post">
+	 <form action ="/movievultures/search/searchMovies4.html" method="get">
 	 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	 	Search: <input type="text" name="searchTerm" />
 	 	

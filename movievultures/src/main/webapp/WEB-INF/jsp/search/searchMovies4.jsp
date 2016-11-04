@@ -69,10 +69,31 @@ mark {
 						<c:set var="sum" value="${ sum + r.rating }" />
 					</c:forEach>
 					<b>Total User Rating</b>: <span class="movieRating"><fmt:formatNumber type="number" maxFractionDigits="0" value="${sum/fn:length(movieResult.reviews)}"/></span><br />
-					
-					<b>Genres</b>: <c:forEach items="${ movieResult.genres }" var="g">| <span class="movieGenre">${g}</span> |</c:forEach><br />
-					<b>Directors</b>: <c:forEach items="${ movieResult.directors }" var="d">| <span class="movieDirector">${d}</span> |</c:forEach><br />
-					<b>Artists</b>: <c:forEach items="${ movieResult.actors }" var="a">| <span class="movieActor">${a}</span> |</c:forEach><br />
+					<!-- c:url is used here to url-encode the genre/director/actor, so if their name is "null&illegalargument=foo" we don't get funny business. -->
+					<b>Genres</b>: <c:forEach items="${ movieResult.genres }" var="g">| <span class="movieGenre">
+						<c:url value="searchMovies4.html" var="myURL">
+						   <c:param name="searchTerm" value="${g}"/>
+						   <c:param name="type" value="2"/>
+						   <c:param name="comparator" value="3"/>
+						</c:url>
+						<a href="${myURL}">${g}</a>
+					</span> |</c:forEach><br />
+					<b>Directors</b>: <c:forEach items="${ movieResult.directors }" var="d">| <span class="movieDirector">
+						<c:url value="searchMovies4.html" var="myURL">
+						   <c:param name="searchTerm" value="${d}"/>
+						   <c:param name="type" value="3"/>
+						   <c:param name="comparator" value="3"/>
+						</c:url>
+						<a href="${myURL}">${d}</a>
+					</span> |</c:forEach><br />
+					<b>Artists</b>: <c:forEach items="${ movieResult.actors }" var="a">| <span class="movieActor">
+						<c:url value="searchMovies4.html" var="myURL">
+						   <c:param name="searchTerm" value="${a}"/>
+						   <c:param name="type" value="4"/>
+						   <c:param name="comparator" value="3"/>
+						</c:url>
+						<a href="${myURL}">${a}</a>
+					</span> |</c:forEach><br />
 					<br />
 					<b>===== Short Plot Summary =====</b><br />
 						<span class="moviePlot">${movieResult.plot}</span>
