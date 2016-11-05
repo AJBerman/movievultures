@@ -24,17 +24,11 @@ public interface MovieDao {
 	List<Movie> getMoviesByGenre(String genre);
 	List<Movie> getMoviesByGenre(String genre, int limit);
 	
-	List<Movie> getMoviesSmallerYear(int year);
-	List<Movie> getMoviesGreaterYear(int year);
-	List<Movie> getMovieEqualYear(int year);
+	List<Movie> getMoviesByYear(int year, String comparator);
 	
-	List<Movie> getMoviesSmallerUserRating(double userRating);
-	List<Movie> getMoviesGreaterUserRating(double userRating);
-	List<Movie> getMovieEqualUserRating(double userRating);
+	List<Movie> getMoviesByUserRating(double userRating, String comparator);
 	
-	List<Movie> getMoviesSmallerEloRating(double eloRating);
-	List<Movie> getMoviesGreaterEloRating(double eloRating);
-	List<Movie> getMovieEqualEloRating(double eloRating);
+	List<Movie> getMoviesByEloRating(double eloRating, String comparator);
 	
 	Movie saveMovie(Movie movie);
 
@@ -45,5 +39,7 @@ public interface MovieDao {
 	void delMovie(Movie movie);
 
 	Long getTotalRateTimes(int movieId);
+
+	Double getAverageRating(int movieId);
 	
 }

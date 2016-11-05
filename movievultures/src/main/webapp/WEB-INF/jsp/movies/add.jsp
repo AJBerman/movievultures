@@ -1,36 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Add Movies</title>
+<title>Add a New Movie</title>
 </head>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
 <body>
-<h5><a href="/movievultures/home.html">Home</a></h5>
+	<p align="right">
+		<a href="<c:url value='/' />" >Main</a> |
+		
+		<sec:authorize access="!isFullyAuthenticated()">
+			<a href="../user/register.html">Register</a> |
+			<a href= "<c:url value='/login'/>"  >Login</a>
+		</sec:authorize>
+		
+		<sec:authorize access="isAuthenticated()">
+			<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >
+			 	<sec:authentication property="principal.username" /></a> |
+			<a href="<c:url value='/logout'/>"   >Logout</a>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+				| <a href="../user/list.html">All Users</a>
+		</sec:authorize>
+	</p>
+	
+	<p align="left">
+		<a href="/movievultures/">Back</a>
+	</p>
 
-	<h1>Add Movie</h1>
+	<h1>Add a New Movie</h1>
 	<div class="container">
 		<form action="add.html" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -41,20 +44,25 @@
 						placeholder="Enter title of the movie" name="addmovie_title"
 						required />
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Plot</div>
 				<div class="col-xs-10">
-					<textarea class="form-control"
+					<textarea style="width: 50%; height: 300px;" class="form-control"
 						placeholder="Enter plot of the movie" name="addmovie_plot"
 						required></textarea>
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Date</div>
 				<div class="col-xs-10">
-					<input type="date" name="addmovie_date" id="moviedate" required />
+					<input type="date" name="addmovie_date" id="moviedate" 
+					placeholder="YYYY"
+					required />
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Genre</div>
@@ -63,6 +71,7 @@
 						placeholder="Genre1, Genre2,....." name="addmovie_genres"
 						required>
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Cast</div>
@@ -71,6 +80,7 @@
 						placeholder="Actor1, Actor2...." name="addmovie_actors"
 						required>
 				</div>
+				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Director(s)</div>
@@ -79,6 +89,7 @@
 						placeholder="Director1,Director2...." name="addmovie_directors"
 						required>
 				</div>
+				<br />
 			</div>
 			<input type="submit" class="btn btn-primary" />
 		</form>

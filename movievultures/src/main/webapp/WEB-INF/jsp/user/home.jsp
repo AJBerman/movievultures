@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,10 +11,18 @@
 <title>"There's no place like home"</title>
 </head>
 <body>
-<h5><a href="/movievultures/home.html">Home</a></h5>
+
+	<p align="right">
+		<security:authorize access="isAuthenticated()">
+			<a href="<c:url value='/' /> ">Main</a> |
+			<a href="<c:url value='/logout' />">Logout</a> 
+		</security:authorize>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+				| <a href="../user/list.html">All Users</a>
+		</sec:authorize>
+	</p>
 
 	<h2>Welcome ${user.username}</h2>
-	<h3><a href="/movievultures/home.html">Home</a></h3>
 	
 	<h3>Profile:</h3>
 	<table border=1>
@@ -32,7 +42,7 @@
 			<tr><th>Title</th></tr>
 			<c:forEach items="${user.recommendations}" var="movie" varStatus="status" >
 				<tr>
-					<td>${movie.title }</td>
+					<td>${movie.title}</td>
 					<td><a href="movie/view.html">view</a></td>
 				</tr>
 			</c:forEach>
@@ -50,7 +60,7 @@
 			<tr><th>Title</th><th>action</th></tr>
 			<c:forEach items="${user.favorites}" var="movie" varStatus="status" >
 				<tr>
-					<td>${movie.title }</td>
+					<td><a href="../movies/details2.html?id=${ movie.movieId }">${movie.title }</a></td>
 					<td>
 						<a href="removeFav.html?index=${status.index}&userId=${user.userId}">
 							<img src="../images/delete.png"></img>
@@ -72,7 +82,7 @@
 			<tr><th>Title</th><th>action</th></tr>
 			<c:forEach items="${user.watchLater}" var="movie" varStatus="status" >
 				<tr>
-					<td>${movie.title }</td>
+					<td><a href="../movies/details2.html?id=${ movie.movieId }">${movie.title }</a></td>
 					<td>
 						<a href="removeWL.html?index=${status.index}&userId=${user.userId}">
 							<img src="../images/delete.png"></img>
@@ -92,21 +102,14 @@
 		<tr><th>Movie Title</th> <th>Rating</th><th>Operations</th></tr>
 		<c:forEach items="${user.reviewedMovies}" var="review" varStatus="status">
 			<tr>
-				<td>${review.movie.title}</td>
+				<td><a href="../movies/details2.html?id=${ review.movie.movieId }">${review.movie.title}</a></td>
 				<td>${review.rating }</td>
 				<td>
-					<!--  <a href="/review/view.html">View</a> |-->
-					<a href="../review/edit.html?id=${review.reviewId}">Edit</a>
+					<a href="../review/edit.html?id=${review.movie.movieId}">Edit</a>
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
 	</c:if>	
-	<br />		
-	
-	<form action="<c:url value='/logout' />" method="POST">
-  		<input name="_csrf" type="hidden" value="${_csrf.token}" />
-  		<input name="submit" type="submit" value="Logout" />
-	</form>
 </body>
 </html>
