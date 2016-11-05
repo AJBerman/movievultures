@@ -185,8 +185,7 @@ public class UserController {
 	
 	//TODO: disable user
 	//TODO: enable user (if disabled)
-	//TODO: new admin page
-	//TODO: search users (for admin page) - and pagination
+
 	
 	@RequestMapping(value="user/searchForm.html", method=RequestMethod.GET)
 	public String searchUsers(){

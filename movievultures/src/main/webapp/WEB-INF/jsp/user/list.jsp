@@ -11,68 +11,8 @@
 <title>List of Users</title>
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-		
-	<script>
-	var current_page_users = 1;
-	var records_per_page = 10;
+<script type="text/javascript" src="<c:url value="/res/js/userPaging.js" />"></script>
 
-	function changePageBy(num) {
-		if(current_page_users+num >= 1 && current_page_users+num <= numPagesUsers()) {
-			current_page_users += num;
-	        changePageUsers(current_page_users);
-		}
-	}
-
-	function changePageUsers(page)
-	{
-	    // Validate page
-	    if (page < 1) page = 1;
-	    if (page > numPagesUsers()) page = numPagesUsers();
-
-	    $(".user").filter(":not(." +current_page_users+")").hide();
-		$(".userpage"+page).show();
-	    $("#userpageno").html(page);
-	    for(var i = 1; i <= 4; i++) {
-	    	if(page-i >= 1) {
-	    		$("#userpageno-"+i).show().html(page-i);
-	    		
-	    	} else {
-	    		$("#userpageno-"+i).hide();
-	    	}
-	    	console.log($("#userpageno"+i));
-	    	if(page+i <= numPagesUsers()) {
-	    		$("#userpageno"+i).show().html(page+i);
-	    	} else {
-	    		$("#userpageno"+i).hide();
-	    	}
-	    }
-
-	    if (page == 1) {
-	        $("#user_btn_prev").hide();
-	    } else {
-	        $("#user_btn_prev").show();
-	    }
-
-	    if (page == numPagesUsers()) {
-	        $("#user_btn_next").hide();
-	    } else {
-	        $("#user_btn_next").show();
-	    }
-	}
-
-	function numPagesUsers()
-	{
-
-
-		var count = $('#usersT tr').length - 1;
-		//console.log(Math.ceil($("#users > li").length / records_per_page));
-	    return Math.ceil(count / records_per_page);
-	}
-
-	window.onload = function() {
-		changePageUsers(1);
-	};
-	</script>
 </head>
 <body>
 	<p align="right">
@@ -103,8 +43,8 @@
 		--%>
 				</tr>
 		</c:forEach>
-	</table>
-				
+	</table> <br />
+			<a href="javascript:changePageBy(-1000)" id="user_btn_first">First...</a> <<
 			<a href="javascript:changePageBy(-1)" id="user_btn_prev">Prev</a>
 			<a href="javascript:changePageBy(-4)" id="userpageno-4" style="display: none;"></a>
 			<a href="javascript:changePageBy(-3)" id="userpageno-3" style="display: none;"></a>
@@ -115,7 +55,8 @@
 			<a href="javascript:changePageBy(2)" id="userpageno2" style="display: none;"></a>
 			<a href="javascript:changePageBy(3)" id="userpageno3" style="display: none;"></a>
 			<a href="javascript:changePageBy(4)" id="userpageno4" style="display: none;"></a>
-			<a href="javascript:changePageBy(1)" id="user_btn_next">Next</a>
+			<a href="javascript:changePageBy(1)" id="user_btn_next">Next</a> >>
+			<a href="javascript:changePageBy(-99)" id="user_btn_last"> ...Last</a>
 	
 </body>
 </html>
