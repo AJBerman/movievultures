@@ -1,5 +1,6 @@
 package movievultures.recommender;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.sql.DataSource;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.model.jdbc.PostgreSQLJDBCDataModel;
+import org.apache.mahout.cf.taste.impl.model.jdbc.ReloadFromJDBCDataModel;
 import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
 import org.apache.mahout.cf.taste.impl.recommender.CachingRecommender;
 import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
@@ -24,12 +26,11 @@ import movievultures.model.User;
 public class RecommenderUtils {
 
 	// data model for the recommender
-	private JDBCDataModel model;
+	private ReloadFromJDBCDataModel dataModel;
 
 	// recommender
 	// private Recommender recommender;
-
-	public void getRecommendation(long userId) throws TasteException {
+	public RecommenderUtils() throws TasteException {
 		// connect to database
 		PGPoolingDataSource connection = new PGPoolingDataSource();
 		connection.setDataSourceName("db_name");
@@ -42,11 +43,16 @@ public class RecommenderUtils {
 
 		DataSource movieVults = (DataSource) connection;
 
-		model = new PostgreSQLJDBCDataModel(movieVults, "reviews", "user_userid", "movie_movieid", "rating", "date");
+		JDBCDataModel model = new PostgreSQLJDBCDataModel(movieVults, "reviews", "user_userid", "movie_movieid", "rating", "date");
+		
+		dataModel = new ReloadFromJDBCDataModel(model);
+	}
 
-		UserSimilarity userSimilarity = new PearsonCorrelationSimilarity(model);
-		UserNeighborhood neighborhood = new NearestNUserNeighborhood(15, userSimilarity, model);
-		Recommender recommender = new GenericUserBasedRecommender(model, neighborhood, userSimilarity);
+	public void getRecommendation(long userId) throws TasteException {
+
+		UserSimilarity userSimilarity = new PearsonCorrelationSimilarity(dataModel);
+		UserNeighborhood neighborhood = new NearestNUserNeighborhood(15, userSimilarity, dataModel);
+		Recommender recommender = new GenericUserBasedRecommender(dataModel, neighborhood, userSimilarity);
 		Recommender cachingRecommender = new CachingRecommender(recommender);
 		List<RecommendedItem> recommendations =
 				  cachingRecommender.recommend(userId, 5);
@@ -62,7 +68,9 @@ public class RecommenderUtils {
 	
 	public static void main(String[] args) throws TasteException{
 		RecommenderUtils ru = new RecommenderUtils();
-		ru.getRecommendation(1001);
+		System.out.println(new Date());
+		for(int i = 1; i < 669; i++) ru.getRecommendation(i);
+		System.out.println(new Date());
 	}
 
 }
