@@ -182,5 +182,27 @@ public class UserController {
 		userDao.saveUser(user);
 		return "redirect:/user/list.html";
 	}
+	
+	//TODO: disable user
+	//TODO: enable user (if disabled)
+
+	
+	@RequestMapping(value="user/searchForm.html", method=RequestMethod.GET)
+	public String searchUsers(){
+		return "user/searchResults";
+	}
+	
+	@RequestMapping(value="user/searchResults.html", method=RequestMethod.POST)
+	public String searchResults(ModelMap models, 
+			@RequestParam(value="nameQuery", required = false) String username){
+		List<User> users;
+		if(username != null)
+			users = userDao.getUsersByUsername(username);
+		else
+			users = userDao.getUsers();
+		models.put("users", users);
+
+		return "user/searchResults";
+	}
 
 }
