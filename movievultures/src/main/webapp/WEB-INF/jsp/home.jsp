@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Home</title>
+<link rel="stylesheet" type="text/css" href="/movievultures/res/css/main.css">
 </head>
 <body>
 	<%-- ===== REGISTRATION AUTHENTICATION ===== --%>
@@ -21,7 +22,7 @@
 			<a href="logout">Logout</a> 
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
-				| <a href="user/list.html">All Users</a>
+				|<a href="user/list.html">All Users</a>
 		</sec:authorize>
 	</p>
 	
@@ -39,7 +40,7 @@
 	
 	<%-- ===== NOT LOGGED IN ===== --%>
 	<sec:authorize access = "!isFullyAuthenticated()">
-		<h2>Films</h2>
+		<center><h2>Films</h2></center>
 		<c:choose>
 			<c:when test="${ not empty movies }">
 				<table border=1>
