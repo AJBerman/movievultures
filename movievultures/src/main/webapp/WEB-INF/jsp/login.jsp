@@ -13,17 +13,11 @@
 <table class="general" style="width: auto;">
   <tr>
     <th>Username:</th>
-    <td><input type="text" name="username" class="forminput" /></td>
+    <td><input type="text" name="username" /></td>
   </tr>
   <tr>
     <th>Password:</th>
-    <td><input type="password" name="password" class="forminput" /></td>
-  </tr>
-  <tr>
-    <td colspan="2">
-      <input type="checkbox" name="remember-me" />
-      Remember me on this computer.
-    </td>
+    <td><input type="password" name="password" /></td>
   </tr>
   <tr>
     <td colspan="2">
