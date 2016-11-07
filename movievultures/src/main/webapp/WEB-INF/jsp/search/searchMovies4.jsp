@@ -38,7 +38,7 @@ function changePageReviews(page)
     if (page < 1) page = 1;
     if (page > numPagesReviews()) page = numPagesReviews();
 
-    $(".search").filter(":not()").hide();
+    $(".search").hide();
 	$(".searchpage"+page).show();
     $("#searchpageno").html(page);
     for(var i = 1; i <= 4; i++) {
@@ -132,9 +132,7 @@ window.onload = function() {
 				<c:if test="${ !movieResult.hidden }">
 					<li class="search searchpage${fn:replace(((varStatus.count/20)-((varStatus.count/20)%1)+1),'.0','')}">
 						<b>Movie Title</b>: <a class="movieTitle" href="../movies/details2.html?id=${ movieResult.movieId }">${ movieResult.title }</a><br />
-						
-						
-						<%--<b>Year of Release</b>: <span class="movieYear"><fmt:formatDate value="${ movieResult.date }" pattern="yyyy" /></span><br />
+						<b>Year of Release</b>: <span class="movieYear"><fmt:formatDate value="${ movieResult.date }" pattern="yyyy" /></span><br />
 						<b>Total Elo Rating</b>: <span class="movieElo"><fmt:formatNumber type="number" maxFractionDigits="2" value="${movieResult.eloRating}"/></span><br />
 						
 						<c:set var="sum" value="0" />
@@ -173,9 +171,7 @@ window.onload = function() {
 						<br />
 						<br />
 						<hr>
-						<br />--%>
-						
-						
+						<br />
 					</li>
 				</c:if>
 			</c:forEach>

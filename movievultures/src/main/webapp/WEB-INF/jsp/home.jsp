@@ -40,13 +40,11 @@
 	
 	<%-- ===== NOT LOGGED IN ===== --%>
 	<sec:authorize access = "!isFullyAuthenticated()">
-		<center><h2>Films</h2></center>
+		<h2>Films</h2>
 		<c:choose>
 			<c:when test="${ not empty movies }">
-				<table border=1>
 					<c:forEach items="${movies}" var="movie" varStatus="status">
-						<tr>
-							<td>
+						<div>
 							<b>Title:</b> <a href="movies/details2.html?id=${movie.movieId}">${movie.title}</a> <br />
 							<b>Director(s):</b>
 								<c:forEach items="${movie.directors}" var="dir" varStatus="status">
@@ -69,12 +67,12 @@
 								</c:otherwise>
 							</c:choose>
 							<br /><br />
-								
+							<hr>
 							<b>Plot:</b> <p>${movie.plot}</p>
-							</td>
-						</tr>
+						</div>
+						<br />
 					</c:forEach>
-				</table>
+				
 			</c:when>
 			<c:otherwise>
 				There are no movies to display.
@@ -89,10 +87,8 @@
 		
 		<c:choose>
 			<c:when test="${ not empty movies }">
-				<table border=1>
 					<c:forEach items="${movies}" var="movie" varStatus="status">
-						<tr>
-							<td>
+						<div>
 							<b>Title:</b> <a href="movies/details2.html?id=${movie.movieId}">${movie.title}</a> <br />
 							<b>Director(s):</b>
 								<c:forEach items="${movie.directors}" var="dir" varStatus="status">
@@ -117,10 +113,9 @@
 							<br /><br />
 								
 							<b>Plot:</b> <p>${movie.plot}</p>
-							</td>
-						</tr>
+						</div>
+						<br />
 					</c:forEach>
-				</table>
 			</c:when>
 			<c:otherwise>
 				There are no movies to display.
@@ -132,10 +127,8 @@
 		
 		<c:choose>
 			<c:when test="${ not empty movies2 }">
-				<table border=1>
 					<c:forEach items="${movies2}" var="movie2" varStatus="status">
-						<tr>
-							<td>
+						<div>
 							<b>Title:</b> <a href="movies/details2.html?id=${movie2.movieId}">${movie2.title}</a> <br />
 							<b>Director(s):</b>
 								<c:forEach items="${movie2.directors}" var="dir2" varStatus="status">
@@ -160,10 +153,9 @@
 							<br /><br />
 							
 							<b>Plot:</b> <p>${movie2.plot}</p>
-							</td>
-						</tr>
+						</div>
+						<br />
 					</c:forEach>
-				</table>
 			</c:when>
 			<c:otherwise>
 				There are no movies to display.
