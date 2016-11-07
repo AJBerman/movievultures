@@ -20,16 +20,15 @@ import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 import org.postgresql.ds.PGPoolingDataSource;
 
-import movievultures.model.Movie;
-import movievultures.model.User;
+//import movievultures.model.Movie;
+//import movievultures.model.User;
 
 public class RecommenderUtils {
 
 	// data model for the recommender
 	private ReloadFromJDBCDataModel dataModel;
 
-	// recommender
-	// private Recommender recommender;
+
 	public RecommenderUtils() throws TasteException {
 		// connect to database
 		PGPoolingDataSource connection = new PGPoolingDataSource();

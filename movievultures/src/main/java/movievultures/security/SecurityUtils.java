@@ -32,5 +32,9 @@ public class SecurityUtils {
 		}
 		return username_sec;
     }
+    
+    public static String getRoles(){
+    	return SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+    }
 
 }
