@@ -6,7 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Home</title>
-<link rel="stylesheet" type="text/css" href="/movievultures/res/css/main.css">
 </head>
 <body>
 	<%-- ===== REGISTRATION AUTHENTICATION ===== --%>
@@ -22,7 +21,7 @@
 			<a href="logout">Logout</a> 
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
-				|<a href="user/list.html">All Users</a>
+				| <a href="user/list.html">Management</a>
 		</sec:authorize>
 	</p>
 	
@@ -43,8 +42,10 @@
 		<h2>Films</h2>
 		<c:choose>
 			<c:when test="${ not empty movies }">
+				<table border=1>
 					<c:forEach items="${movies}" var="movie" varStatus="status">
-						<div>
+						<tr>
+							<td>
 							<b>Title:</b> <a href="movies/details2.html?id=${movie.movieId}">${movie.title}</a> <br />
 							<b>Director(s):</b>
 								<c:forEach items="${movie.directors}" var="dir" varStatus="status">
@@ -67,12 +68,12 @@
 								</c:otherwise>
 							</c:choose>
 							<br /><br />
-							<hr>
+								
 							<b>Plot:</b> <p>${movie.plot}</p>
-						</div>
-						<br />
+							</td>
+						</tr>
 					</c:forEach>
-				
+				</table>
 			</c:when>
 			<c:otherwise>
 				There are no movies to display.
@@ -87,8 +88,10 @@
 		
 		<c:choose>
 			<c:when test="${ not empty movies }">
+				<table border=1>
 					<c:forEach items="${movies}" var="movie" varStatus="status">
-						<div>
+						<tr>
+							<td>
 							<b>Title:</b> <a href="movies/details2.html?id=${movie.movieId}">${movie.title}</a> <br />
 							<b>Director(s):</b>
 								<c:forEach items="${movie.directors}" var="dir" varStatus="status">
@@ -113,9 +116,10 @@
 							<br /><br />
 								
 							<b>Plot:</b> <p>${movie.plot}</p>
-						</div>
-						<br />
+							</td>
+						</tr>
 					</c:forEach>
+				</table>
 			</c:when>
 			<c:otherwise>
 				There are no movies to display.
@@ -127,8 +131,10 @@
 		
 		<c:choose>
 			<c:when test="${ not empty movies2 }">
+				<table border=1>
 					<c:forEach items="${movies2}" var="movie2" varStatus="status">
-						<div>
+						<tr>
+							<td>
 							<b>Title:</b> <a href="movies/details2.html?id=${movie2.movieId}">${movie2.title}</a> <br />
 							<b>Director(s):</b>
 								<c:forEach items="${movie2.directors}" var="dir2" varStatus="status">
@@ -153,9 +159,10 @@
 							<br /><br />
 							
 							<b>Plot:</b> <p>${movie2.plot}</p>
-						</div>
-						<br />
+							</td>
+						</tr>
 					</c:forEach>
+				</table>
 			</c:when>
 			<c:otherwise>
 				There are no movies to display.
