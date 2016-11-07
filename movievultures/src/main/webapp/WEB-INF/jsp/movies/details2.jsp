@@ -28,8 +28,8 @@ function changePageReviews(page)
     if (page < 1) page = 1;
     if (page > numPagesReviews()) page = numPagesReviews();
 
-    $(".review").filter(":not(.userReview)").hide();
-	$(".reviewpage"+page).show();
+    $(".review").hide();
+	$(".reviewpage"+page).filter(":not(.userReview)").show();
     $("#reviewpageno").html(page);
     for(var i = 1; i <= 4; i++) {
     	if(page-i >= 1) {
@@ -102,9 +102,17 @@ window.onload = function() {
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 		| <a href="delete.html?id=${movie.movieId}" class="btn btn-primary">Delete Movie</a>
 	</sec:authorize>
-	<c:if test="${not empty user.username && user.enabled}"> |
-		<a href="../review/add.html?id=${movie.movieId}">Make your voice heard!</a> |
-		<a href="../elo/add.html?movie1=${movie.movieId}">Where does this movie stack up?</a> |
+
+	<c:if test="${not empty user.username}"> |
+		<c:choose>
+			<c:when test="${empty userreview}">
+				<a href="../review/add.html?id=${movie.movieId}">Review this movie</a>
+			</c:when>
+			<c:otherwise>
+				<a href="../review/edit.html?id=${movie.movieId}">Edit your review</a>
+			</c:otherwise>
+		</c:choose> |
+		<a href="../elo/add.html?movie1=${movie.movieId}">Elo rate this movie</a> |
 		<a href="../user/addFav.html?movieId=${movie.movieId}">Add to Favorites?</a> |
 		<a href="../user/addWL.html?movieId=${movie.movieId}">Add to WatchList?</a> 
 	</c:if>
@@ -153,8 +161,15 @@ window.onload = function() {
 			<!-- Client-Side Pagination. This is "bad" in some regards, but it's much simpler to implement. This was tested up to 10,000 reviews and works "okay" at that point (2 mb page weight and 5-ish second load time). We don't expect to have anywhere near 10,000 reviews any time soon. -->
 			<br /><b>User Reviews</b><br />
 			<ul id="reviews">
+			<c:if test="${not empty userreview}">
+				  <li>
+				  ${user.username} - ${userreview.rating} | <a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
+				  <br />
+				  ${userreview.review}<br />
+				  </li>
+			</c:if>
 			<c:forEach items="${movie.reviews}" var="r" varStatus="varStatus">
-				  <li class="review reviewpage${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')} ${r.user.username == user.username ? 'userReview' : ''}" style="${r.user.username == user.username ? '' : 'display: none;'}">
+				  <li class="review reviewpage${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')} ${r.user.username == user.username ? 'userReview' : ''}" style="display: none;">
 				  ${r.user.username} - ${r.rating}
 				  <c:if test="${r.user.username == user.username}">
 				  	 | <a href="../review/edit.html?id=${movie.movieId}"> Changed your mind?</a>
