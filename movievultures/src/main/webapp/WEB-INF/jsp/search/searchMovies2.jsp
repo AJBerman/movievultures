@@ -13,7 +13,7 @@
 <title>Search for a Movie</title>
 </head>
 <body>	 
-	 <form action ="/movievultures/search/searchMovies4.html" method="post">
+	 <form action ="/movievultures/search/searchMovies4.html" method="get">
 	 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	 	Search: <input type="text" name="searchTerm" />
 	 	
@@ -29,10 +29,10 @@
 	 	</select>
 	 	
 	 	<select id="comparator" name="comparator">
+	 		<option value="3" selected="selected">=</option>
+	 		<option value="4">!=</option>
 	 		<option value="1">></option>
 	 		<option value="2"><</option>
-	 		<option value="3">=</option>
-	 		<option value="4">!=</option>
 	 	</select>
 	 	
 	 	<input name="search" type="submit" value="Go"/>

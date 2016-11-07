@@ -68,7 +68,7 @@ public class EloController {
 		}
 		movieDao.updateElos(runoff);
 		eloDao.saveEloRunoff(runoff);
-        return "redirect:add.html";
+        return "redirect:add.html?movie1="+runoff.getWinner().getMovieId();
     }
 
 	@RequestMapping(value = "/elo/view.html", method = RequestMethod.GET)

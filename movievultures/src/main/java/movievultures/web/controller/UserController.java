@@ -22,6 +22,7 @@ import movievultures.model.Movie;
 import movievultures.model.User;
 import movievultures.model.dao.MovieDao;
 import movievultures.model.dao.UserDao;
+import movievultures.security.SecurityUtils;
 import movievultures.web.validator.EditUserValidator;
 import movievultures.web.validator.UserValidator;
 
@@ -181,6 +182,47 @@ public class UserController {
 		user.getRoles().add("ROLE_ADMIN");
 		userDao.saveUser(user);
 		return "redirect:/user/list.html";
+	}
+	
+	//TODO: disable user
+	//TODO: enable user (if disabled)
+	@RequestMapping(value="user/management.html", method=RequestMethod.GET)
+	public String manage(@RequestParam int userid, ModelMap models){
+		//only authenticated users allowed here
+		if(!SecurityUtils.getRoles().contains("ROLE_ADMIN"))
+			return "redirect:/home.html";
+		models.put("user", userDao.getUser(userid));
+		return "user/management";
+	}
+	
+	@RequestMapping(value="user/management.html", method=RequestMethod.POST)
+	public String manage(@ModelAttribute User user, @RequestParam(required = false) boolean authority,
+			SessionStatus status){
+		if(authority){
+			user.getRoles().add("ROLE_ADMIN");
+		}
+		userDao.saveUser(user);
+		status.setComplete();
+		return "redirect:/user/list.html";
+	}
+
+	
+	@RequestMapping(value="user/searchForm.html", method=RequestMethod.GET)
+	public String searchUsers(){
+		return "user/searchResults";
+	}
+	
+	@RequestMapping(value="user/searchResults.html", method=RequestMethod.POST)
+	public String searchResults(ModelMap models, 
+			@RequestParam(value="nameQuery", required = false) String username){
+		List<User> users;
+		if(username != null)
+			users = userDao.getUsersByUsername(username);
+		else
+			users = userDao.getUsers();
+		models.put("users", users);
+
+		return "user/searchResults";
 	}
 
 }
