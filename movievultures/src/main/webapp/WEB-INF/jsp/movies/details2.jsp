@@ -137,7 +137,7 @@ window.onload = function() {
 			<a href="<c:url value='/logout'/>"   >Logout</a>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
-				| <a href="../user/list.html">All Users</a>
+				| <a href="../user/list.html">Management</a>
 		</sec:authorize>
 	</p>
 	
@@ -149,11 +149,12 @@ window.onload = function() {
 	<h1>${movie.title}</h1>
 		
 	<sec:authorize access = "isAuthenticated()">
-	<a href="edit.html?id=${movie.movieId}" class="btn btn-primary">Edit Movie</a>
+		<a href="edit.html?id=${movie.movieId}" class="btn btn-primary">Edit Movie</a>
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 		| <a href="delete.html?id=${movie.movieId}" class="btn btn-primary">Delete Movie</a>
 	</sec:authorize>
+
 	<c:if test="${not empty user.username}"> |
 		<c:choose>
 			<c:when test="${empty userreview}">
