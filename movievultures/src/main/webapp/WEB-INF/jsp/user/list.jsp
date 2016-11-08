@@ -31,7 +31,7 @@
 		<tr><th>User ID</th> <th>Username</th></tr>
 		<c:forEach items="${users}" var="user" varStatus="varStatus">
 			<tr class="user userpage${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')} 
-				${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')}">
+				${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')}"  style="display:none">
 				<td>${user.userId}</td>
 				<td>${user.username}</td>
 				<td>

@@ -104,9 +104,9 @@ public class SearchController {
 				break;
 			case 8:
 				//get random list of movies
-				List<Movie> ranMovies = movieDao.getRandomMovies(20);
+				List<Movie> ranMovies = movieDao.getRandomMovies(100);
 				models.put("movieResults", ranMovies);
-				models.put("type", "20 random movies");
+				models.put("type", "random movies");
 				break;
 			default:
 				break;
