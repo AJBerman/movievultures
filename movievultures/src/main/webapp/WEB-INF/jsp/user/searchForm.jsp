@@ -10,7 +10,9 @@
 </head>
 <body>
 	<form action="<c:url value="/user/searchResults.html" />" method="POST">
-		Search: <input type="text" name="nameQuery" value="Username" >
+		
+		<i>Search users by Username:</i><br />
+		<input type="text" name="nameQuery" >
 		<input name="search" type="submit" value="Search"/>
 	</form>
 </body>

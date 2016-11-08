@@ -21,7 +21,7 @@
 			<a href="logout">Logout</a> 
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
-				| <a href="user/list.html">All Users</a>
+				| <a href="user/list.html">Management</a>
 		</sec:authorize>
 	</p>
 	

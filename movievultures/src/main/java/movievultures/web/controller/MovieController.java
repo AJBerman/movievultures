@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.NestedServletException;
 
 import movievultures.model.Movie;
 import movievultures.model.Review;
@@ -131,10 +133,19 @@ public class MovieController {
 		
 		Movie movie = movieDao.getMovie(Id);
 		models.put("movie", movie);
-		if(SecurityUtils.isAuthenticated())
-			models.put("user", userDao.getUserByUsername(SecurityUtils.getUserName()));
-		else
+		if(SecurityUtils.isAuthenticated()) {
+			User user = userDao.getUserByUsername(SecurityUtils.getUserName());
+			models.put("user", user);
+			try {
+				models.put("userreview", reviewDao.getReviewByUserAndMovie(movie, user));
+			} catch (EmptyResultDataAccessException e) {
+				models.put("userreview", null);
+			}
+		}
+		else {
 			models.put("user", null);
+			models.put("userreview", null);
+		}
 		models.put("eloratings", eloRunoffDao.getEloRunoffsByMovie(movie));
 		return "movies/details2";
 	}

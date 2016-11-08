@@ -12,6 +12,14 @@
 	<script type="text/javascript" src="<c:url value="/res/js/userPaging.js" />"></script>
 </head>
 <body>
+	<p align="right">
+		<a href="<c:url value='/' />" >Main</a> |
+		<a href="home.html?username=<sec:authentication property="principal.username" />"> 
+			<sec:authentication property="principal.username" /></a> |
+		<a href="<c:url value='/logout'/>" >Logout</a>
+	</p>
+
+	<h2>User Management</h2> <br />
 	<jsp:include page="searchForm.jsp" /><br />
 	
 	<table border=1 id="usersT">
@@ -21,11 +29,28 @@
 				${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')}">
 				<td>${user.userId}</td>
 				<td>${user.username}</td>
+				<td>
+					<%-- if user isn't authority, authorize --%>
+					<c:set var="contains" value="false" />
+					<c:forEach var="role" items="${user.roles}">
+  						<c:if test="${role == 'ROLE_ADMIN'}">
+    						<c:set var="contains" value="true" />
+  						</c:if>
+					</c:forEach>
+					<c:choose>
+					<c:when test="${!contains}">
+						<a href="management.html?userid=${user.userId}">Manage</a>
+					</c:when>
+					<c:when test="${contains}">
+						Admin
+					</c:when>
+					</c:choose>
+				</td>
 				</tr>
 		</c:forEach>
 	</table> 
 	<br />
-			<a href="javascript:changePageBy(-1000)" id="user_btn_first">First...</a> <<
+			<a href="javascript:changePageBy(-1000)" id="user_btn_first"> << </a> 
 			<a href="javascript:changePageBy(-1)" id="user_btn_prev">Prev</a>
 			<a href="javascript:changePageBy(-4)" id="userpageno-4" style="display: none;"></a>
 			<a href="javascript:changePageBy(-3)" id="userpageno-3" style="display: none;"></a>
@@ -36,7 +61,7 @@
 			<a href="javascript:changePageBy(2)" id="userpageno2" style="display: none;"></a>
 			<a href="javascript:changePageBy(3)" id="userpageno3" style="display: none;"></a>
 			<a href="javascript:changePageBy(4)" id="userpageno4" style="display: none;"></a>
-			<a href="javascript:changePageBy(1)" id="user_btn_next">Next</a> >>
-			<a href="javascript:changePageBy(-99)" id="user_btn_last"> ...Last</a>
+			<a href="javascript:changePageBy(1)" id="user_btn_next">Next</a> 
+			<a href="javascript:changePageBy(-99)" id="user_btn_last"> >></a>
 </body>
 </html>

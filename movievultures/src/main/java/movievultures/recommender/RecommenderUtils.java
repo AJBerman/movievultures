@@ -20,16 +20,15 @@ import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 import org.postgresql.ds.PGPoolingDataSource;
 
-import movievultures.model.Movie;
-import movievultures.model.User;
+//import movievultures.model.Movie;
+//import movievultures.model.User;
 
 public class RecommenderUtils {
 
 	// data model for the recommender
 	private ReloadFromJDBCDataModel dataModel;
 
-	// recommender
-	// private Recommender recommender;
+
 	public RecommenderUtils() throws TasteException {
 		// connect to database
 		PGPoolingDataSource connection = new PGPoolingDataSource();
@@ -69,7 +68,8 @@ public class RecommenderUtils {
 	public static void main(String[] args) throws TasteException{
 		RecommenderUtils ru = new RecommenderUtils();
 		System.out.println(new Date());
-		for(int i = 1; i < 669; i++) ru.getRecommendation(i);
+		//for(int i = 1; i < 669; i++) ru.getRecommendation(i);
+		ru.getRecommendation(1001);
 		System.out.println(new Date());
 	}
 
