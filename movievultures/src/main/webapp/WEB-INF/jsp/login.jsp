@@ -8,6 +8,18 @@
 <title>Welcome back~</title>
 </head>
 <body>
+	<p align="right">
+		<a href="<c:url value='/' />" >Main</a> |
+		
+		<sec:authorize access="!isFullyAuthenticated()">
+			<a href="user/register.html">Register</a>
+		</sec:authorize>
+	</p>
+	
+	<jsp:include page="search/searchMovies2.jsp" />
+	<br /><a href="/movievultures/home.html"><img src="images/MV_banner.png" alt="Banner of Movie Vultures" /></a><br />
+
+<font color="red"><c:if test="${not empty error}"><div>${error}</div></c:if></font><br/>
 
 <form name="login" action="<c:url value='/login' />" method="post">
 <table class="general" style="width: auto;">
@@ -21,7 +33,9 @@
   </tr>
   <tr>
     <td colspan="2">
+  	  <br />
       <input class="submit" type="submit" name="login" value="Login" />
+      <input class="reset" type="reset" value="Clear" />
     </td>
   </tr>
 </table>

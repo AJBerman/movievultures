@@ -86,7 +86,7 @@ window.onload = function() {
 	
 	<sec:authorize access="!isFullyAuthenticated()">
 		<a href="../user/register.html">Register</a> |
-		<a href="<c:url value='/login'/>">Login</a>
+		<a href="<c:url value='/login.html'/>">Login</a>
 	</sec:authorize>
 	<sec:authorize access="isAuthenticated()">
 		<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >

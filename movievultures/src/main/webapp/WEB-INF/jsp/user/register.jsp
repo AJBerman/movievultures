@@ -13,9 +13,12 @@
 		<a href="<c:url value='/' />" >Main</a> |
 		
 		<sec:authorize access="!isFullyAuthenticated()">
-			<a href= "<c:url value='/login'/>"  >Login</a>
+			<a href= "<c:url value='/login.html'/>"  >Login</a>
 		</sec:authorize>
 	</p>
+	
+	<jsp:include page="../search/searchMovies2.jsp" />
+	<br /><a href="/movievultures/home.html"><img src="../images/MV_banner.png" alt="Banner of Movie Vultures" /></a><br />
 	
 	<h2>Please Fill Out the Form to Register</h2>
 
@@ -23,7 +26,8 @@
 		Username: <form:input path="username" /> <font color="red"><form:errors path="username" /></font> <br /><br />
 		E-mail: <form:input path="email" />  <font color="red"><form:errors path="email" /> </font><br /><br />
 		Password: <form:input path="password" /> <font color="red"><form:errors path="password" /> </font><br /><br />
-		<input type="submit" name="add" value="add" />
+		<input type="submit" name="add" value="Register" />
+		<input class="reset" type="reset" value="Clear" />
 	</form:form>
 </body>
 </html>
