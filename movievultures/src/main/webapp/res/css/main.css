@@ -1,0 +1,30 @@
+body {
+/*     background-image: url("/movievultures/images/mv_bg.png"); */
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+/* 	color: yellow; */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: underline;
+}
+
+div {
+    display: block;
+    border-radius: 25px;
+    border: 2px solid #000000;
+    padding: 20px; 
+    width: 50%; 
+}

@@ -12,7 +12,7 @@
 	<p align="right">
 		<sec:authorize access="!isFullyAuthenticated()">
 			<a href="user/register.html">Register</a> |
-			<a href="login">Login</a>
+			<a href="login.html">Login</a>
 		</sec:authorize>
 		
 		<sec:authorize access="isAuthenticated()">
