@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
@@ -271,6 +272,21 @@ public class MovieDaoImpl implements MovieDao{
 			.createNativeQuery("select AVG(rating) from reviews where movie_movieid=:movieid")
 			.setParameter("movieid", movieId).getSingleResult();
 		return totalRates;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Movie> getMoviesByIDList(List<Integer> movieIds) {
+		List<Movie> movies = new ArrayList<Movie>();
+		for(int i = 0; i < movieIds.size(); i++){
+			movies.add( getMovie(movieIds.get(i) ));
+		}
+//		Query query = entityManager.createQuery("FROM Movie WHERE movieId IN :movieIds")
+//				.setParameter("movieIds", movieIds);
+//		List<Movie> movies = query.getResultList();
+		return movies;
+		
+
 	}
     
 }

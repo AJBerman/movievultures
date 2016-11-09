@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,7 +20,12 @@
 	<jsp:include page="search/searchMovies2.jsp" />
 	<br /><a href="/movievultures/home.html"><img src="images/MV_banner.png" alt="Banner of Movie Vultures" /></a><br />
 
-<font color="red"><c:if test="${not empty error}"><div>${error}</div></c:if></font><br/>
+	<c:if test="${not empty error}">
+      <font color="red">
+        Your login attempt was not successful.<br/>
+        Reason: <i>${SPRING_SECURITY_LAST_EXCEPTION.message}</i>
+      </font>
+	</c:if>
 
 <form name="login" action="<c:url value='/login' />" method="post">
 <table class="general" style="width: auto;">

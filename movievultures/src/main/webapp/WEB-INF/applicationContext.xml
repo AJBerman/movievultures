@@ -36,7 +36,7 @@
 
     <tx:annotation-driven />
 
-    <context:component-scan base-package="movievultures.model" />
+    <context:component-scan base-package="movievultures.model, movievultures.recommender" />
     
     <security:authentication-manager>
         <security:authentication-provider>
@@ -64,6 +64,7 @@
   	
   	<!-- beans for authentication handler -->
   	<bean id="authenticSuccessHandler" class="movievultures.security.AuthenticSuccessHandler" />
+  	<bean id="userService" class="movievultures.recommender.UserService" />
   	
   	<security:global-method-security pre-post-annotations="enabled" />
 
