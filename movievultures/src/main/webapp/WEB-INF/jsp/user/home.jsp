@@ -34,21 +34,21 @@
 	
 	<br />
 	<h3>Recommendations:</h3>
-	<c:if test="${empty user.recommendations}">
-		<p>None at the moment.</p>
-	</c:if>
-	<c:if test="${not empty user.recommendations}">
-		<table>
-			<tr><th>Title</th></tr>
-			<c:forEach items="${user.recommendations}" var="movie" varStatus="status" >
-				<tr>
-					<td>${movie.title}</td>
-					<td><a href="movie/view.html">view</a></td>
-				</tr>
-			</c:forEach>
-		</table>
-	</c:if>
-	
+	<div style="overflow-y:scroll;">
+		<c:if test="${empty user.recommendations}">
+			<p>None at the moment.</p>
+		</c:if>
+		<c:if test="${not empty user.recommendations}">
+			<table border=1>
+				<tr><th>Title</th></tr>
+				<c:forEach items="${user.recommendations}" var="movie" varStatus="status" >
+					<tr>
+						<td><a href="../movies/details2.html?id=${movie.movieId}">${movie.title}</a></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</c:if>
+	</div>
 	<br />
 	
 	<h3>Favorites:</h3>

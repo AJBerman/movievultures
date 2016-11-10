@@ -17,37 +17,40 @@ import movievultures.model.dao.MovieDao;
 import movievultures.model.dao.UserDao;
 
 @Service
-public class UserService implements ApplicationListener<AuthenticationSuccessEvent>{
-	
+public class UserService implements ApplicationListener<AuthenticationSuccessEvent> {
+
 	@Autowired
 	UserDao userDao;
-	
+
 	@Autowired
 	MovieDao movieDao;
-	
-	@Autowired 
+
+	@Autowired
 	RecommenderUtils recommender;
 
 	@Override
 	public void onApplicationEvent(AuthenticationSuccessEvent event) {
 
-		String userName = ((UserDetails) event.getAuthentication().
-                getPrincipal()).getUsername();
-		//upon login success, get user recommendation
+		String userName = ((UserDetails) event.getAuthentication().getPrincipal()).getUsername();
+		// upon login success, get user recommendation
 		User user = userDao.getUserByUsername(userName);
-		System.out.println("In UserService: " + user.getUsername() + " " + user.getUserId());
-		List<Integer> movieIds = null;
-		try {
-			movieIds = recommender.getRecommendation(user.getUserId());
-			//System.out.println("Recommendations in movieIds: " + movieIds.size());
-		} catch (TasteException e) {
-			System.out.println("There was some error here");
-			e.printStackTrace();
-		}
-		//Get movies 
-		List<Movie> movies = movieDao.getMoviesByIDList(movieIds);
-		user.setRecommendations(movies);
-		userDao.saveUser(user);
+
+			System.out.println("In UserService: " + user.getUsername() + " " + user.getUserId());
+			List<Integer> movieIds = null;
+			try {
+				movieIds = recommender.getRecommendation(user.getUserId());
+				// System.out.println("Recommendations in movieIds: " +
+				// movieIds.size());
+			} catch (TasteException e) {
+				System.out.println("There was some error here");
+				e.printStackTrace();
+			}
+			// Get movies
+			if(movieIds.isEmpty())
+				return;
+			List<Movie> movies = movieDao.getMoviesByIDList(movieIds);
+			user.setRecommendations(movies);
+			userDao.saveUser(user);
 		
 	}
 

@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Home</title>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="<c:url value="/res/js/movieTableTruncate.js" />"></script>
 </head>
 <body>
 	<%-- ===== REGISTRATION AUTHENTICATION ===== --%>
@@ -69,7 +72,8 @@
 							</c:choose>
 							<br /><br />
 								
-							<b>Plot:</b> <p>${movie.plot}</p>
+							<b>Plot:</b> 
+							<p>${fn:substring(movie.plot, 0, 300)} ...</p>
 							</td>
 						</tr>
 					</c:forEach>
@@ -81,14 +85,14 @@
 		</c:choose>
 	</sec:authorize>
 	
-	<%-- ===== DISPLAY MOVIES OF: RANDOM (not logged in) / FAVORITES (logged in) ===== --%>
+	<%-- ===== Display Recommendations, WatchLater, and Favorites===== --%>
 	
 	<sec:authorize access="isAuthenticated()">
+	
 		<h2>Favorites</h2>
-		
 		<c:choose>
 			<c:when test="${ not empty movies }">
-				<table border=1>
+				<table id="favs" border=1 >
 					<c:forEach items="${movies}" var="movie" varStatus="status">
 						<tr>
 							<td>
@@ -120,6 +124,8 @@
 						</tr>
 					</c:forEach>
 				</table>
+				<input type="button" id="prevFavs" value="Previous" />
+				<input type="button" id="nextFavs" value="Next" />
 			</c:when>
 			<c:otherwise>
 				There are no movies to display.

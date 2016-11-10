@@ -52,20 +52,19 @@ public class RecommenderUtils {
 	public List<Integer> getRecommendation(long userId) throws TasteException {
 
 		UserSimilarity userSimilarity = new PearsonCorrelationSimilarity(dataModel);
-		UserNeighborhood neighborhood = new NearestNUserNeighborhood(15, userSimilarity, dataModel);
+		UserNeighborhood neighborhood = new NearestNUserNeighborhood(30, userSimilarity, dataModel);
 		Recommender recommender = new GenericUserBasedRecommender(dataModel, neighborhood, userSimilarity);
 		Recommender cachingRecommender = new CachingRecommender(recommender);
 		List<Integer>recs = new ArrayList<Integer>();
 		List<RecommendedItem> recommendations =
 				  cachingRecommender.recommend(userId, 5);
 		System.out.println("total recommendations: " + recommendations.size());
-//		Iterator<RecommendedItem>iter = recommendations.iterator();
-//		while ( iter.hasNext()) {
-//			RecommendedItem item = iter.next();
-//			//System.out.println("item id: " + item.getItemID());
-//			recs.add(item.getItemID());
-//			
-//		}
+		Iterator<RecommendedItem>iter = recommendations.iterator();
+		while ( iter.hasNext()) {
+			RecommendedItem item = iter.next();
+			System.out.println("item id: " + item.getItemID());		
+			System.out.println("Confidence: " + item.getValue());
+		}
 		//connection.close();
 		for(RecommendedItem item: recommendations)
 			recs.add((int) item.getItemID());
