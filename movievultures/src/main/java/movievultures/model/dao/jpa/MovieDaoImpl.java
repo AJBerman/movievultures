@@ -277,16 +277,10 @@ public class MovieDaoImpl implements MovieDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Movie> getMoviesByIDList(List<Integer> movieIds) {
-		List<Movie> movies = new ArrayList<Movie>();
-		for(int i = 0; i < movieIds.size(); i++){
-			movies.add( getMovie(movieIds.get(i) ));
-		}
-//		Query query = entityManager.createQuery("FROM Movie WHERE movieId IN :movieIds")
-//				.setParameter("movieIds", movieIds);
-//		List<Movie> movies = query.getResultList();
+		Query query = entityManager.createQuery("FROM Movie WHERE movieId IN :movieIds")
+				.setParameter("movieIds", movieIds);
+		List<Movie> movies = query.getResultList();
 		return movies;
-		
-
 	}
     
 }
