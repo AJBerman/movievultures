@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,6 +47,9 @@ public class UserController {
 	
 	@Autowired
 	RecommenderUtils recommender;
+	
+	@Autowired
+	private MailSender mailSender;
 	
 	@RequestMapping("user/list.html")
 	public String listUsers(ModelMap models){
@@ -97,6 +102,19 @@ public class UserController {
 		userDao.saveUser(user);
 		//free resources
 		status.setComplete();
+		
+		String msgSubject = "Thank you for Joining Movie Vultures!";
+		String msgBody = "Hi " + user.getUsername() + "!\r\n\r\nWe are excited to learn that you have joined Movie Vultures! We hope you enjoy "
+				+ "the features we will be providing you and we hope that you will be an active member in our community. Thank you again for joining! "
+				+ "We look forward to having you as part of our community.\r\n\r\nWith much excitement,\r\nMovie Vultures\r\n\r\nThis is an automated "
+				+ "message. If this email was sent in error, please disregard and "
+				+ "delete this email. Thank you.";
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo( user.getEmail() );
+		msg.setSubject( msgSubject );
+		msg.setText( msgBody );
+		mailSender.send( msg );
+		
 		return "redirect:../home.html";
 	}
 	
