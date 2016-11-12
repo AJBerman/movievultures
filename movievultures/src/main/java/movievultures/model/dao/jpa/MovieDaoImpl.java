@@ -6,8 +6,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityResult;
+import javax.persistence.ColumnResult;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.SqlResultSetMapping;
+
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
@@ -274,6 +278,7 @@ public class MovieDaoImpl implements MovieDao{
 		return totalRates;
 	}
 
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Movie> getMoviesByIDList(List<Integer> movieIds) {
@@ -281,6 +286,40 @@ public class MovieDaoImpl implements MovieDao{
 				.setParameter("movieIds", movieIds);
 		List<Movie> movies = query.getResultList();
 		return movies;
+	}
+	
+
+    @Override
+    //Yes, Seriously, List<Object[]>. The List is a list of results, and the Object[] is each result. For each result, there's a movie at res[0], a headline at res[1], and a rank at res[2] 
+	public List<Object[]> fullTextSearch(String text) {
+		return entityManager
+			.createNativeQuery( "select m.*, "
+					+ "ts_headline(m.plot || ' || ' || m.title || ' || ' || string_agg(distinct(d.director), ' | ') || ' || ' || string_agg(distinct(g.genre), ' | ') || ' || ' || string_agg(distinct(a.actor), ' | '), plainto_tsquery( :text )) as headline, "
+					+ "ts_rank(to_tsvector('english', m.plot || ' || ' || m.title || ' || ' || string_agg(distinct(d.director), ' | ') || ' || ' || string_agg(distinct(g.genre), ' | ') || ' || ' || string_agg(distinct(a.actor), ' | ')), plainto_tsquery( :text )) AS rank "
+					+ "from movies m join movie_directors d on d.movieid=m.movieid join movie_genres g on g.movieid=m.movieid join movie_cast a on a.movieid=m.movieid "
+					+ "group by m.movieid "
+					+ "having to_tsvector('english', m.plot || ' || ' || m.title || ' || ' || string_agg(distinct(d.director), ' | ') || ' || ' || string_agg(distinct(g.genre), ' | ') || ' || ' || string_agg(distinct(a.actor), ' | ')) @@ plainto_tsquery( :text ) "
+					+ "order by rank desc;", "SearchResults" )
+			.setParameter("text", text)
+			.getResultList();
+	}
+	
+    @Override
+    //Yes, Seriously, List<Object[]>. The List is a list of results, and the Object[] is each result. For each result, there's a movie at res[0], a headline at res[1], and a rank at res[2] 
+	//to create index:
+    //create index fts_index on movies using gin(to_tsvector('english', plot || ' || ' || title));
+    public List<Object[]> fullTextSearchIndexed(String text) {
+		return entityManager
+			.createNativeQuery( "select m.*, "
+					+ "ts_headline(m.plot || ' || ' || m.title, plainto_tsquery( :text )) as headline, "
+					+ "ts_rank(to_tsvector('english', m.plot || ' || ' || m.title), plainto_tsquery( :text )) AS rank "
+					+ "from movies m join movie_directors d on d.movieid=m.movieid join movie_genres g on g.movieid=m.movieid join movie_cast a on a.movieid=m.movieid "
+					+ "group by m.movieid "
+					+ "having to_tsvector('english', m.plot || ' || ' || m.title) @@ plainto_tsquery( :text ) "
+					+ "order by rank desc;", "SearchResults" )
+			.setParameter("text", text)
+			.getResultList();
+
 	}
     
 }

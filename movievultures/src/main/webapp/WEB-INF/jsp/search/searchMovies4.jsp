@@ -131,6 +131,9 @@ window.onload = function() {
 			<c:forEach items="${ movieResults }" var="movieResult" varStatus="varStatus">
 				<c:if test="${ !movieResult.hidden }">
 					<li class="search searchpage${fn:replace(((varStatus.count/20)-((varStatus.count/20)%1)+1),'.0','')}"  style="display:none">
+						<c:if test="${ not empty headlines }">
+							<span>...${headlines[varStatus.count-1]}...</span><br/>
+						</c:if>
 						<b>Movie Title</b>: <a class="movieTitle" href="../movies/details2.html?id=${ movieResult.movieId }">${ movieResult.title }</a><br />
 						<b>Year of Release</b>: <span class="movieYear"><fmt:formatDate value="${ movieResult.date }" pattern="yyyy" /></span><br />
 						<b>Total Elo Rating</b>: <span class="movieElo"><fmt:formatNumber type="number" maxFractionDigits="2" value="${movieResult.eloRating}"/></span><br />
@@ -141,30 +144,30 @@ window.onload = function() {
 						</c:forEach>
 						<b>Total User Rating</b>: <span class="movieRating"><fmt:formatNumber type="number" maxFractionDigits="0" value="${sum/fn:length(movieResult.reviews)}"/></span><br />
 						<!-- c:url is used here to url-encode the genre/director/actor, so if their name is "null&illegalargument=foo" we don't get funny business. -->
-						<b>Genres</b>: <c:forEach items="${ movieResult.genres }" var="g">| <span class="movieGenre">
+						<b>Genres</b>: <c:forEach items="${ movieResult.genres }" var="g" varStatus="stat">| <span class="movieGenre">
 							<c:url value="searchMovies4.html" var="myURL">
 							   <c:param name="searchTerm" value="${g}"/>
 							   <c:param name="type" value="2"/>
 							   <c:param name="comparator" value="3"/>
 							</c:url>
 							<a href="${myURL}">${g}</a>
-						</span> |</c:forEach><br />
-						<b>Directors</b>: <c:forEach items="${ movieResult.directors }" var="d">| <span class="movieDirector">
+						</span> ${stat.last ? '' : '|'}</c:forEach><br />
+						<b>Directors</b>: <c:forEach items="${ movieResult.directors }" var="d" varStatus="stat">| <span class="movieDirector">
 							<c:url value="searchMovies4.html" var="myURL">
 							   <c:param name="searchTerm" value="${d}"/>
 							   <c:param name="type" value="3"/>
 							   <c:param name="comparator" value="3"/>
 							</c:url>
 							<a href="${myURL}">${d}</a>
-						</span> |</c:forEach><br />
-						<b>Artists</b>: <c:forEach items="${ movieResult.actors }" var="a">| <span class="movieActor">
+						</span> ${stat.last ? '' : '|'}</c:forEach><br />
+						<b>Artists</b>: <c:forEach items="${ movieResult.actors }" var="a" varStatus="stat">| <span class="movieActor">
 							<c:url value="searchMovies4.html" var="myURL">
 							   <c:param name="searchTerm" value="${a}"/>
 							   <c:param name="type" value="4"/>
 							   <c:param name="comparator" value="3"/>
 							</c:url>
 							<a href="${myURL}">${a}</a>
-						</span> |</c:forEach><br />
+						</span> ${stat.last ? '' : '|'}</c:forEach><br />
 						<br />
 						<b>===== Short Plot Summary =====</b><br />
 							<span class="moviePlot">${movieResult.plot}</span>

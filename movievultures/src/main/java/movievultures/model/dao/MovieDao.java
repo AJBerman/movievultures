@@ -43,5 +43,9 @@ public interface MovieDao {
 	Long getTotalRateTimes(int movieId);
 
 	Double getAverageRating(int movieId);
+
+	List<Object[]> fullTextSearch(String text);
+
+	List<Object[]> fullTextSearchIndexed(String text);
 	
 }
