@@ -19,6 +19,7 @@
 	 	
 	 	<select id="searchType" name="type">
 	 		<option value="9">General Search</option>
+	 		<option value="10">General Search (Indexable)</option>
 	 		<option value="1">Title</option>
 	 		<option value="2">Genre</option>
 	 		<option value="3">Director</option>

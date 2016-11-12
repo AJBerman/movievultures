@@ -291,5 +291,22 @@ public class MovieDaoImpl implements MovieDao{
 			.setParameter("text", text)
 			.getResultList();
 	}
+	
+    @Override
+    //Yes, Seriously, List<Object[]>. The List is a list of results, and the Object[] is each result. For each result, there's a movie at res[0], a headline at res[1], and a rank at res[2] 
+	//to create index:
+    //create index fts_index on movies using gin(to_tsvector('english', plot || ' || ' || title));
+    public List<Object[]> fullTextSearchIndexed(String text) {
+		return entityManager
+			.createNativeQuery( "select m.*, "
+					+ "ts_headline(m.plot || ' || ' || m.title, plainto_tsquery( :text )) as headline, "
+					+ "ts_rank(to_tsvector('english', m.plot || ' || ' || m.title), plainto_tsquery( :text )) AS rank "
+					+ "from movies m join movie_directors d on d.movieid=m.movieid join movie_genres g on g.movieid=m.movieid join movie_cast a on a.movieid=m.movieid "
+					+ "group by m.movieid "
+					+ "having to_tsvector('english', m.plot || ' || ' || m.title) @@ plainto_tsquery( :text ) "
+					+ "order by rank desc;", "SearchResults" )
+			.setParameter("text", text)
+			.getResultList();
+	}
     
 }

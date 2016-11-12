@@ -110,7 +110,7 @@ public class SearchController {
 				models.put("type", "random movies");
 				break;
 			case 9:
-				//get random list of movies
+				//FTS (non-indexable)
 				List<Object[]> results = movieDao.fullTextSearch(searchTerm);
 				List<Movie> ftsMovieResults = new ArrayList<Movie>();
 				List<String> headlines = new ArrayList<String>();
@@ -120,6 +120,19 @@ public class SearchController {
 				}
 				models.put("movieResults", ftsMovieResults);
 				models.put("headlines", headlines);
+				models.put("type", "Full Text Search");
+				break;
+			case 10:
+				//FTS (indexable)
+				List<Object[]> results2 = movieDao.fullTextSearchIndexed(searchTerm);
+				List<Movie> ftsMovieResults2 = new ArrayList<Movie>();
+				List<String> headlines2 = new ArrayList<String>();
+				for(Object[] res: results2) {
+					ftsMovieResults2.add((Movie) res[0]);
+					headlines2.add((String) res[1]);
+				}
+				models.put("movieResults", ftsMovieResults2);
+				models.put("headlines", headlines2);
 				models.put("type", "Full Text Search");
 				break;
 			default:
