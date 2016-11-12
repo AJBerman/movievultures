@@ -31,6 +31,7 @@ public class HomeController {
 		//check to see if we're authenticated
 		List<Movie> movies;
 		List<Movie> movies2;
+		List<Movie> recomms;
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if(!(authentication instanceof AnonymousAuthenticationToken)){
 			User user = userDao.getUserByUsername(authentication.getName());
@@ -38,6 +39,8 @@ public class HomeController {
 			models.put("movies", movies);
 			movies2 = user.getWatchLater();
 			models.put("movies2", movies2);
+			recomms = user.getRecommendations();
+			models.put("recomms", recomms);
 		}else{
 			movies = movieDao.getRandomMovies(5);
 			models.put("movies", movies);

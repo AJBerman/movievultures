@@ -52,7 +52,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> getUsersByUsernames(String username) {
 		return entityManager.createQuery("from User where lower(username) LIKE lower(:username)", User.class )
-				.setParameter("username", '%' + username + '%')
+				.setParameter("username", username + '%')
 				.getResultList();
 	}
 
