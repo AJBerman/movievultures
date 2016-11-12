@@ -6,8 +6,10 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EntityResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,10 +17,16 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 @Entity
+@SqlResultSetMapping(
+		name="SearchResults", 
+        entities={@EntityResult(entityClass=Movie.class)},
+        columns={@ColumnResult(name="headline"), @ColumnResult(name="rank")}
+) //This is for MovieDaoImpl.fullTextSearch
 @Table(name="movies")
 public class Movie {
 	@Id

@@ -1,5 +1,6 @@
 package movievultures.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,6 +108,19 @@ public class SearchController {
 				List<Movie> ranMovies = movieDao.getRandomMovies(100);
 				models.put("movieResults", ranMovies);
 				models.put("type", "random movies");
+				break;
+			case 9:
+				//get random list of movies
+				List<Object[]> results = movieDao.fullTextSearch(searchTerm);
+				List<Movie> ftsMovieResults = new ArrayList<Movie>();
+				List<String> headlines = new ArrayList<String>();
+				for(Object[] res: results) {
+					ftsMovieResults.add((Movie) res[0]);
+					headlines.add((String) res[1]);
+				}
+				models.put("movieResults", ftsMovieResults);
+				models.put("headlines", headlines);
+				models.put("type", "Full Text Search");
 				break;
 			default:
 				break;
