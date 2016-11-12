@@ -26,7 +26,6 @@ public class AuthenticSuccessHandler extends SavedRequestAwareAuthenticationSucc
         }else{
         	targetUrl = "/home.html";
         }
-        //additional checking for disabled users? If user is disabled
         return targetUrl;
     }
 	

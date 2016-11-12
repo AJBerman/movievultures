@@ -9,7 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityResult;
 import javax.persistence.ColumnResult;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.SqlResultSetMapping;
+
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
@@ -275,6 +277,16 @@ public class MovieDaoImpl implements MovieDao{
 			.setParameter("movieid", movieId).getSingleResult();
 		return totalRates;
 	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Movie> getMoviesByIDList(List<Integer> movieIds) {
+		Query query = entityManager.createQuery("FROM Movie WHERE movieId IN :movieIds")
+				.setParameter("movieIds", movieIds);
+		List<Movie> movies = query.getResultList();
+		return movies;
+	}
 	
 
     @Override
@@ -307,6 +319,7 @@ public class MovieDaoImpl implements MovieDao{
 					+ "order by rank desc;", "SearchResults" )
 			.setParameter("text", text)
 			.getResultList();
+
 	}
     
 }

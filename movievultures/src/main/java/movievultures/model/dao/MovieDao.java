@@ -30,6 +30,8 @@ public interface MovieDao {
 	
 	List<Movie> getMoviesByEloRating(double eloRating, String comparator);
 	
+	List<Movie> getMoviesByIDList(List<Integer> movieIds);
+	
 	Movie saveMovie(Movie movie);
 
 	void updateElos(Movie winner, Movie loser);
