@@ -206,7 +206,14 @@ window.onload = function() {
 	<c:forEach items="${ movie.reviews }" var="r">
 		<c:set var="sum" value="${ sum + r.rating }" />
 	</c:forEach>
-	<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movie.reviews)}"/><br />
+	<c:choose>
+		<c:when test="${ not empty movie.reviews }">
+			<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movie.reviews)}"/><br />
+		</c:when>
+		<c:otherwise>
+			<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum}"/><br /><br />
+		</c:otherwise>
+	</c:choose>
 
 	<c:choose>
 		<c:when test="${ not empty movie.reviews }">
