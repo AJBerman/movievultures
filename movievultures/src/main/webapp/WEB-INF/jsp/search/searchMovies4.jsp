@@ -180,85 +180,87 @@ For search highlighting --> <%-- For search highlighting --%> mark {
 
 		<br />
 		<div class="panel panel-default">
-			<div class="panel-body">
-				<c:choose>
-					<c:when test="${ not empty movieResults }">
-						<ul id="results">
-							<c:forEach items="${ movieResults }" var="movieResult"
-								varStatus="varStatus">
-								<c:if test="${ !movieResult.hidden }">
-									<li
-										class="search searchpage${fn:replace(((varStatus.count/20)-((varStatus.count/20)%1)+1),'.0','')}"
-										style="display: none">
-										<c:if test="${ not empty headlines }">
-											<span>...${headlines[varStatus.count-1]}...</span>
-											<br />
-										</c:if> 
-										<b>Movie Title</b>: <a class="movieTitle"
-										href="../movies/details2.html?id=${ movieResult.movieId }">${ movieResult.title }</a><br />
-										<b>Year of Release</b>: <span class="movieYear"><fmt:formatDate
-												value="${ movieResult.date }" pattern="yyyy" /></span><br /> <b>Total
-											Elo Rating</b>: <span class="movieElo"><fmt:formatNumber
-												type="number" maxFractionDigits="2"
-												value="${movieResult.eloRating}" /></span><br /> <c:set var="sum"
-											value="0" /> <c:forEach items="${ movieResult.reviews }"
-											var="r">
-											<c:set var="sum" value="${ sum + r.rating }" />
-										</c:forEach> <b>Total User Rating</b>: <span class="movieRating"><fmt:formatNumber
-												type="number" maxFractionDigits="0"
-												value="${sum/fn:length(movieResult.reviews)}" /></span><br /> <!-- c:url is used here to url-encode the genre/director/actor, so if their name is "null&illegalargument=foo" we don't get funny business. -->
-										<b>Genres</b>: <c:forEach items="${ movieResult.genres }"
-											var="g" varStatus="stat">| <span
-												class="movieGenre"> <c:url value="searchMovies4.html"
-													var="myURL">
-													<c:param name="searchTerm" value="${g}" />
-													<c:param name="type" value="2" />
-													<c:param name="comparator" value="3" />
-												</c:url> <a href="${myURL}">${g}</a>
-											</span> ${stat.last ? '' : '|'}</c:forEach><br /> <b>Directors</b>: <c:forEach
-											items="${ movieResult.directors }" var="d" varStatus="stat">| <span
-												class="movieDirector"> <c:url
-													value="searchMovies4.html" var="myURL">
-													<c:param name="searchTerm" value="${d}" />
-													<c:param name="type" value="3" />
-													<c:param name="comparator" value="3" />
-												</c:url> <a href="${myURL}">${d}</a>
-											</span> ${stat.last ? '' : '|'}</c:forEach><br /> <b>Artists</b>: <c:forEach
-											items="${ movieResult.actors }" var="a" varStatus="stat">| <span
-												class="movieActor"> <c:url value="searchMovies4.html"
-													var="myURL">
-													<c:param name="searchTerm" value="${a}" />
-													<c:param name="type" value="4" />
-													<c:param name="comparator" value="3" />
-												</c:url> <a href="${myURL}">${a}</a>
-											</span> ${stat.last ? '' : '|'}</c:forEach><br /> <br /> <b>===== Short
-											Plot Summary =====</b><br /> <span class="moviePlot">${movieResult.plot}</span>
-										<br /> <br />
-										<hr> <br /></li>
-								</c:if>
-							</c:forEach>
-						</ul>
-						<a href="javascript:changePageBy(-1)" id="search_btn_prev">Prev</a>
-						<a href="javascript:changePageBy(-4)" id="searchpageno-4"
-							style="display: none;"></a>
-						<a href="javascript:changePageBy(-3)" id="searchpageno-3"
-							style="display: none;"></a>
-						<a href="javascript:changePageBy(-2)" id="searchpageno-2"
-							style="display: none;"></a>
-						<a href="javascript:changePageBy(-1)" id="searchpageno-1"
-							style="display: none;"></a>
-						<a id="searchpageno"></a>
-						<a href="javascript:changePageBy(1)" id="searchpageno1"
-							style="display: none;"></a>
-						<a href="javascript:changePageBy(2)" id="searchpageno2"
-							style="display: none;"></a>
-						<a href="javascript:changePageBy(3)" id="searchpageno3"
-							style="display: none;"></a>
-						<a href="javascript:changePageBy(4)" id="searchpageno4"
-							style="display: none;"></a>
-						<a href="javascript:changePageBy(1)" id="search_btn_next">Next</a>
-					</c:when>
-					<c:otherwise>
+			<div class="panel-body">	
+	<c:choose>
+		<c:when test="${ not empty movieResults }">
+			<ul id="results">
+			<c:forEach items="${ movieResults }" var="movieResult" varStatus="varStatus">
+				<c:if test="${ !movieResult.hidden }">
+					<li class="search searchpage${fn:replace(((varStatus.count/20)-((varStatus.count/20)%1)+1),'.0','')}"  style="display:none">
+						<c:if test="${ not empty headlines }">
+							<span>...${headlines[varStatus.count-1]}...</span><br/>
+						</c:if>
+						<b>Movie Title</b>: <a class="movieTitle" href="../movies/details2.html?id=${ movieResult.movieId }">${ movieResult.title }</a><br />
+						<b>Year of Release</b>: <span class="movieYear"><fmt:formatDate value="${ movieResult.date }" pattern="yyyy" /></span><br />
+						<b>Total Elo Rating</b>: <span class="movieElo"><fmt:formatNumber type="number" maxFractionDigits="2" value="${movieResult.eloRating}"/></span><br />
+						
+						<c:set var="sum" value="0" />
+						<c:forEach items="${ movieResult.reviews }" var="r">
+							<c:set var="sum" value="${ sum + r.rating }" />
+						</c:forEach>
+						<span class="movieRating">
+							<c:choose>
+								<c:when test="${ not empty movieResult.reviews }">
+									<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movieResult.reviews)}"/>
+									<img height="15" width="15"
+										src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg">
+								</c:when>
+								<c:otherwise>
+									<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum}"/>
+									<img height="15" width="15"
+										src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg">
+								</c:otherwise>
+							</c:choose>
+						</span><br />
+						<!-- c:url is used here to url-encode the genre/director/actor, so if their name is "null&illegalargument=foo" we don't get funny business. -->
+						<b>Genres</b>: <c:forEach items="${ movieResult.genres }" var="g" varStatus="stat">| <span class="movieGenre">
+							<c:url value="searchMovies4.html" var="myURL">
+							   <c:param name="searchTerm" value="${g}"/>
+							   <c:param name="type" value="2"/>
+							   <c:param name="comparator" value="3"/>
+							</c:url>
+							<a href="${myURL}">${g}</a>
+						</span> ${stat.last ? '' : '|'}</c:forEach><br />
+						<b>Directors</b>: <c:forEach items="${ movieResult.directors }" var="d" varStatus="stat">| <span class="movieDirector">
+							<c:url value="searchMovies4.html" var="myURL">
+							   <c:param name="searchTerm" value="${d}"/>
+							   <c:param name="type" value="3"/>
+							   <c:param name="comparator" value="3"/>
+							</c:url>
+							<a href="${myURL}">${d}</a>
+						</span> ${stat.last ? '' : '|'}</c:forEach><br />
+						<b>Artists</b>: <c:forEach items="${ movieResult.actors }" var="a" varStatus="stat">| <span class="movieActor">
+							<c:url value="searchMovies4.html" var="myURL">
+							   <c:param name="searchTerm" value="${a}"/>
+							   <c:param name="type" value="4"/>
+							   <c:param name="comparator" value="3"/>
+							</c:url>
+							<a href="${myURL}">${a}</a>
+						</span> ${stat.last ? '' : '|'}</c:forEach><br />
+						<br />
+						<b>===== Short Plot Summary =====</b><br />
+							<span class="moviePlot">${movieResult.plot}</span>
+						<br />
+						<br />
+						<hr>
+						<br />
+					</li>
+				</c:if>
+			</c:forEach>
+			</ul>
+			<a href="javascript:changePageBy(-1)" id="search_btn_prev">Prev</a>
+			<a href="javascript:changePageBy(-4)" id="searchpageno-4" style="display: none;"></a>
+			<a href="javascript:changePageBy(-3)" id="searchpageno-3" style="display: none;"></a>
+			<a href="javascript:changePageBy(-2)" id="searchpageno-2" style="display: none;"></a>
+			<a href="javascript:changePageBy(-1)" id="searchpageno-1" style="display: none;"></a>
+			<a id="searchpageno"></a>
+			<a href="javascript:changePageBy(1)" id="searchpageno1" style="display: none;"></a>
+			<a href="javascript:changePageBy(2)" id="searchpageno2" style="display: none;"></a>
+			<a href="javascript:changePageBy(3)" id="searchpageno3" style="display: none;"></a>
+			<a href="javascript:changePageBy(4)" id="searchpageno4" style="display: none;"></a>
+			<a href="javascript:changePageBy(1)" id="search_btn_next">Next</a>
+		</c:when>
+		<c:otherwise>
 			No results were found.
 		</c:otherwise>
 				</c:choose>
