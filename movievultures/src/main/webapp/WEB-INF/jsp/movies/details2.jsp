@@ -214,7 +214,6 @@
 
 		<c:if test="${not empty user.username}"> |
 		<c:choose>
-<<<<<<< HEAD
 				<c:when test="${empty userreview}">
 					<a href="../review/add.html?id=${movie.movieId}"
 						class="btn btn-primary">Review this movie</a>
@@ -302,65 +301,6 @@
 						<img height="15" width="15"
 							src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg">
 						<br />
-=======
-			<c:when test="${empty userreview}">
-				<a href="../review/add.html?id=${movie.movieId}">Review this movie</a>
-			</c:when>
-			<c:otherwise>
-				<a href="../review/edit.html?id=${movie.movieId}">Edit your review</a>
-			</c:otherwise>
-		</c:choose> |
-		<a href="../elo/add.html?movie1=${movie.movieId}">Elo rate this movie</a> |
-		<a href="../user/addFav.html?movieId=${movie.movieId}">Add to Favorites?</a> |
-		<a href="../user/addWL.html?movieId=${movie.movieId}">Add to WatchList?</a> 
-	</c:if>
-				
-	<p><b>Year of Release</b>: <fmt:formatDate value="${ movie.date }" pattern="yyyy" /></p>
-				
-	<br /><b>Plot</b><br />
-	<p>${movie.plot}</p>
-		
-	<br /><b>Genre</b><br />
-	<c:choose>
-		<c:when test="${ not empty movie.genres }">
-			<c:forEach items="${movie.genres}" var="genre">
-				<ul><li>${genre}</li></ul>
-			</c:forEach>
-		</c:when>
-		<c:otherwise>
-			Please help by adding Genres to this movie.
-		</c:otherwise>
-	</c:choose>
-	
-	<br /><b>Cast</b><br />
-		<c:forEach items="${movie.actors}" var="c">
-			<ul><li>${c}</li></ul>
-		</c:forEach>
-	<br /> 
-		
-	<br /><b>Director(s)</b><br />
-		<c:forEach items="${movie.directors}" var="director">
-			<ul><li>${director}</li></ul>
-		</c:forEach>
-	<br />
-	
-	<p><b>================================</b><br />
-	   <b>===== RATINGS AND REVIEWS =====</b><br />
-	   <b>================================</b></p>
-	
-	<c:set var="sum" value="0" />
-	<c:forEach items="${ movie.reviews }" var="r">
-		<c:set var="sum" value="${ sum + r.rating }" />
-	</c:forEach>
-	<c:choose>
-		<c:when test="${ not empty movie.reviews }">
-			<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movie.reviews)}"/><br />
-		</c:when>
-		<c:otherwise>
-			<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum}"/><br /><br />
-		</c:otherwise>
-	</c:choose>
->>>>>>> 8f9c1bbdee3d512a656d0b7d9ca7f621ff478c64
 
 						<c:choose>
 							<c:when test="${ not empty movie.reviews }">
