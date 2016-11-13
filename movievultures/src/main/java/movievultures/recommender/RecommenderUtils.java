@@ -57,7 +57,7 @@ public class RecommenderUtils {
 		Recommender cachingRecommender = new CachingRecommender(recommender);
 		List<Integer>recs = new ArrayList<Integer>();
 		List<RecommendedItem> recommendations =
-				  cachingRecommender.recommend(userId, 5);
+				  cachingRecommender.recommend(userId, 6);
 		System.out.println("total recommendations: " + recommendations.size());
 		Iterator<RecommendedItem>iter = recommendations.iterator();
 		while ( iter.hasNext()) {
