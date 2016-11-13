@@ -108,7 +108,6 @@
 			</c:forEach>
 		</table>
 	</c:if>
-
 	<br />
 	
 	<h3>Watch Later:</h3>
@@ -130,6 +129,7 @@
 			</c:forEach>
 		</table>
 	</c:if>
+	<br />
 
 	<h3>Reviewed Movies:</h3>
 	<c:if test="${empty user.reviewedMovies}">
