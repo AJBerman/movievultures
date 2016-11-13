@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,6 +25,7 @@ import movievultures.model.dao.MovieDao;
 import movievultures.model.dao.ReviewDao;
 import movievultures.model.dao.UserDao;
 import movievultures.security.SecurityUtils;
+import movievultures.web.validator.AddReviewValidator;
 
 @Controller
 @SessionAttributes("review")
@@ -34,6 +36,9 @@ public class ReviewController {
 	private ReviewDao reviewDao;
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	AddReviewValidator addReviewValidator;
 	
 	@RequestMapping(value = "/review/add.html", method = RequestMethod.GET)
     public String add(@RequestParam("id") int id, ModelMap models ) // e.g. /rate?id=5267
@@ -51,10 +56,13 @@ public class ReviewController {
     }
 	
 	@RequestMapping(value = "/review/add.html", method = RequestMethod.POST)
-    public String add( @ModelAttribute("review") Review review ) // e.g. /rate?id=5267
+    public String add( @ModelAttribute("review") Review review, BindingResult result, SessionStatus status ) // e.g. /rate?id=5267
     {
 		//Debugging statement
 		//System.out.println("Review ID: " + review.getReviewId());
+		addReviewValidator.validate(review, result);
+		if(result.hasErrors())
+			return "review/add";
 		try {
 			Review oldreview = reviewDao.getReviewByUserAndMovie(review.getMovie(), review.getUser());
 			//if we're still here, that means there's already a review.
@@ -66,6 +74,7 @@ public class ReviewController {
 		} catch (EmptyResultDataAccessException e) {
 			review = reviewDao.saveReview(review);
 		}
+		status.setComplete();
         return "redirect:../movies/details2.html?id=" + review.getMovie().getMovieId();
     }
 

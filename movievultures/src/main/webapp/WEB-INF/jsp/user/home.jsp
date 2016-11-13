@@ -53,15 +53,7 @@
 		</ul>
 	</div>
 	</nav>
-	<%-- <p align="right">
-		<security:authorize access="isAuthenticated()">
-			<a href="<c:url value='/' /> ">Main</a> |
-			<a href="<c:url value='/logout' />">Logout</a> 
-		</security:authorize>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-				| <a href="../user/list.html">Management</a>
-		</sec:authorize>
-	</p> --%>
+
 	<div class="container">
 	<h2>Welcome ${user.username}</h2>
 	
