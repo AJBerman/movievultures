@@ -14,15 +14,15 @@
 <script>
 function addGenre() {
 	var id = Date.now()
-	$('#genres').append( '<span id="genre' + id + '"><input type="text" class="form-control" placeholder="Horror, Comedy,....." name="editmovie_genres""/> <a onclick="$(\'#genre' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a><br /></span>' );
+	$('#genres').append( '<span id="genre' + id + '"><br /><input type="text" class="form-control" placeholder="Horror, Comedy,....." name="editmovie_genres""/> <a onclick="$(\'#genre' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a></span>' );
 }
 function addActor() {
 	var id = Date.now()
-	$('#actors').append( '<span id="actor' + id + '"><input type="text" class="form-control" placeholder="Fay Wray, Ronald Reagan,....." name="editmovie_actors""/> <a onclick="$(\'#actor' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a><br /></span>' );
+	$('#actors').append( '<span id="actor' + id + '"><br /><input type="text" class="form-control" placeholder="Fay Wray, Ronald Reagan,....." name="editmovie_actors""/> <a onclick="$(\'#actor' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a></span>' );
 }
 function addDirector() {
 	var id = Date.now()
-	$('#directors').append( '<span id="director' + id + '"><input type="text" class="form-control" placeholder="Wes Anderson, Woody Allen,....." name="editmovie_directors"/> <a onclick="$(\'#director' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a><br /></span>' );
+	$('#directors').append( '<span id="director' + id + '"><br /><input type="text" class="form-control" placeholder="Wes Anderson, Woody Allen,....." name="editmovie_directors"/> <a onclick="$(\'#director' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a></span>' );
 }
 </script>
 </head>
@@ -75,50 +75,50 @@ function addDirector() {
 				<br />
 			</div>
 			<div class="form-group row">
-				<div class="col-xs-2 col-form-label">Genre(s) <a onclick="addGenre()"><i style="color: green;" class="fa fa-plus-circle" aria-hidden="true"></i></a></div>
+				<div class="col-xs-2 col-form-label">Genre(s)</div>
 				<div class="col-xs-10">
 					<span id="genres">
 					<c:forEach items="${movie.genres}" var="genre" varStatus="stat">
 						<span id="genre${stat.count}">
+						<br />
 						<input type="text" class="form-control" placeholder="Horror, Comedy,....." name="editmovie_genres" value="${genre}"/>
-							<a onclick="$('#genre${stat.count}').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a>
-							<br />
+						<a onclick="$('#genre${stat.count}').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a>
 						</span>
 					</c:forEach>
 					</span>
-					
+					<a onclick="addGenre()"><i style="color: green;" class="fa fa-plus-circle" aria-hidden="true"></i></a>
 				</div>
 				<br />
 			</div>
 			<div class="form-group row">
-				<div class="col-xs-2 col-form-label">Cast <a onclick="addActor()"><i style="color: green;" class="fa fa-plus-circle" aria-hidden="true"></i></a></div>
+				<div class="col-xs-2 col-form-label">Cast</div>
 				<div class="col-xs-10">
 					<span id="actors">
 					<c:forEach items="${movie.actors}" var="actor" varStatus="stat">
 						<span id="actor${stat.count}">
+						<br />
 						<input type="text" class="form-control" placeholder="Fay Wray, Ronald Reagan,....." name="editmovie_actors" value="${actor}"/>
-							<a onclick="$('#actor${stat.count}').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a>
-							<br />
+						<a onclick="$('#actor${stat.count}').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a>
 						</span>
 					</c:forEach>
 					</span>
-					
+					<a onclick="addActor()"><i style="color: green;" class="fa fa-plus-circle" aria-hidden="true"></i></a>
 				</div>
 				<br />
 			</div>
 			<div class="form-group row">
-				<div class="col-xs-2 col-form-label">Director(s) <a onclick="addDirector()"><i style="color: green;" class="fa fa-plus-circle" aria-hidden="true"></i></a></div>
+				<div class="col-xs-2 col-form-label">Director(s)</div>
 				<div class="col-xs-10">
 					<span id="directors">
 					<c:forEach items="${movie.directors}" var="director" varStatus="stat">
 						<span id="director${stat.count}">
+						<br />
 						<input type="text" class="form-control" placeholder="Wes Anderson, Woody Allen,....." name="editmovie_directors" value="${director}"/>
-							<a onclick="$('#director${stat.count}').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a>
-							<br />
+						<a onclick="$('#director${stat.count}').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a>
 						</span>
 					</c:forEach>
 					</span>
-					
+					<a onclick="addDirector()"><i style="color: green;" class="fa fa-plus-circle" aria-hidden="true"></i></a>
 				</div>
 				<br />
 			</div>
