@@ -29,74 +29,76 @@
 	crossorigin="anonymous"></script>
 <title>Search for a Movie</title>
 <style>
-<!-- For search highlighting -->
-	<%-- For search highlighting --%>
-	mark {
-	    background: yellow;
-	}
-	.marked {
-	    background: yellow;
-	}
+<!--
+For search highlighting --> <%-- For search highlighting --%> mark {
+	background: yellow;
+}
+
+.marked {
+	background: yellow;
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
-var current_page_reviews = 1;
-var records_per_page = 20;
+	var current_page_reviews = 1;
+	var records_per_page = 20;
 
-function changePageBy(num) {
-	if(current_page_reviews+num >= 1 && current_page_reviews+num <= numPagesReviews()) {
-		current_page_reviews += num;
-        changePageReviews(current_page_reviews);
+	function changePageBy(num) {
+		if (current_page_reviews + num >= 1
+				&& current_page_reviews + num <= numPagesReviews()) {
+			current_page_reviews += num;
+			changePageReviews(current_page_reviews);
+		}
 	}
-}
 
-function changePageReviews(page)
-{
-    // Validate page
-    if (page < 1) page = 1;
-    if (page > numPagesReviews()) page = numPagesReviews();
+	function changePageReviews(page) {
+		// Validate page
+		if (page < 1)
+			page = 1;
+		if (page > numPagesReviews())
+			page = numPagesReviews();
 
-    $(".search").hide();
-	$(".searchpage"+page).show();
-    $("#searchpageno").html(page);
-    for(var i = 1; i <= 4; i++) {
-    	if(page-i >= 1) {
-    		$("#searchpageno-"+i).show().html(page-i);
-    		
-    	} else {
-    		$("#searchpageno-"+i).hide();
-    	}
-    	console.log($("#searchpageno"+i));
-    	if(page+i <= numPagesReviews()) {
-    		$("#searchpageno"+i).show().html(page+i);
-    	} else {
-    		$("#searchpageno"+i).hide();
-    	}
-    }
+		$(".search").hide();
+		$(".searchpage" + page).show();
+		$("#searchpageno").html(page);
+		for (var i = 1; i <= 4; i++) {
+			if (page - i >= 1) {
+				$("#searchpageno-" + i).show().html(page - i);
 
-    if (page == 1) {
-        $("#search_btn_prev").hide();
-    } else {
-        $("#search_btn_prev").show();
-    }
+			} else {
+				$("#searchpageno-" + i).hide();
+			}
+			console.log($("#searchpageno" + i));
+			if (page + i <= numPagesReviews()) {
+				$("#searchpageno" + i).show().html(page + i);
+			} else {
+				$("#searchpageno" + i).hide();
+			}
+		}
 
-    if (page == numPagesReviews()) {
-        $("#search_btn_next").hide();
-    } else {
-        $("#search_btn_next").show();
-    }
-}
+		if (page == 1) {
+			$("#search_btn_prev").hide();
+		} else {
+			$("#search_btn_prev").show();
+		}
 
-function numPagesReviews()
-{
-	console.log(Math.ceil($("#results > li").length / records_per_page));
-    return Math.ceil($("#results > li").length / records_per_page);
-}
+		if (page == numPagesReviews()) {
+			$("#search_btn_next").hide();
+		} else {
+			$("#search_btn_next").show();
+		}
+	}
 
-window.onload = function() {
-	changePageReviews(1);
-};</script>
+	function numPagesReviews() {
+		console.log(Math.ceil($("#results > li").length / records_per_page));
+		return Math.ceil($("#results > li").length / records_per_page);
+	}
+
+	window.onload = function() {
+		changePageReviews(1);
+	};
+</script>
 </head>
 <body>
 	<nav class="navbar navbar-inverse">
@@ -148,32 +150,37 @@ window.onload = function() {
 	</sec:authorize>
 	</p>
 	
-	<jsp:include page="searchMovies2.jsp" />
+	
 	<p><a href="/movievultures/home.html"><img src="../images/MV_banner.png" alt="Banner of Movie Vultures" /></a></p>
 	
 	<%-- Calculating none hidden results --%>
+	<div class="container">
+	<jsp:include page="searchMovies2.jsp" />
 	<c:set var="res" value="0" />
 	<c:forEach items="${ movieResults }" var="movieResult">
 		<c:if test="${ !movieResult.hidden }">
-			<c:set var="res" value="${ res + 1 }" />			
+			<c:set var="res" value="${ res + 1 }" />
 		</c:if>
 	</c:forEach>
-		
-	<h2><u>MOVIE RESULTS</u>: ( ${ res } result(s) )</h2>
-	<c:choose>
-		<c:when test="${type != 'random movies'}">
-			<h3>Where <span id="searchResultType">${type}</span> <span id="comparator">${comparator}</span> <span id="searchResultTerm">${searchTerm}</span></h3>
-		</c:when>
-		<c:otherwise>
-			<h3>Where movie search is <span id="searchResultType">${type}</span> </h3>
-		</c:otherwise>
-	</c:choose>
 	
-	
-	<hr>
-	<hr>
-	<br />
-	
+		<h2>MOVIE RESULTS: ( ${ res } result(s) )</h2>
+		<c:choose>
+			<c:when test="${type != 'random movies'}">
+				<h4>
+					Where <span id="searchResultType">${type}</span> <span
+						id="comparator">${comparator}</span> <span id="searchResultTerm">${searchTerm}</span>
+				</h4>
+			</c:when>
+			<c:otherwise>
+				<h4>
+					Where movie search is <span id="searchResultType">${type}</span>
+				</h4>
+			</c:otherwise>
+		</c:choose>
+
+		<br />
+		<div class="panel panel-default">
+			<div class="panel-body">	
 	<c:choose>
 		<c:when test="${ not empty movieResults }">
 			<ul id="results">
@@ -191,7 +198,20 @@ window.onload = function() {
 						<c:forEach items="${ movieResult.reviews }" var="r">
 							<c:set var="sum" value="${ sum + r.rating }" />
 						</c:forEach>
-						<b>Total User Rating</b>: <span class="movieRating"><fmt:formatNumber type="number" maxFractionDigits="0" value="${sum/fn:length(movieResult.reviews)}"/></span><br />
+						<span class="movieRating">
+							<c:choose>
+								<c:when test="${ not empty movieResult.reviews }">
+									<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movieResult.reviews)}"/>
+									<img height="15" width="15"
+										src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg">
+								</c:when>
+								<c:otherwise>
+									<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum}"/>
+									<img height="15" width="15"
+										src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg">
+								</c:otherwise>
+							</c:choose>
+						</span><br />
 						<!-- c:url is used here to url-encode the genre/director/actor, so if their name is "null&illegalargument=foo" we don't get funny business. -->
 						<b>Genres</b>: <c:forEach items="${ movieResult.genres }" var="g" varStatus="stat">| <span class="movieGenre">
 							<c:url value="searchMovies4.html" var="myURL">
@@ -246,7 +266,9 @@ window.onload = function() {
 				</c:choose>
 			</div>
 		</div>
+
 	</div>
+
 	<script src="/movievultures/res/js/jquery-3.1.1.min.js"></script>
 	<!-- For search highlighting -->
 	<script src="/movievultures/res/js/jquery.mark.js"></script>
