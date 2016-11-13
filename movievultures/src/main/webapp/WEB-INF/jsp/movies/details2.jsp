@@ -295,13 +295,20 @@
 						<c:forEach items="${ movie.reviews }" var="r">
 							<c:set var="sum" value="${ sum + r.rating }" />
 						</c:forEach>
-						<b>Total User Rating</b>:
-						<fmt:formatNumber type="number" maxFractionDigits="2"
-							value="${sum/fn:length(movie.reviews)}" />
-						<img height="15" width="15"
-							src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg">
-						<br />
-
+						<c:choose>
+								<c:when test="${ not empty movieResult.reviews }">
+									<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movieResult.reviews)}"/>
+									<img height="15" width="15"
+										src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg">
+									<br />
+								</c:when>
+								<c:otherwise>
+									<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum}"/>
+									<img height="15" width="15"
+										src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg">
+									<br />
+								</c:otherwise>
+						</c:choose>
 						<c:choose>
 							<c:when test="${ not empty movie.reviews }">
 								<!-- Client-Side Pagination. This is "bad" in some regards, but it's much simpler to implement. This was tested up to 10,000 reviews and works "okay" at that point (2 mb page weight and 5-ish second load time). We don't expect to have anywhere near 10,000 reviews any time soon. -->
