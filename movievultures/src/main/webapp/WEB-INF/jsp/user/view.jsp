@@ -15,7 +15,7 @@
 		
 		<sec:authorize access="!isFullyAuthenticated()">
 			<a href="../user/register.html">Register</a> |
-			<a href= "<c:url value='/login'/>"  >Login</a>
+			<a href= "<c:url value='/login.html'/>"  >Login</a>
 		</sec:authorize>
 		
 		<sec:authorize access="isAuthenticated()">
