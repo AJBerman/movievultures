@@ -32,15 +32,15 @@
 <script>
 function addGenre() {
 	var id = Date.now()
-	$('#genres').append( '<span id="genre' + id + '"><br /><input type="text" class="form-control" placeholder="Horror, Comedy,....." name="editmovie_genres""/> <a onclick="$(\'#genre' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a></span>' );
+	$('#genres').append( '<span id="genre' + id + '"><br /><input type="text" class="form-control" placeholder="Horror, Comedy,....." name="addmovie_genres""/> <a onclick="$(\'#genre' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a></span>' );
 }
 function addActor() {
 	var id = Date.now()
-	$('#actors').append( '<span id="actor' + id + '"><br /><input type="text" class="form-control" placeholder="Fay Wray, Ronald Reagan,....." name="editmovie_actors""/> <a onclick="$(\'#actor' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a></span>' );
+	$('#actors').append( '<span id="actor' + id + '"><br /><input type="text" class="form-control" placeholder="Fay Wray, Ronald Reagan,....." name="addmovie_actors""/> <a onclick="$(\'#actor' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a></span>' );
 }
 function addDirector() {
 	var id = Date.now()
-	$('#directors').append( '<span id="director' + id + '"><br /><input type="text" class="form-control" placeholder="Wes Anderson, Woody Allen,....." name="editmovie_directors"/> <a onclick="$(\'#director' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a></span>' );
+	$('#directors').append( '<span id="director' + id + '"><br /><input type="text" class="form-control" placeholder="Wes Anderson, Woody Allen,....." name="addmovie_directors"/> <a onclick="$(\'#director' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a></span>' );
 }
 </script>
 </head>
