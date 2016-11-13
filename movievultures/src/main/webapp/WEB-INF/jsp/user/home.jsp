@@ -100,7 +100,7 @@
 	</c:if>
 
 	<h3 style="cursor: pointer;" id="revHeader">Reviewed Movies:</h3>
-	<div id="slideRev">
+	<div id="slideRev" style="display:none;">
 	<c:if test="${empty user.reviewedMovies}">
 		<p>You haven't reviewed any movies yet!</p>
 	</c:if>
