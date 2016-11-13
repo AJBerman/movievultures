@@ -9,6 +9,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>"There's no place like home"</title>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="<c:url value="/res/js/userHome.js" />"></script>
 </head>
 <body>
 
@@ -46,6 +48,8 @@
 					</tr>
 				</c:forEach>
 			</table>
+			<input type="button" value="Less" id="lessRec" />
+			<input type="button" value="More" id="moreRec" />
 		</c:if>
 	<br />
 	
@@ -67,6 +71,8 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<input type="button" value="Less" id="lessFav" />
+		<input type="button" value="More" id="moreFav" />
 	</c:if>
 
 	<br />
@@ -89,18 +95,22 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<input type="button" value="Less" id="lessWatch" />
+		<input type="button" value="More" id="moreWatch" />
 	</c:if>
 
-	<h3>Reviewed Movies:</h3>
+	<h3 style="cursor: pointer;" id="revHeader">Reviewed Movies:</h3>
+	<div id="slideRev">
 	<c:if test="${empty user.reviewedMovies}">
 		<p>You haven't reviewed any movies yet!</p>
 	</c:if>
 	<c:if test= "${not empty user.reviewedMovies}">
-	<table id="reviews" border=1>
-		<tr class="header"><th>Movie Title</th> <th>Rating</th><th>Operations</th></tr>
+	<table id="rev" border=1>
+		<tr class="header"><th>Movie Title</th><th>Review</th> <th>Rating</th><th>Operations</th></tr>
 		<c:forEach items="${user.reviewedMovies}" var="review" varStatus="status">
 			<tr>
 				<td><a href="../movies/details2.html?id=${ review.movie.movieId }">${review.movie.title}</a></td>
+				<td>${review.review}</td>
 				<td>${review.rating }</td>
 				<td>
 					<a href="../review/edit.html?id=${review.movie.movieId}">Edit</a>
@@ -108,6 +118,9 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<input type="button" value="Less" id="lessRev" />
+	<input type="button" value="More" id="moreRev" />
 	</c:if>	
+	</div>
 </body>
 </html>
