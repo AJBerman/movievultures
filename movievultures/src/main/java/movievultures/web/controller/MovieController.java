@@ -225,9 +225,9 @@ public class MovieController {
 							@RequestParam String editmovie_title, 
 							@RequestParam String editmovie_plot, 
 							@RequestParam String editmovie_date,
-							@RequestParam String editmovie_genres,
-							@RequestParam String editmovie_actors,
-							@RequestParam String editmovie_directors,
+							@RequestParam List<String> editmovie_genres,
+							@RequestParam List<String> editmovie_actors,
+							@RequestParam List<String> editmovie_directors,
 							ModelMap models) throws ParseException
 	{
 		int Id=Integer.parseInt(id);
@@ -237,27 +237,9 @@ public class MovieController {
 		//DateFormat format = new SimpleDateFormat("yyyy-MM-DD");
 		DateFormat format = new SimpleDateFormat("yyyy");
 		movie.setDate(format.parse(editmovie_date));
-		
-		List<String> genres = new ArrayList<>();
-		String[] gen = editmovie_genres.split(",");
-		for (int i = 0; i < gen.length; i++) {
-			genres.add(gen[i]);
-		}
-		movie.setGenres(genres);
-
-		List<String> cast = new ArrayList<>();
-		String[] actors = editmovie_actors.split(",");
-		for (int i = 0; i < actors.length; i++) {
-			cast.add(actors[i]);
-		}
-		movie.setActors(cast);
-		
-		List<String> directors = new ArrayList<>();
-		String[] dir = editmovie_directors.split(",");
-		for (int i = 0; i < dir.length; i++) {
-			directors.add(dir[i]);
-		}
-		movie.setDirectors(directors);
+		movie.setGenres(editmovie_genres);
+		movie.setActors(editmovie_actors);
+		movie.setDirectors(editmovie_directors);
 		
 		movie=movieDao.saveMovie(movie);
 
