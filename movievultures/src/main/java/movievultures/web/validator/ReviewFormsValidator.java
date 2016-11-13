@@ -9,7 +9,7 @@ import movievultures.model.Review;
 
 
 @Component
-public class AddReviewValidator implements Validator{
+public class ReviewFormsValidator implements Validator{
 
 	@Override
 	public boolean supports(Class<?> clazz) {

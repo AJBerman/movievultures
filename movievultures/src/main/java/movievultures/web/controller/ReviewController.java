@@ -25,7 +25,7 @@ import movievultures.model.dao.MovieDao;
 import movievultures.model.dao.ReviewDao;
 import movievultures.model.dao.UserDao;
 import movievultures.security.SecurityUtils;
-import movievultures.web.validator.AddReviewValidator;
+import movievultures.web.validator.ReviewFormsValidator;
 
 @Controller
 @SessionAttributes("review")
@@ -38,7 +38,7 @@ public class ReviewController {
 	private UserDao userDao;
 	
 	@Autowired
-	AddReviewValidator addReviewValidator;
+	ReviewFormsValidator reviewFormsValidator;
 	
 	@RequestMapping(value = "/review/add.html", method = RequestMethod.GET)
     public String add(@RequestParam("id") int id, ModelMap models ) // e.g. /rate?id=5267
@@ -60,7 +60,7 @@ public class ReviewController {
     {
 		//Debugging statement
 		//System.out.println("Review ID: " + review.getReviewId());
-		addReviewValidator.validate(review, result);
+		reviewFormsValidator.validate(review, result);
 		if(result.hasErrors())
 			return "review/add";
 		try {
@@ -89,10 +89,13 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/review/edit.html", method = RequestMethod.POST)
-	public String edit( @ModelAttribute Review review, SessionStatus status )
+	public String edit( @ModelAttribute Review review, BindingResult result, SessionStatus status )
 	{
 		//Debugging statement
 		//System.out.println("Review ID: " + review.getReviewId());
+		reviewFormsValidator.validate(review, result);
+		if(result.hasErrors())
+			return "review/edit";
 		try {
 			Review oldreview = reviewDao.getReviewByUserAndMovie(review.getMovie(), review.getUser());
 			//if we're still here, that means there's already a review.
@@ -103,8 +106,8 @@ public class ReviewController {
 		} catch (EmptyResultDataAccessException e) {
 			//for some reason they're trying to edit a review that didn't exist in the first place. Let's save it anyway.
 			review = reviewDao.saveReview(review);
-			status.setComplete();
 		}
+		status.setComplete();
         return "redirect:../movies/details2.html?id=" + review.getMovie().getMovieId();
 	}
 

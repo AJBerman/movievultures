@@ -116,6 +116,7 @@
 		<form:textarea type="text" class="form-control" path="review" rows="6" />
 		<form:input path="reviewId" type="hidden" value="${review.reviewId}" />
 		<br />
+			<font color="red"><form:errors path="rating" /></font>
 		<br />
 		<center>
 		<input type="submit" class="btn btn-primary" value="Submit">
