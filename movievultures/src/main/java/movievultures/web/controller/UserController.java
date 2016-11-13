@@ -206,6 +206,12 @@ public class UserController {
 		return "redirect:/user/list.html";
 	}
 
+	@RequestMapping(value="login.html", method=RequestMethod.GET)
+	public String getLogin()
+	{
+		return "login";
+	}
+	
 	
 	@RequestMapping(value="user/searchForm.html", method=RequestMethod.GET)
 	public String searchUsers(){

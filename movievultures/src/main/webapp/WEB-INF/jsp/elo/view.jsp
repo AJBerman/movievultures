@@ -7,12 +7,31 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
+
 <title>${runoff.winner.title} > ${runoff.loser.title}</title>
 </head>
 <body>
 	<h5><a href="/movievultures/home.html">Home</a></h5>
 	
-	<table border="1">
+	<table class="table table-bordered table-striped table-hover">
 		<tr><th>Rating By:</th><td>${runoff.user.username}</td></tr>
 		<tr><th>On:</th><td><fmt:formatDate value="${runoff.date}" pattern="MM-dd-yyyy hh:mm" /></td></tr>
 		<tr><th>Title</th><td><a href="/movievultures/movies/details.html?id=${runoff.winner.movieId}">${runoff.winner.title}</a></td><td><a href="/movievultures/movies/details.html?id=${runoff.loser.movieId}">${runoff.loser.title}</a></td></tr>
