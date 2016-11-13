@@ -74,21 +74,19 @@
 	
 	<br />
 	<h3>Recommendations:</h3>
-	<c:if test="${empty user.recommendations}">
-		<p>None at the moment.</p>
-	</c:if>
-	<c:if test="${not empty user.recommendations}">
-		<table>
-			<tr><th>Title</th></tr>
-			<c:forEach items="${user.recommendations}" var="movie" varStatus="status" >
-				<tr>
-					<td>${movie.title}</td>
-					<td><a href="movie/view.html">view</a></td>
-				</tr>
-			</c:forEach>
-		</table>
-	</c:if>
-	
+		<c:if test="${empty user.recommendations}">
+			<p>None at the moment.</p>
+		</c:if>
+		<c:if test="${not empty user.recommendations}">
+			<table id="rec" border=1>
+				<tr class="header"><th>Title</th></tr>
+				<c:forEach items="${user.recommendations}" var="movie" varStatus="status" >
+					<tr>
+						<td><a href="../movies/details2.html?id=${movie.movieId}">${movie.title}</a></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</c:if>
 	<br />
 	
 	<h3>Favorites:</h3>
@@ -96,7 +94,7 @@
 		<p>None at the moment.</p>
 	</c:if>
 	<c:if test="${not empty user.favorites}">
-		<table class="table table-bordered table-striped table-hover">
+		<table id="fav" class="table table-bordered table-striped table-hover">
 			<tr><th>Title</th><th>action</th></tr>
 			<c:forEach items="${user.favorites}" var="movie" varStatus="status" >
 				<tr>
@@ -118,7 +116,7 @@
 		<p>None at the moment.</p>
 	</c:if>
 	<c:if test="${not empty user.watchLater}">
-		<table class="table table-bordered table-striped table-hover">
+		<table id="watch" class="table table-bordered table-striped table-hover">
 			<tr><th>Title</th><th>action</th></tr>
 			<c:forEach items="${user.watchLater}" var="movie" varStatus="status" >
 				<tr>
@@ -138,7 +136,7 @@
 		<p>You haven't reviewed any movies yet!</p>
 	</c:if>
 	<c:if test= "${not empty user.reviewedMovies}">
-	<table class="table table-bordered table-striped table-hover">
+	<table id="reviews" class="table table-bordered table-striped table-hover">
 		<tr><th>Movie Title</th> <th>Rating</th><th>Operations</th></tr>
 		<c:forEach items="${user.reviewedMovies}" var="review" varStatus="status">
 			<tr>

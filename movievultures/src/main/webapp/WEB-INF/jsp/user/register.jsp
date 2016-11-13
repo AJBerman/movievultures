@@ -54,7 +54,7 @@
 		<a href="<c:url value='/' />" >Main</a> |
 		
 		<sec:authorize access="!isFullyAuthenticated()">
-			<a href= "<c:url value='/login'/>"  >Login</a>
+			<a href= "<c:url value='/login.html'/>"  >Login</a>
 		</sec:authorize>
 	</p> --%>
 	<div class="container">

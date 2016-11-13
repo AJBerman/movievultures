@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import movievultures.model.Movie;
 import movievultures.model.User;
 import movievultures.model.dao.MovieDao;
 import movievultures.model.dao.UserDao;
+import movievultures.recommender.RecommenderUtils;
 import movievultures.security.SecurityUtils;
 import movievultures.web.validator.EditUserValidator;
 import movievultures.web.validator.UserValidator;
@@ -40,6 +42,10 @@ public class UserController {
 	
 	@Autowired
 	EditUserValidator editUserValidator;
+	
+	@Autowired
+	RecommenderUtils recommender;
+	
 	@RequestMapping("user/list.html")
 	public String listUsers(ModelMap models){
 		
@@ -51,11 +57,11 @@ public class UserController {
 	
 	//this will take user to user's home page, can view everything
 	@RequestMapping("user/home.html")
-	public String home(@RequestParam String username, ModelMap models){
+	public String home(@RequestParam String username, ModelMap models, @RequestHeader("referer") String referer){
 		String username_sec = "";
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if(!(authentication instanceof AnonymousAuthenticationToken) && username.equals(authentication.getName())){
-			username_sec = authentication.getName();
+			username_sec = authentication.getName();			
 			models.put("user", userDao.getUserByUsername(username));
 			return "user/home";
 		}else if(!(authentication instanceof AnonymousAuthenticationToken) && !username.equals(authentication.getName())){
@@ -184,8 +190,6 @@ public class UserController {
 		return "redirect:/user/list.html";
 	}
 	
-	//TODO: disable user
-	//TODO: enable user (if disabled)
 	@RequestMapping(value="user/management.html", method=RequestMethod.GET)
 	public String manage(@RequestParam int userid, ModelMap models){
 		//only authenticated users allowed here

@@ -30,6 +30,8 @@ public interface MovieDao {
 	
 	List<Movie> getMoviesByEloRating(double eloRating, String comparator);
 	
+	List<Movie> getMoviesByIDList(List<Integer> movieIds);
+	
 	Movie saveMovie(Movie movie);
 
 	void updateElos(Movie winner, Movie loser);
@@ -41,5 +43,9 @@ public interface MovieDao {
 	Long getTotalRateTimes(int movieId);
 
 	Double getAverageRating(int movieId);
+
+	List<Object[]> fullTextSearch(String text);
+
+	List<Object[]> fullTextSearchIndexed(String text);
 	
 }
