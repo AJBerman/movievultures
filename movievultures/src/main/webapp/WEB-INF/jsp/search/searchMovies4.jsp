@@ -191,7 +191,16 @@ window.onload = function() {
 						<c:forEach items="${ movieResult.reviews }" var="r">
 							<c:set var="sum" value="${ sum + r.rating }" />
 						</c:forEach>
-						<b>Total User Rating</b>: <span class="movieRating"><fmt:formatNumber type="number" maxFractionDigits="0" value="${sum/fn:length(movieResult.reviews)}"/></span><br />
+						<span class="movieRating">
+							<c:choose>
+								<c:when test="${ not empty movieResult.reviews }">
+									<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movieResult.reviews)}"/>
+								</c:when>
+								<c:otherwise>
+									<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum}"/>
+								</c:otherwise>
+							</c:choose>
+						</span><br />
 						<!-- c:url is used here to url-encode the genre/director/actor, so if their name is "null&illegalargument=foo" we don't get funny business. -->
 						<b>Genres</b>: <c:forEach items="${ movieResult.genres }" var="g" varStatus="stat">| <span class="movieGenre">
 							<c:url value="searchMovies4.html" var="myURL">
