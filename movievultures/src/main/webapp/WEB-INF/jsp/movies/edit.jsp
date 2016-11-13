@@ -75,7 +75,7 @@ function addDirector() {
 				<br />
 			</div>
 			<div class="form-group row">
-				<div class="col-xs-2 col-form-label">Genre <a onclick="addGenre()"><i style="color: green;" class="fa fa-plus-circle" aria-hidden="true"></i></a></div>
+				<div class="col-xs-2 col-form-label">Genre(s) <a onclick="addGenre()"><i style="color: green;" class="fa fa-plus-circle" aria-hidden="true"></i></a></div>
 				<div class="col-xs-10">
 					<span id="genres">
 					<c:forEach items="${movie.genres}" var="genre" varStatus="stat">
