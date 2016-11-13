@@ -26,8 +26,6 @@
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 	crossorigin="anonymous"></script>
 <title>"There's no place like home"</title>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="<c:url value="/res/js/userHome.js" />"></script>
 </head>
 <body>
 	<nav class="navbar navbar-inverse">
@@ -88,8 +86,6 @@
 					</tr>
 				</c:forEach>
 			</table>
-			<input type="button" value="Less" id="lessRec" />
-			<input type="button" value="More" id="moreRec" />
 		</c:if>
 	<br />
 	
@@ -111,8 +107,6 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<input type="button" value="Less" id="lessFav" />
-		<input type="button" value="More" id="moreFav" />
 	</c:if>
 
 	<br />
@@ -135,8 +129,6 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<input type="button" value="Less" id="lessWatch" />
-		<input type="button" value="More" id="moreWatch" />
 	</c:if>
 
 	<h3>Reviewed Movies:</h3>
@@ -144,19 +136,19 @@
 		<p>You haven't reviewed any movies yet!</p>
 	</c:if>
 	<c:if test= "${not empty user.reviewedMovies}">
-		<table id="reviews" class="table table-bordered table-striped table-hover">
-			<tr><th>Movie Title</th> <th>Rating</th><th>Operations</th></tr>
-			<c:forEach items="${user.reviewedMovies}" var="review" varStatus="status">
-				<tr>
-					<td><a href="../movies/details2.html?id=${ review.movie.movieId }">${review.movie.title}</a></td>
-					<td>${review.rating }  <img height="15" width="15" src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg"></td>
-					<td>
-						<a href="../review/edit.html?id=${review.movie.movieId}">Edit</a>
-					</td>
-				</tr>
-			</c:forEach>
-		</table>
-	</c:if> 
+	<table id="reviews" class="table table-bordered table-striped table-hover">
+		<tr><th>Movie Title</th> <th>Rating</th><th>Operations</th></tr>
+		<c:forEach items="${user.reviewedMovies}" var="review" varStatus="status">
+			<tr>
+				<td><a href="../movies/details2.html?id=${ review.movie.movieId }">${review.movie.title}</a></td>
+				<td>${review.rating }  <img height="15" width="15" src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg"></td>
+				<td>
+					<a href="../review/edit.html?id=${review.movie.movieId}">Edit</a>
+				</td>
+			</tr>
+		</c:forEach>
+	</table>
+	</c:if>	
 	</div>
 </body>
 </html>
