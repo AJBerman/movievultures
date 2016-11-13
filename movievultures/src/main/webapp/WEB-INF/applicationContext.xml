@@ -36,7 +36,7 @@
 
     <tx:annotation-driven />
 
-    <context:component-scan base-package="movievultures.model" />
+    <context:component-scan base-package="movievultures.model, movievultures.recommender" />
     
     <security:authentication-manager>
         <security:authentication-provider>
@@ -57,13 +57,14 @@
     	<!-- 
     		<security:form-login default-target-url="/"/>
     	 -->
-    	<security:form-login 
-            authentication-success-handler-ref="authenticSuccessHandler"/>
+    	<security:form-login login-page="/login.html" authentication-failure-url="/loginError.html"
+            authentication-success-handler-ref="authenticSuccessHandler" />
     	<security:logout logout-success-url="/" />
   	</security:http>
   	
-  	<!-- bean for authentication handler -->
+  	<!-- beans for authentication handler -->
   	<bean id="authenticSuccessHandler" class="movievultures.security.AuthenticSuccessHandler" />
+  	<bean id="userService" class="movievultures.recommender.UserService" />
   	
   	<security:global-method-security pre-post-annotations="enabled" />
 

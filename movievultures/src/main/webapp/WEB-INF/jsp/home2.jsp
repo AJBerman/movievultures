@@ -71,12 +71,12 @@
 						<td>
 						<b>Title:</b> <a href="movies/details2.html?id=${movie.movieId}">${movie.title}</a> <br />
 						<b>Director(s):</b>
-							<c:forEach items="${movie.directors}" var="dir" varStatus="status">
-								${dir},  
+							<c:forEach items="${movie.directors}" var="dir" varStatus="stat">
+								${dir}${stat.last ? '' : ','}  
 							</c:forEach><br />
 						<b>Cast:</b>
-							<c:forEach items="${movie.actors}" var="actor" varStatus="status">
-								${actor}, 
+							<c:forEach items="${movie.actors}" var="actor" varStatus="stat">
+								${actor}${stat.last ? '' : ','}
 							</c:forEach><br />
 						<b>Plot:</b> <p>${movie.plot}</p>
 						</td>
