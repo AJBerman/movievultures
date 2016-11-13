@@ -73,29 +73,35 @@ public class MovieController {
 
 	@RequestMapping(value = "/movies/add.html", method = RequestMethod.POST)
 	public String postAddMovies(@RequestParam String addmovie_title, 
-			@RequestParam String addmovie_plot,
-			@RequestParam String addmovie_date, 
-			@RequestParam List<String> addmovie_genres,
-			@RequestParam List<String> addmovie_actors, 
-			@RequestParam List<String> addmovie_directors, ModelMap models)
+			@RequestParam(required=false) String addmovie_plot,
+			@RequestParam(required=false) String addmovie_date, 
+			@RequestParam(required=false) List<String> addmovie_genres,
+			@RequestParam(required=false) List<String> addmovie_actors, 
+			@RequestParam(required=false) List<String> addmovie_directors, ModelMap models)
 					throws ParseException {
 		if(!SecurityUtils.isAuthenticated())
 			return "redirect:../login";
 		Movie movie = new Movie();
 		movie.setTitle(addmovie_title);
-		movie.setPlot(addmovie_plot);
+		if(addmovie_plot != null) movie.setPlot(addmovie_plot);
 		DateFormat format = new SimpleDateFormat("yyyy");
 		// Date d=format.parse(source)
 		System.out.println(format.parse(addmovie_date));
-		movie.setDate(format.parse(addmovie_date));
+		if(addmovie_date != null) movie.setDate(format.parse(addmovie_date));
 		movie.setEloRating(1200.0); //1200 is the default Elo Rating
 		movie.setHidden(false);
-		Collections.sort(addmovie_genres);
-		movie.setGenres(addmovie_genres);
-		Collections.sort(addmovie_actors);
-		movie.setActors(addmovie_actors);
-		Collections.sort(addmovie_directors);
-		movie.setDirectors(addmovie_directors);
+		if(addmovie_genres != null) {
+			Collections.sort(addmovie_genres);
+			movie.setGenres(addmovie_genres);
+		}
+		if(addmovie_actors != null) {
+			Collections.sort(addmovie_actors);
+			movie.setActors(addmovie_actors);
+		}
+		if(addmovie_directors != null) {
+			Collections.sort(addmovie_directors);
+			movie.setDirectors(addmovie_directors);
+		}
 		movie=movieDao.saveMovie(movie);
 		// movie saved to db
 		return "redirect:details2.html?id="+movie.getMovieId();
@@ -144,27 +150,33 @@ public class MovieController {
 	@RequestMapping(value="/movies/edit.html",method=RequestMethod.POST)
 	public String postEdit(@RequestParam int id,
 							@RequestParam String editmovie_title, 
-							@RequestParam String editmovie_plot, 
-							@RequestParam String editmovie_date,
-							@RequestParam List<String> editmovie_genres,
-							@RequestParam List<String> editmovie_actors,
-							@RequestParam List<String> editmovie_directors,
+							@RequestParam(required=false) String editmovie_plot, 
+							@RequestParam(required=false) String editmovie_date,
+							@RequestParam(required=false) List<String> editmovie_genres,
+							@RequestParam(required=false) List<String> editmovie_actors,
+							@RequestParam(required=false) List<String> editmovie_directors,
 							ModelMap models) throws ParseException
 							{
 		if(!SecurityUtils.isAuthenticated())
 			return "redirect:../login";
 		Movie movie=movieDao.getMovie(id);
 		movie.setTitle(editmovie_title);
-		movie.setPlot(editmovie_plot);
+		if(editmovie_plot != null) movie.setPlot(editmovie_plot);
 		//DateFormat format = new SimpleDateFormat("yyyy-MM-DD");
 		DateFormat format = new SimpleDateFormat("yyyy");
-		movie.setDate(format.parse(editmovie_date));
-		Collections.sort(editmovie_genres);
-		movie.setGenres(editmovie_genres);
-		Collections.sort(editmovie_actors);
-		movie.setActors(editmovie_actors);
-		Collections.sort(editmovie_directors);
-		movie.setDirectors(editmovie_directors);
+		if(editmovie_date != null) movie.setDate(format.parse(editmovie_date));
+		if(editmovie_genres != null) {
+			Collections.sort(editmovie_genres);
+			movie.setGenres(editmovie_genres);
+		}
+		if(editmovie_actors != null) {
+			Collections.sort(editmovie_actors);
+			movie.setActors(editmovie_actors);
+		}
+		if(editmovie_directors != null) {
+			Collections.sort(editmovie_directors);
+			movie.setDirectors(editmovie_directors);
+		}
 		movie=movieDao.saveMovie(movie);
 		return "redirect:../movies/details2.html?id="+id;
 	}
