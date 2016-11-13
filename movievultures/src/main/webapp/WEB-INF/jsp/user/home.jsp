@@ -139,6 +139,7 @@
 		<input type="button" value="More" id="moreWatch" />
 	</c:if>
 
+<<<<<<< HEAD
 		<h3>Reviewed Movies:</h3>
 		<c:if test="${empty user.reviewedMovies}">
 			<p>You haven't reviewed any movies yet!</p>
@@ -157,6 +158,30 @@
 			</c:forEach>
 		</table>
 		</c:if>	
+=======
+	<h3 style="cursor: pointer;" id="revHeader">Reviewed Movies:</h3>
+	<div id="slideRev">
+	<c:if test="${empty user.reviewedMovies}">
+		<p>You haven't reviewed any movies yet!</p>
+	</c:if>
+	<c:if test= "${not empty user.reviewedMovies}">
+	<table id="rev" border=1>
+		<tr class="header"><th>Movie Title</th><th>Review</th> <th>Rating</th><th>Operations</th></tr>
+		<c:forEach items="${user.reviewedMovies}" var="review" varStatus="status">
+			<tr>
+				<td><a href="../movies/details2.html?id=${ review.movie.movieId }">${review.movie.title}</a></td>
+				<td>${review.review}</td>
+				<td>${review.rating }</td>
+				<td>
+					<a href="../review/edit.html?id=${review.movie.movieId}">Edit</a>
+				</td>
+			</tr>
+		</c:forEach>
+	</table>
+	<input type="button" value="Less" id="lessRev" />
+	<input type="button" value="More" id="moreRev" />
+	</c:if>	
+>>>>>>> 8f9c1bbdee3d512a656d0b7d9ca7f621ff478c64
 	</div>
 </body>
 </html>
