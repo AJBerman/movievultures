@@ -117,7 +117,7 @@
 			<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
 			<br /><font color="red"><form:errors path="rating" /></font><br />
-			<font color="red"><form:errors path="password" /></font>
+			<font color="red"><form:errors path="rating" /></font>
 			<center><input type="submit" class="btn btn-primary" value="Submit"></center>
 		</form:form>
 	</div>
