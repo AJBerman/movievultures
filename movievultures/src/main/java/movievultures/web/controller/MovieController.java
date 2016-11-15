@@ -8,14 +8,20 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.util.NestedServletException;
 
 import movievultures.model.Movie;
@@ -26,8 +32,10 @@ import movievultures.model.dao.MovieDao;
 import movievultures.model.dao.ReviewDao;
 import movievultures.model.dao.UserDao;
 import movievultures.security.SecurityUtils;
+import movievultures.web.validator.AddMovieValidator;
 
 @Controller
+@SessionAttributes("movie")
 public class MovieController {
 
 	@Autowired
@@ -41,6 +49,9 @@ public class MovieController {
 
 	@Autowired
 	private EloRunoffDao eloRunoffDao;
+	
+	@Autowired
+	private AddMovieValidator movieValidator;
 	
 //	@RequestMapping(value = "/home.html", method = RequestMethod.GET)
 //	public String getHome() {
@@ -65,29 +76,35 @@ public class MovieController {
 	}
 
 	@RequestMapping(value = "/movies/add.html", method = RequestMethod.GET)
-	public String getAddMovies() {
+	public String getAddMovies(ModelMap models) {
+		models.put("movie", new Movie());
 		if(!SecurityUtils.isAuthenticated())
 			return "redirect:../login";
 		return "movies/add";
 	}
 
 	@RequestMapping(value = "/movies/add.html", method = RequestMethod.POST)
-	public String postAddMovies(@RequestParam String addmovie_title, 
-			@RequestParam(required=false) String addmovie_plot,
-			@RequestParam(required=false) String addmovie_date, 
+	public String postAddMovies(
+			@ModelAttribute Movie movie, BindingResult result, SessionStatus status,
+//			@RequestParam String addmovie_title, 
+//			@RequestParam(required=false) String addmovie_plot,
+//			@RequestParam(required=false) String addmovie_date, 
 			@RequestParam(required=false) List<String> addmovie_genres,
 			@RequestParam(required=false) List<String> addmovie_actors, 
-			@RequestParam(required=false) List<String> addmovie_directors, ModelMap models)
-					throws ParseException {
+			@RequestParam(required=false) List<String> addmovie_directors 
+			//ModelMap models
+			)throws ParseException {
 		if(!SecurityUtils.isAuthenticated())
 			return "redirect:../login";
-		Movie movie = new Movie();
-		movie.setTitle(addmovie_title);
-		if(addmovie_plot != null) movie.setPlot(addmovie_plot);
-		DateFormat format = new SimpleDateFormat("yyyy");
-		// Date d=format.parse(source)
-		System.out.println(format.parse(addmovie_date));
-		if(addmovie_date != null) movie.setDate(format.parse(addmovie_date));
+		
+		movieValidator.validate(movie, result);
+		if(result.hasErrors())
+			return "movies/add";
+
+//		DateFormat format = new SimpleDateFormat("yyyy");
+//		// Date d=format.parse(source)
+//		System.out.println(format.parse(addmovie_date));
+//		if(addmovie_date != null) movie.setDate(format.parse(addmovie_date));
 		movie.setEloRating(1200.0); //1200 is the default Elo Rating
 		movie.setHidden(false);
 		if(addmovie_genres != null) {
@@ -103,6 +120,7 @@ public class MovieController {
 			movie.setDirectors(addmovie_directors);
 		}
 		movie=movieDao.saveMovie(movie);
+		status.setComplete();
 		// movie saved to db
 		return "redirect:details2.html?id="+movie.getMovieId();
 	}
@@ -179,6 +197,11 @@ public class MovieController {
 		}
 		movie=movieDao.saveMovie(movie);
 		return "redirect:../movies/details2.html?id="+id;
+	}
+	
+	@InitBinder
+	public void dataBinding(WebDataBinder binder) {
+		binder.registerCustomEditor(java.util.Date.class, "date", new CustomDateEditor(new SimpleDateFormat("yyyy"), false));
 	}
 	
 }
