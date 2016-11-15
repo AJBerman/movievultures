@@ -192,7 +192,7 @@
 			<c:if test="${not empty elos }">
 				<table id="elo" class="table table-bordered table-striped table-hover">
 				<tr><th>Winning Film</th><th>Elo Rating</th><th>Losing Film</th><th>Elo Rating</th></tr>
-				<c:forEach items="${elos}" var="elo" varStatus="status">
+				<c:forEach items="${elos}" var="elo" varStatus="varStatus">
 				<tr class="elo elopage${fn:replace(((varStatus.count/5)-((varStatus.count/5)%1)+1),'.0','')}">
 					<td><a href="../movies/details2.html?id=${ elo.winner.movieId }">${elo.winner.title}</a></td>
 					<td>${elo.winner.eloRating}</td>
