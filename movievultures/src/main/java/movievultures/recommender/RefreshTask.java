@@ -11,7 +11,7 @@ public class RefreshTask {
 	@Autowired
 	RecommenderUtils recommender;
 
-	@Scheduled(cron="* */5 * * * *")
+	@Scheduled(cron="0 */5 * * * *")
 	public void refreshDatabase() throws TasteException{
 		System.out.println("Refreshing recommender and dataModel");
 		recommender.getCachingRecommender().refresh(null);

@@ -37,6 +37,9 @@ For search highlighting --> <%-- For search highlighting --%> mark {
 .marked {
 	background: yellow;
 }
+.hidden {
+	display: none;
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -96,6 +99,7 @@ For search highlighting --> <%-- For search highlighting --%> mark {
 	}
 
 	window.onload = function() {
+		$(".hidden").("hidden");
 		changePageReviews(1);
 	};
 </script>
@@ -186,7 +190,7 @@ For search highlighting --> <%-- For search highlighting --%> mark {
 			<ul id="results">
 			<c:forEach items="${ movieResults }" var="movieResult" varStatus="varStatus">
 				<c:if test="${ !movieResult.hidden }">
-					<li class="search searchpage${fn:replace(((varStatus.count/20)-((varStatus.count/20)%1)+1),'.0','')}"  style="display:none">
+					<li class="${varStatus.count <= 20 ? '' : 'hidden '}search searchpage${fn:replace(((varStatus.count/20)-((varStatus.count/20)%1)+1),'.0','')}">
 						<c:if test="${ not empty headlines }">
 							<span>...${headlines[varStatus.count-1]}...</span><br/>
 						</c:if>
