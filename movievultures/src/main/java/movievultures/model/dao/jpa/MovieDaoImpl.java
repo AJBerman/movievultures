@@ -191,7 +191,7 @@ public class MovieDaoImpl implements MovieDao{
     	   	end if;
     	END;
     	$$;*/
-    	entityManager.createNativeQuery("select elowinner(:winner,:loser);").setParameter("winner", winner.getMovieId()).setParameter("loser", loser.getMovieId()).getResultList();
+    	entityManager.createNativeQuery("select 1 from elowinner(:winner,:loser);").setParameter("winner", winner.getMovieId()).setParameter("loser", loser.getMovieId()).getResultList();
 	}
     
     @Override
