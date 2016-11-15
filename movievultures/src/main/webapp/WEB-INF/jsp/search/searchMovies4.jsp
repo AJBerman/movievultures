@@ -299,26 +299,22 @@ mark {
 			switch ($("#searchResultType").text()) {
 			case "title":
 				$(".movieTitle").mark($("#searchResultTerm").text(), {
-					diacritics : false,
-					debug : true
+					diacritics : false
 				});
 				break;
 			case "genre":
 				$(".movieGenre").mark($("#searchResultTerm").text(), {
-					diacritics : false,
-					debug : true
+					diacritics : false
 				});
 				break;
 			case "director":
 				$(".movieDirector").mark($("#searchResultTerm").text(), {
-					diacritics : false,
-					debug : true
+					diacritics : false
 				});
 				break;
 			case "actor":
 				$(".movieActor").mark($("#searchResultTerm").text(), {
-					diacritics : false,
-					debug : true
+					diacritics : false
 				});
 				break;
 			case "year of release":
@@ -331,7 +327,9 @@ mark {
 				$(".movieElo").addClass("marked");
 				break;
 			default:
-				console.log("Foo!");
+				$(".search").mark($("#searchResultTerm").text(), {
+					diacritics : false
+				});
 				break;
 			}
 		});
