@@ -6,12 +6,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.stereotype.Service;
 
 /*
  * Redirecting based on
  * http://stackoverflow.com/questions/21986362/spring-security-redirect-based-on-role
  */
 
+@Service 
 public class AuthenticSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler{
 
 	@Override

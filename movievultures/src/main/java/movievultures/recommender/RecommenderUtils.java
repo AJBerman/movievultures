@@ -27,8 +27,9 @@ import org.springframework.stereotype.Service;
 public class RecommenderUtils {
 
 	// data model for the recommender
-	private ReloadFromJDBCDataModel dataModel;
+	private static ReloadFromJDBCDataModel dataModel;
 	PGPoolingDataSource connection;
+	private static Recommender cachingRecommender;
 
 
 	public RecommenderUtils() throws TasteException {
@@ -43,18 +44,16 @@ public class RecommenderUtils {
 		connection.setMaxConnections(10);
 
 		DataSource movieVults = (DataSource) connection;
-
 		JDBCDataModel model = new PostgreSQLJDBCDataModel(movieVults, "reviews", "user_userid", "movie_movieid", "rating", "date");
-		
 		dataModel = new ReloadFromJDBCDataModel(model);
-	}
-
-	public List<Integer> getRecommendation(long userId) throws TasteException {
 
 		UserSimilarity userSimilarity = new PearsonCorrelationSimilarity(dataModel);
 		UserNeighborhood neighborhood = new NearestNUserNeighborhood(30, userSimilarity, dataModel);
 		Recommender recommender = new GenericUserBasedRecommender(dataModel, neighborhood, userSimilarity);
-		Recommender cachingRecommender = new CachingRecommender(recommender);
+		cachingRecommender = new CachingRecommender(recommender);
+	}
+
+	public List<Integer> getRecommendation(long userId) throws TasteException {
 		List<Integer>recs = new ArrayList<Integer>();
 		List<RecommendedItem> recommendations =
 				  cachingRecommender.recommend(userId, 6);
@@ -76,13 +75,22 @@ public class RecommenderUtils {
 		return recs;
 	}
 	
-	//for testing
-	public static void main(String[] args) throws TasteException{
-		RecommenderUtils ru = new RecommenderUtils();
-		System.out.println(new Date());
-		//for(int i = 1; i < 669; i++) ru.getRecommendation(i);
-		ru.getRecommendation(1001);
-		System.out.println(new Date());
+	
+	
+	public ReloadFromJDBCDataModel getDataModel() {
+		return dataModel;
+	}
+
+	public void setDataModel(ReloadFromJDBCDataModel dataModel) {
+		this.dataModel = dataModel;
+	}
+
+	public Recommender getCachingRecommender() throws TasteException {
+		return cachingRecommender;
+	}
+
+	public void setCachingRecommender(Recommender cachingRecommender) {
+		this.cachingRecommender = cachingRecommender;
 	}
 
 }

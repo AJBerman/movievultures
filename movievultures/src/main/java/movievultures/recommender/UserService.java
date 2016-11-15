@@ -49,8 +49,10 @@ public class UserService implements ApplicationListener<AuthenticationSuccessEve
 			if(movieIds.isEmpty())
 				return;
 			List<Movie> movies = movieDao.getMoviesByIDList(movieIds);
-			user.setRecommendations(movies);
-			userDao.saveUser(user);
+			if(!movies.equals(user.getRecommendations())) {
+				user.setRecommendations(movies);
+				userDao.saveUser(user);
+			}
 		
 	}
 

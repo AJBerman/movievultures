@@ -27,7 +27,7 @@
 	crossorigin="anonymous"></script>
 <title>"There's no place like home"</title>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="<c:url value="/res/js/userHome.js" />"></script>
+<script type="text/javascript" src="<c:url value="/res/js/userHomePaging.js" />"></script>
 </head>
 <body>
 	<nav class="navbar navbar-inverse">
@@ -53,15 +53,7 @@
 		</ul>
 	</div>
 	</nav>
-	<%-- <p align="right">
-		<security:authorize access="isAuthenticated()">
-			<a href="<c:url value='/' /> ">Main</a> |
-			<a href="<c:url value='/logout' />">Logout</a> 
-		</security:authorize>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-				| <a href="../user/list.html">Management</a>
-		</sec:authorize>
-	</p> --%>
+
 	<div class="container">
 	<h2>Welcome ${user.username}</h2>
 	
@@ -80,83 +72,112 @@
 			<p>None at the moment.</p>
 		</c:if>
 		<c:if test="${not empty user.recommendations}">
-			<table id="rec" border=1>
-				<tr class="header"><th>Title</th></tr>
-				<c:forEach items="${user.recommendations}" var="movie" varStatus="status" >
-					<tr>
-						<td><a href="../movies/details2.html?id=${movie.movieId}">${movie.title}</a></td>
+			<ul>
+			<c:forEach items="${user.recommendations}" var="movie" varStatus="status">
+				<li><a href="../movies/details2.html?id=${ movie.movieId }">${movie.title}</a></li>
+			</c:forEach>
+			</ul>
+		</c:if>
+	<br />
+	
+	<h3><a href="javascript:toggleFavorites()">Favorites:</a></h3>
+	<div id="favSlider" style="display: none;">
+		<c:if test="${empty user.favorites}">
+			<p>None at the moment.</p>
+		</c:if>
+		<c:if test="${not empty user.favorites}">
+			<table id="fav" class="table table-bordered table-striped table-hover">
+				<tr><th>Title</th><th>action</th></tr>
+				<c:forEach items="${user.favorites}" var="movie" varStatus="status" >
+					<tr class="fav favpage${fn:replace(((status.count/5)-((status.count/5)%1)+1),'.0','')}">
+						<td><a href="../movies/details2.html?id=${ movie.movieId }">${movie.title }</a></td>
+						<td>
+							<a href="removeFav.html?index=${status.index}&userId=${user.userId}">
+								<img src="../images/delete.png"></img> Delete
+							</a>
+						</td>
 					</tr>
 				</c:forEach>
 			</table>
-			<input type="button" value="Less" id="lessRec" />
-			<input type="button" value="More" id="moreRec" />
+				<a href="javascript:void(0);" onclick="changeFavBy(-1, 'fav');" id="fav_btn_prev">Prev</a>
+				<a href="javascript:void(0);" onclick="changeFavBy(-4, 'fav');" id="favpageno-4" style="display: none;"></a> 
+				<a href="javascript:void(0);" onclick="changeFavBy(-3, 'fav');" id="favpageno-3" style="display: none;"></a> 
+				<a href="javascript:void(0);" onclick="changeFavBy(-2, 'fav');" id="favpageno-2" style="display: none;"></a> 
+				<a href="javascript:void(0);" onclick="changeFavBy(-1, 'fav');" id="favpageno-1" style="display: none;"></a> 
+				<a id="favpageno"></a>
+				<a href="javascript:void(0);" onclick="changeFavBy(1, 'fav');" id="favpageno1" style="display: none;"></a> 
+				<a href="javascript:void(0);" onclick="changeFavBy(2, 'fav');" id="favpageno2" style="display: none;"></a> 
+				<a href="javascript:void(0);" onclick="changeFavBy(3, 'fav');" id="favpageno3" style="display: none;"></a> 
+				<a href="javascript:void(0);" onclick="changeFavBy(4, 'fav');" id="favpageno4" style="display: none;"></a> 
+				<a href="javascript:void(0);" onclick="changeFavBy(1, 'fav');" id="fav_btn_next">Next</a> 
 		</c:if>
-	<br />
-	<br />
-	
-	<h3>Favorites:</h3>
-	<c:if test="${empty user.favorites}">
-		<p>None at the moment.</p>
-	</c:if>
-	<c:if test="${not empty user.favorites}">
-		<table id="fav" class="table table-bordered table-striped table-hover">
-			<tr><th>Title</th><th>action</th></tr>
-			<c:forEach items="${user.favorites}" var="movie" varStatus="status" >
-				<tr>
-					<td><a href="../movies/details2.html?id=${ movie.movieId }">${movie.title }</a></td>
-					<td>
-						<a href="removeFav.html?index=${status.index}&userId=${user.userId}">
-							<img src="../images/delete.png"></img> Delete
-						</a>
-					</td>
-				</tr>
-			</c:forEach>
-		</table>
-		<input type="button" value="Less" id="lessFav" />
-		<input type="button" value="More" id="moreFav" />
-	</c:if>
+	</div>
 	<br />
 	
-	<h3>Watch Later:</h3>
-	<c:if test="${empty user.watchLater}">
-		<p>None at the moment.</p>
-	</c:if>
-	<c:if test="${not empty user.watchLater}">
-		<table id="watch" class="table table-bordered table-striped table-hover">
-			<tr><th>Title</th><th>action</th></tr>
-			<c:forEach items="${user.watchLater}" var="movie" varStatus="status" >
-				<tr>
-					<td><a href="../movies/details2.html?id=${ movie.movieId }">${movie.title }</a></td>
-					<td>
-						<a href="removeWL.html?index=${status.index}&userId=${user.userId}">
-							<img src="../images/delete.png"></img> Delete
-						</a>
-					</td>
-				</tr>
-			</c:forEach>
-		</table>
-		<input type="button" value="Less" id="lessWatch" />
-		<input type="button" value="More" id="moreWatch" />
-	</c:if>
-	<br />
+	<h3><a href="javascript:toggleWatch()">Watch Later:</a></h3>
+	<div id="watchSlider" style="display: none;">
+		<c:if test="${empty user.watchLater}">
+			<p>None at the moment.</p>
+		</c:if>
+		<c:if test="${not empty user.watchLater}">
+			<table id="watch" class="table table-bordered table-striped table-hover">
+				<tr><th>Title</th><th>action</th></tr>
+				<c:forEach items="${user.watchLater}" var="movie" varStatus="status" >
+					<tr class="watch watchpage${fn:replace(((status.count/5)-((status.count/5)%1)+1),'.0','')}">
+						<td><a href="../movies/details2.html?id=${ movie.movieId }">${movie.title }</a></td>
+						<td>
+							<a href="removeWL.html?index=${status.index}&userId=${user.userId}">
+								<img src="../images/delete.png"></img> Delete
+							</a>
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
+			<a href="javascript:void(0);" onclick="changeWatchBy(-1, 'watch');" id="watch_btn_prev">Prev</a>
+			<a href="javascript:void(0);" onclick="changeWatchBy(-4, 'watch');" id="watchpageno-4" style="display: none;"></a> 
+			<a href="javascript:void(0);" onclick="changeWatchBy(-3, 'watch');" id="watchpageno-3" style="display: none;"></a> 
+			<a href="javascript:void(0);" onclick="changeWatchBy(-2, 'watch');" id="watchpageno-2" style="display: none;"></a> 
+			<a href="javascript:void(0);" onclick="changeWatchBy(-1, 'watch');" id="watchpageno-1" style="display: none;"></a> 
+			<a id="watchpageno"></a>
+			<a href="javascript:void(0);" onclick="changeWatchBy(1, 'watch');" id="watchpageno1" style="display: none;"></a> 
+			<a href="javascript:void(0);" onclick="changeWatchBy(2, 'watch');" id="watchpageno2" style="display: none;"></a> 
+			<a href="javascript:void(0);" onclick="changeWatchBy(3, 'watch');" id="watchpageno3" style="display: none;"></a> 
+			<a href="javascript:void(0);" onclick="changeWatchBy(4, 'watch');" id="watchpageno4" style="display: none;"></a> 
+			<a href="javascript:void(0);" onclick="changeWatchBy(1, 'watch');" id="watch_btn_next">Next</a> 
+		</c:if>
+		</div>
+		<br />
 
-		<h3>Reviewed Movies:</h3>
-		<c:if test="${empty user.reviewedMovies}">
-			<p>You haven't reviewed any movies yet!</p>
-		</c:if>
-		<c:if test= "${not empty user.reviewedMovies}">
-		<table id="reviews" class="table table-bordered table-striped table-hover">
-			<tr><th>Movie Title</th> <th>Rating</th><th>Operations</th></tr>
-			<c:forEach items="${user.reviewedMovies}" var="review" varStatus="status">
-				<tr>
-					<td><a href="../movies/details2.html?id=${ review.movie.movieId }">${review.movie.title}</a></td>
-					<td>${review.rating }  <img height="15" width="15" src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg"></td>
-					<td>
-						<a href="../review/edit.html?id=${review.movie.movieId}">Edit</a>
-					</td>
-				</tr>
-			</c:forEach>
-		</table>
-		</c:if>
+		<h3> <a href="javascript:toggleReviews()">Reviewed Movies:</a></h3>
+		<div id="revSlider" style="display: none;">
+			<c:if test="${empty user.reviewedMovies}">
+				<p>You haven't reviewed any movies yet!</p>
+			</c:if>
+			<c:if test= "${not empty user.reviewedMovies}">
+			<table id="rev" class="table table-bordered table-striped table-hover">
+				<tr><th>Movie Title</th> <th>Rating</th><th>Operations</th></tr>
+				<c:forEach items="${user.reviewedMovies}" var="review" varStatus="varStatus">
+					<tr class="rev revpage${fn:replace(((varStatus.count/5)-((varStatus.count/5)%1)+1),'.0','')}" >
+						<td><a href="../movies/details2.html?id=${ review.movie.movieId }">${review.movie.title}</a></td>
+						<td>${review.rating }  <img height="15" width="15" src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg"></td>
+						<td>
+							<a href="../review/edit.html?id=${review.movie.movieId}">Edit</a>
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
+			<a href="javascript:void(0);" onclick="changeRevBy(-1, 'rev');" id="rev_btn_prev">Prev</a>
+			<a href="javascript:void(0);" onclick="changeRevBy(-4, 'rev');" id="revpageno-4" style="display: none;"></a> 
+			<a href="javascript:void(0);" onclick="changeRevBy(-3, 'rev');" id="revpageno-3" style="display: none;"></a> 
+			<a href="javascript:void(0);" onclick="changeRevBy(-2, 'rev');" id="revpageno-2" style="display: none;"></a> 
+			<a href="javascript:void(0);" onclick="changeRevBy(-1, 'rev');" id="revpageno-1" style="display: none;"></a> 
+			<a id="revpageno"></a>
+			<a href="javascript:void(0);" onclick="changeRevBy(1, 'rev');" id="revpageno1" style="display: none;"></a> 
+			<a href="javascript:void(0);" onclick="changeRevBy(2, 'rev');" id="revpageno2" style="display: none;"></a> 
+			<a href="javascript:void(0);" onclick="changeRevBy(3, 'rev');" id="revpageno3" style="display: none;"></a> 
+			<a href="javascript:void(0);" onclick="changeRevBy(4, 'rev');" id="revpageno4" style="display: none;"></a> 
+			<a href="javascript:void(0);" onclick="changeRevBy(1, 'rev');" id="rev_btn_next">Next</a> 
+			</c:if>
+		</div>
 </body>
 </html>

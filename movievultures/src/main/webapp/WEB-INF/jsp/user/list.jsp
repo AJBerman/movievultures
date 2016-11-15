@@ -77,14 +77,14 @@
 				<th>Manage</th>
 			</tr>
 			<c:forEach items="${users}" var="user" varStatus="varStatus">
-				<tr
-					class="user userpage${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')} 
+				<tr class="user userpage${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')} 
 				${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')}">
 					<td>${user.userId}</td>
 					<td>${user.username}</td>
 					<td>
-						<%-- if user isn't authority, authorize --%> <c:set var="contains"
-							value="false" /> <c:forEach var="role" items="${user.roles}">
+						<%-- if user isn't authority, authorize --%> 
+						<c:set var="contains" value="false" /> 
+						<c:forEach var="role" items="${user.roles}">
 							<c:if test="${role == 'ROLE_ADMIN'}">
 								<c:set var="contains" value="true" />
 							</c:if>
@@ -93,38 +93,27 @@
 								<a href="management.html?userid=${user.userId}">Manage</a>
 							</c:when>
 							<c:when test="${contains}">
-						Admin
-					</c:when>
+								Admin
+						</c:when>
 						</c:choose>
 					</td>
-					<%-- 
-		<td>${user.userId}</td>
-		<td>${user.username}</td>
-		<td><a href="view.html?userId=${user.userId}">view</a>
-		<security:authorize access="hasRole('ROLE_ADMIN')">
-			| <a href="authorize.html?userid=${user.userId}">Authorize</a>
-		</security:authorize>
-		</td>
-		--%>
 				</tr>
 			</c:forEach>
 		</table>
-		<br /> <a href="javascript:changePageBy(-1000)" id="user_btn_first">
-			<< </a> <a href="javascript:changePageBy(-1)" id="user_btn_prev">Prev</a>
-		<a href="javascript:changePageBy(-4)" id="userpageno-4"
-			style="display: none;"></a> <a href="javascript:changePageBy(-3)"
-			id="userpageno-3" style="display: none;"></a> <a
-			href="javascript:changePageBy(-2)" id="userpageno-2"
-			style="display: none;"></a> <a href="javascript:changePageBy(-1)"
-			id="userpageno-1" style="display: none;"></a> <a id="userpageno"></a>
-		<a href="javascript:changePageBy(1)" id="userpageno1"
-			style="display: none;"></a> <a href="javascript:changePageBy(2)"
-			id="userpageno2" style="display: none;"></a> <a
-			href="javascript:changePageBy(3)" id="userpageno3"
-			style="display: none;"></a> <a href="javascript:changePageBy(4)"
-			id="userpageno4" style="display: none;"></a> <a
-			href="javascript:changePageBy(1)" id="user_btn_next">Next</a> <a
-			href="javascript:changePageBy(-99)" id="user_btn_last"> >> </a>
+		<br /> 
+		<a href="javascript:changePageBy(-1000)" id="user_btn_first"> << </a> 
+		<a href="javascript:changePageBy(-1)" id="user_btn_prev">Prev</a>
+		<a href="javascript:changePageBy(-4)" id="userpageno-4" style="display: none;"></a> 
+		<a href="javascript:changePageBy(-3)" id="userpageno-3" style="display: none;"></a> 
+		<a href="javascript:changePageBy(-2)" id="userpageno-2" style="display: none;"></a> 
+		<a href="javascript:changePageBy(-1)" id="userpageno-1" style="display: none;"></a> 
+		<a id="userpageno"></a>
+		<a href="javascript:changePageBy(1)" id="userpageno1" style="display: none;"></a> 
+		<a href="javascript:changePageBy(2)" id="userpageno2" style="display: none;"></a> 
+		<a href="javascript:changePageBy(3)" id="userpageno3" style="display: none;"></a> 
+		<a href="javascript:changePageBy(4)" id="userpageno4" style="display: none;"></a> 
+		<a href="javascript:changePageBy(1)" id="user_btn_next">Next</a> 
+		<a href="javascript:changePageBy(-99)" id="user_btn_last"> >> </a>
 
 	</div>
 </body>
