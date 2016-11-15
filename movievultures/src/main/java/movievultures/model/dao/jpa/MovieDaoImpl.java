@@ -69,13 +69,7 @@ public class MovieDaoImpl implements MovieDao{
 	@Override
 	public List<Movie> getMoviesByActor(String actor) {
 		return entityManager
-				.createNativeQuery("select "
-						+ "movie0_.movieId as movieId, "
-						+ "movie0_.date as date, "
-						+ "movie0_.eloRating as eloRating, "
-						+ "movie0_.is_hidden as is_hidden, "
-						+ "movie0_.plot as plot, "
-						+ "movie0_.title as title "
+				.createNativeQuery("select movie0_.* "
 						+ "from movies movie0_ "
 						+ "join movie_cast actors0_ "
 						+ "on movie0_.movieId=actors0_.movieid "
@@ -89,13 +83,7 @@ public class MovieDaoImpl implements MovieDao{
 	@Override
 	public List<Movie> getMoviesByActor(String actor, int limit) {
 		return entityManager
-				.createNativeQuery("select "
-						+ "movie0_.movieId as movieId, "
-						+ "movie0_.date as date, "
-						+ "movie0_.eloRating as eloRating, "
-						+ "movie0_.is_hidden as is_hidden, "
-						+ "movie0_.plot as plot, "
-						+ "movie0_.title as title "
+				.createNativeQuery("select movie0_.* "
 						+ "from movies movie0_ "
 						+ "join movie_cast actors0_ "
 						+ "on movie0_.movieId=actors0_.movieid "
@@ -110,13 +98,7 @@ public class MovieDaoImpl implements MovieDao{
 	@Override
 	public List<Movie> getMoviesByDirector(String director) {
 		return entityManager
-				.createNativeQuery("select "
-						+ "movie0_.movieId as movieId, "
-						+ "movie0_.date as date, "
-						+ "movie0_.eloRating as eloRating, "
-						+ "movie0_.is_hidden as is_hidden, "
-						+ "movie0_.plot as plot, "
-						+ "movie0_.title as title "
+				.createNativeQuery("select movie0_.* "
 						+ "from movies movie0_ "
 						+ "join movie_directors directors0_ "
 						+ "on movie0_.movieId=directors0_.movieid "
@@ -130,13 +112,7 @@ public class MovieDaoImpl implements MovieDao{
 	@Override
 	public List<Movie> getMoviesByDirector(String director, int limit) {
 		return entityManager
-			.createNativeQuery("select "
-					+ "movie0_.movieId as movieId, "
-					+ "movie0_.date as date, "
-					+ "movie0_.eloRating as eloRating, "
-					+ "movie0_.is_hidden as is_hidden, "
-					+ "movie0_.plot as plot, "
-					+ "movie0_.title as title "
+			.createNativeQuery("select movie0_.* "
 					+ "from movies movie0_ "
 					+ "join movie_directors directors0_ "
 					+ "on movie0_.movieId=directors0_.movieid "
@@ -151,13 +127,7 @@ public class MovieDaoImpl implements MovieDao{
 	@Override
 	public List<Movie> getMoviesByGenre(String genre) {
 		return entityManager
-				.createNativeQuery("select "
-						+ "movie0_.movieId as movieId, "
-						+ "movie0_.date as date, "
-						+ "movie0_.eloRating as eloRating, "
-						+ "movie0_.is_hidden as is_hidden, "
-						+ "movie0_.plot as plot, "
-						+ "movie0_.title as title "
+				.createNativeQuery("select movie0_.* "
 						+ "from movies movie0_ "
 						+ "join movie_genres genres0_ "
 						+ "on movie0_.movieId=genres0_.movieid "
@@ -171,13 +141,7 @@ public class MovieDaoImpl implements MovieDao{
 	@Override
 	public List<Movie> getMoviesByGenre(String genre, int limit) {
 		return entityManager
-				.createNativeQuery("select "
-						+ "movie0_.movieId as movieId, "
-						+ "movie0_.date as date, "
-						+ "movie0_.eloRating as eloRating, "
-						+ "movie0_.is_hidden as is_hidden, "
-						+ "movie0_.plot as plot, "
-						+ "movie0_.title as title "
+				.createNativeQuery("select movie0_.* "
 						+ "from movies movie0_ "
 						+ "join movie_genres genres0_ "
 						+ "on movie0_.movieId=genres0_.movieid "
@@ -205,18 +169,29 @@ public class MovieDaoImpl implements MovieDao{
     @Override
     @Transactional
 	public void updateElos(Movie winner, Movie loser) {
-    	//make sure we've got the most up-to-date info we can get. Those Movies could have lingered in the ModelMap for hours. Don't want to update based on an old Elo, and DEFINITELY don't want to overwrite changes to the plot or something
-    	winner = this.getMovie(winner.getMovieId());
-    	loser = this.getMovie(loser.getMovieId());
-    	Long winnerCount = (Long) entityManager.createQuery("SELECT COUNT(*) FROM EloRunoff WHERE winner_movieid=:movieid OR loser_movieid=:movieid").setParameter("movieid", winner.getMovieId()).getSingleResult();
-    	Long loserCount = (Long) entityManager.createQuery("SELECT COUNT(*) FROM EloRunoff WHERE winner_movieid=:movieid OR loser_movieid=:movieid").setParameter("movieid", loser.getMovieId()).getSingleResult();
-    	double winnerEloRating = winner.getEloRating(); //saving this for updating loser after updating winner
-    	if(winnerCount > 0) winner.setEloRating(((winnerEloRating*winnerCount)+loser.getEloRating()+400)/(winnerCount+1));
-    	else winner.setEloRating((loser.getEloRating()+400)/1);
-    	if(loserCount > 0) loser.setEloRating(((loser.getEloRating()*loserCount)+winnerEloRating-400)/(loserCount+1));
-    	else loser.setEloRating((winnerEloRating-400)/1);
-    	this.saveMovie(winner);
-    	this.saveMovie(loser);
+    	/*create or replace function elowinner(winnerid integer, loserid integer)
+    	returns void LANGUAGE plpgsql AS $$
+    	DECLARE oldWinnerElo double precision;
+    	DECLARE eloCount integer;
+    	BEGIN
+    		select elorating from movies where movieid=winnerid into oldWinnerElo;
+    		select count(*) from elorunoffs where winner_movieid=winnerid or loser_movieid=winnerid into eloCount;
+    	    if eloCount=0 then
+    	    	update movies set elorating=400+(SELECT elorating from movies where movieid=loserid) where movieid=winnerid;
+    	    else
+    	    	update movies set elorating=((elorating*eloCount)+400+(SELECT elorating from movies where movieid=loserid))/(eloCount+1) where movieid=winnerid;
+    	    end if;
+    	    
+    		select count(*) from elorunoffs where winner_movieid=loserid or loser_movieid=loserid into eloCount;
+    	    
+    	    if eloCount=0 then
+    	    	update movies set elorating=oldWinnerElo-400 where movieid=loserid;
+    	    else
+    	    	update movies set elorating=((elorating*eloCount)-400+oldWinnerElo)/(eloCount+1) where movieid=loserid;
+    	   	end if;
+    	END;
+    	$$;*/
+    	entityManager.createNativeQuery("select 1 from elowinner(:winner,:loser);").setParameter("winner", winner.getMovieId()).setParameter("loser", loser.getMovieId()).getResultList();
 	}
     
     @Override
@@ -238,13 +213,7 @@ public class MovieDaoImpl implements MovieDao{
 	@Override
 	public List<Movie> getMoviesByUserRating(double userRating, String comparator) {
 		return entityManager
-				.createNativeQuery("select "
-						+ "movie0_.movieId as movieId, "
-						+ "movie0_.date as date, "
-						+ "movie0_.eloRating as eloRating, "
-						+ "movie0_.is_hidden as is_hidden, "
-						+ "movie0_.plot as plot, "
-						+ "movie0_.title as title "
+				.createNativeQuery("select movie0_.* "
 						+ "from movies movie0_ "
 						+ "inner join reviews review0_ "
 						+ "on review0_.movie_movieId=movie0_.movieId "
@@ -313,9 +282,8 @@ public class MovieDaoImpl implements MovieDao{
 			.createNativeQuery( "select m.*, "
 					+ "ts_headline(m.plot || ' || ' || m.title, plainto_tsquery( :text )) as headline, "
 					+ "ts_rank(to_tsvector('english', m.plot || ' || ' || m.title), plainto_tsquery( :text )) AS rank "
-					+ "from movies m join movie_directors d on d.movieid=m.movieid join movie_genres g on g.movieid=m.movieid join movie_cast a on a.movieid=m.movieid "
-					+ "group by m.movieid "
-					+ "having to_tsvector('english', m.plot || ' || ' || m.title) @@ plainto_tsquery( :text ) "
+					+ "from movies m "
+					+ "where to_tsvector('english', m.plot || ' || ' || m.title) @@ plainto_tsquery( :text ) "
 					+ "order by rank desc;", "SearchResults" )
 			.setParameter("text", text)
 			.getResultList();

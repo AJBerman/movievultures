@@ -44,7 +44,9 @@ public class Movie {
 	private List<Review> reviews;
 	private Date date;
 	private double eloRating;
-	////These are not included on purpose; because each EloRunoff includes another movie, querying these would effectively mean dumping the database (or at least whatever subset of it is even weakly connected by Elo Runoffs)
+	////These are not included on purpose; because each EloRunoff includes another movie, 
+	////querying these would effectively mean dumping the database 
+    ////or at least whatever subset of it is even weakly connected by Elo Runoffs)
 	////That would be bad.
 	//@OneToMany(mappedBy="winner")
 	//private List<EloRunoff> wonEloRunoffs;
