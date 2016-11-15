@@ -172,7 +172,7 @@ mark {
 		</c:if>
 	</c:forEach>
 	
-		<h2>MOVIE RESULTS: ( ${ res } result(s) )</h2>
+		<h2>MOVIE RESULTS: ${ res } result(s)</h2>
 		<c:choose>
 			<c:when test="${type != 'random movies'}">
 				<h4>
