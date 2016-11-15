@@ -109,12 +109,12 @@
 									${dir},  
 								</c:forEach><br /> <b>Cast:</b> <c:forEach items="${movie.actors}"
 										var="actor" varStatus="status">
-									${actor}, 
+									${actor}${!status.last ? ',' : ''} 
 								</c:forEach><br /> <b>Genre:</b> <c:choose>
 										<c:when test="${ not empty movie.genres }">
 											<c:forEach items="${movie.genres}" var="genre"
 												varStatus="status">
-										| ${genre} |
+										${genre}${!status.last ? ' | ' : ''}
 									</c:forEach>
 										</c:when>
 										<c:otherwise>

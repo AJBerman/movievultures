@@ -67,7 +67,8 @@
 	
 	
 	<br />
-	<h3>Recommendations:</h3>
+	<h3><a href="javascript:toggleRec();">Recommendations:</a></h3>
+		<div id="recSlider" style="display: none;">
 		<c:if test="${empty user.recommendations}">
 			<p>None at the moment.</p>
 		</c:if>
@@ -78,6 +79,7 @@
 			</c:forEach>
 			</ul>
 		</c:if>
+		</div>
 	<br />
 	
 	<h3><a href="javascript:toggleFavorites()">Favorites:</a></h3>
@@ -159,7 +161,8 @@
 				<c:forEach items="${user.reviewedMovies}" var="review" varStatus="varStatus">
 					<tr class="rev revpage${fn:replace(((varStatus.count/5)-((varStatus.count/5)%1)+1),'.0','')}" >
 						<td><a href="../movies/details2.html?id=${ review.movie.movieId }">${review.movie.title}</a></td>
-						<td>${review.rating }  <img height="15" width="15" src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg"></td>
+						<td>${review.rating }  
+						<img height="15" width="15" src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg"></td>
 						<td>
 							<a href="../review/edit.html?id=${review.movie.movieId}">Edit</a>
 						</td>
@@ -179,5 +182,38 @@
 			<a href="javascript:void(0);" onclick="changeRevBy(1, 'rev');" id="rev_btn_next">Next</a> 
 			</c:if>
 		</div>
+		<br />
+		
+		<h3> <a href="javascript:toggleElos()">Elo-Runoffs:</a></h3>
+		<div id="eloSlider" style="display:none;">
+			<c:if test="${empty elos}">
+				<p> You haven't ranked any movies yet! </p>
+			</c:if>
+			<c:if test="${not empty elos }">
+				<table id="elo" class="table table-bordered table-striped table-hover">
+				<tr><th>Winning Film</th><th>Elo Rating</th><th>Losing Film</th><th>Elo Rating</th></tr>
+				<c:forEach items="${elos}" var="elo" varStatus="status">
+				<tr class="elo elopage${fn:replace(((varStatus.count/5)-((varStatus.count/5)%1)+1),'.0','')}">
+					<td><a href="../movies/details2.html?id=${ elo.winner.movieId }">${elo.winner.title}</a></td>
+					<td>${elo.winner.eloRating}</td>
+					<td><a href="../movies/details2.html?id=${ elo.loser.movieId }">${elo.loser.title}</a></td>
+					<td>${elo.loser.eloRating}</td>
+				</tr>
+				</c:forEach>
+				</table>
+				<a href="javascript:void(0);" onclick="changeEloBy(-1, 'elo');" id="elo_btn_prev">Prev</a>
+				<a href="javascript:void(0);" onclick="changeEloBy(-4, 'elo');" id="elopageno-4" style="display: none;"></a> 
+				<a href="javascript:void(0);" onclick="changeEloBy(-3, 'elo');" id="elopageno-3" style="display: none;"></a> 
+				<a href="javascript:void(0);" onclick="changeEloBy(-2, 'elo');" id="elopageno-2" style="display: none;"></a> 
+				<a href="javascript:void(0);" onclick="changeRevBy(-1, 'elo');" id="elopageno-1" style="display: none;"></a> 
+				<a id="elopageno"></a>
+				<a href="javascript:void(0);" onclick="changeEloBy(1, 'elo');" id="elopageno1" style="display: none;"></a> 
+				<a href="javascript:void(0);" onclick="changeEloBy(2, 'elo');" id="elopageno2" style="display: none;"></a> 
+				<a href="javascript:void(0);" onclick="changeEloBy(3, 'elo');" id="elopageno3" style="display: none;"></a> 
+				<a href="javascript:void(0);" onclick="changeEloBy(4, 'elo');" id="elopageno4" style="display: none;"></a> 
+				<a href="javascript:void(0);" onclick="changeEloBy(1, 'elo');" id="elo_btn_next">Next</a> 
+			</c:if>
+		</div>
+		<br />
 </body>
 </html>

@@ -39,8 +39,6 @@ public class UserService implements ApplicationListener<AuthenticationSuccessEve
 			List<Integer> movieIds = null;
 			try {
 				movieIds = recommender.getRecommendation(user.getUserId());
-				// System.out.println("Recommendations in movieIds: " +
-				// movieIds.size());
 			} catch (TasteException e) {
 				System.out.println("There was some error here");
 				e.printStackTrace();
@@ -49,10 +47,8 @@ public class UserService implements ApplicationListener<AuthenticationSuccessEve
 			if(movieIds.isEmpty())
 				return;
 			List<Movie> movies = movieDao.getMoviesByIDList(movieIds);
-			if(!movies.equals(user.getRecommendations())) {
-				user.setRecommendations(movies);
-				userDao.saveUser(user);
-			}
+			user.setRecommendations(movies);
+			userDao.saveUser(user);
 		
 	}
 
