@@ -15,7 +15,6 @@ import movievultures.model.EloRunoff;
 import movievultures.model.Movie;
 import movievultures.model.dao.EloRunoffDao;
 import movievultures.model.dao.MovieDao;
-import movievultures.model.dao.ReviewDao;
 import movievultures.model.dao.UserDao;
 import movievultures.security.SecurityUtils;
 

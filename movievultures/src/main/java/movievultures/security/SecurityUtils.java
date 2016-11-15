@@ -6,8 +6,6 @@ import org.springframework.security.authentication.AuthenticationTrustResolverIm
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import movievultures.model.User;
-
 public class SecurityUtils {
 
     private static AuthenticationTrustResolver authenticationTrustResolver = new AuthenticationTrustResolverImpl();

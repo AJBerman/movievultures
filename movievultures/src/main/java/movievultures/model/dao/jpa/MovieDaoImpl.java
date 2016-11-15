@@ -1,17 +1,11 @@
 package movievultures.model.dao.jpa;
 
-import java.util.ArrayList;
 import java.math.BigInteger;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityResult;
-import javax.persistence.ColumnResult;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.SqlResultSetMapping;
-
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
