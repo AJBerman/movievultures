@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -95,14 +97,15 @@ function addDirector() {
 	</p>
 
 	<h1>${ movie.title }</h1>
-		<form action="edit.html?id=${movie.movieId}" method="post">
+		<form:form modelAttribute="movie">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		<form:input type="hidden" path="movieId" />
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Title of the Movie</div>
 				<div class="col-xs-10">
-					<input class="form-control" type="text"
-						placeholder="Enter title of the movie" value="${movie.title}"name="editmovie_title"
-						required />
+					<form:input class="form-control" type="text"
+						placeholder="Enter title of the movie" path="title" /><br />
+						<font color="red"><form:errors path="title" /></font>
 				</div>
 				<br />
 			</div>
@@ -118,7 +121,8 @@ function addDirector() {
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Date</div>
 				<div class="col-xs-10">
-					<input type="date" value="<fmt:formatDate value="${ movie.date }" pattern="yyyy" />" name="editmovie_date" id="moviedate" />
+					<form:input path="date" type="date"/><br />
+					<font color="red"><form:errors path="date" /></font>
 				</div>
 				<br />
 			</div>
@@ -171,8 +175,8 @@ function addDirector() {
 				<br />
 			</div>
 			<input type="submit" class="btn btn-primary" value="Update"/>
-
-		</form>
+		</form:form>
+		 
 	</div>
 </body>
 </html>

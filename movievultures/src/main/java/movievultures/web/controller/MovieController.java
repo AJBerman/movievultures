@@ -86,25 +86,16 @@ public class MovieController {
 	@RequestMapping(value = "/movies/add.html", method = RequestMethod.POST)
 	public String postAddMovies(
 			@ModelAttribute Movie movie, BindingResult result, SessionStatus status,
-//			@RequestParam String addmovie_title, 
-//			@RequestParam(required=false) String addmovie_plot,
-//			@RequestParam(required=false) String addmovie_date, 
 			@RequestParam(required=false) List<String> addmovie_genres,
 			@RequestParam(required=false) List<String> addmovie_actors, 
 			@RequestParam(required=false) List<String> addmovie_directors 
-			//ModelMap models
 			)throws ParseException {
-		if(!SecurityUtils.isAuthenticated())
-			return "redirect:../login";
-		
 		movieValidator.validate(movie, result);
 		if(result.hasErrors())
 			return "movies/add";
-
-//		DateFormat format = new SimpleDateFormat("yyyy");
-//		// Date d=format.parse(source)
-//		System.out.println(format.parse(addmovie_date));
-//		if(addmovie_date != null) movie.setDate(format.parse(addmovie_date));
+		
+		if(!SecurityUtils.isAuthenticated())
+			return "redirect:../login";
 		movie.setEloRating(1200.0); //1200 is the default Elo Rating
 		movie.setHidden(false);
 		if(addmovie_genres != null) {
@@ -166,23 +157,20 @@ public class MovieController {
 	}
 
 	@RequestMapping(value="/movies/edit.html",method=RequestMethod.POST)
-	public String postEdit(@RequestParam int id,
-							@RequestParam String editmovie_title, 
+	public String postEdit(@ModelAttribute Movie movie, BindingResult results, 
 							@RequestParam(required=false) String editmovie_plot, 
-							@RequestParam(required=false) String editmovie_date,
 							@RequestParam(required=false) List<String> editmovie_genres,
 							@RequestParam(required=false) List<String> editmovie_actors,
 							@RequestParam(required=false) List<String> editmovie_directors,
-							ModelMap models) throws ParseException
+							ModelMap models, SessionStatus status) throws ParseException
 							{
 		if(!SecurityUtils.isAuthenticated())
 			return "redirect:../login";
-		Movie movie=movieDao.getMovie(id);
-		movie.setTitle(editmovie_title);
+		movieValidator.validate(movie, results);
+		if(results.hasErrors())
+			return "movies/edit";
+
 		if(editmovie_plot != null) movie.setPlot(editmovie_plot);
-		//DateFormat format = new SimpleDateFormat("yyyy-MM-DD");
-		DateFormat format = new SimpleDateFormat("yyyy");
-		if(editmovie_date != null) movie.setDate(format.parse(editmovie_date));
 		if(editmovie_genres != null) {
 			Collections.sort(editmovie_genres);
 			movie.setGenres(editmovie_genres);
@@ -195,8 +183,9 @@ public class MovieController {
 			Collections.sort(editmovie_directors);
 			movie.setDirectors(editmovie_directors);
 		}
-		movie=movieDao.saveMovie(movie);
-		return "redirect:../movies/details2.html?id="+id;
+		movieDao.saveMovie(movie);
+		status.setComplete();
+		return "redirect:../movies/details2.html?id=" + movie.getMovieId();
 	}
 	
 	@InitBinder
