@@ -251,7 +251,7 @@
 				<br />
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<b>Genre</b>
+						<b>Genre${fn:length(movie.genres) > 1 ? 's':''}</b>
 					</div>
 					<div class="pabel-body">
 						<c:choose>
@@ -282,7 +282,7 @@
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<b>Director(s)</b>
+						<b>Director${fn:length(movie.directors) > 1 ? 's':''}</b>
 					</div>
 					<div class="panel-body">
 						<c:forEach items="${movie.directors}" var="director">

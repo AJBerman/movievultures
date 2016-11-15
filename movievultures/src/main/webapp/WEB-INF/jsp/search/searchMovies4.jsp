@@ -232,7 +232,7 @@ mark {
 							</c:choose>
 						</span><br />
 						<!-- c:url is used here to url-encode the genre/director/actor, so if their name is "null&illegalargument=foo" we don't get funny business. -->
-						<b>Genres</b>: <c:forEach items="${ movieResult.genres }" var="g" varStatus="stat"> <span class="movieGenre">
+						<b>Genre${fn:length(movieResult.genres) > 1 ? 's':''}</b>: <c:forEach items="${ movieResult.genres }" var="g" varStatus="stat"> <span class="movieGenre">
 							<c:url value="searchMovies4.html" var="myURL">
 							   <c:param name="searchTerm" value="${g}"/>
 							   <c:param name="type" value="2"/>
@@ -240,7 +240,7 @@ mark {
 							</c:url>
 							<a href="${myURL}">${g}</a>
 						</span> ${stat.last ? '' : '|'}</c:forEach><br />
-						<b>Directors</b>: <c:forEach items="${ movieResult.directors }" var="d" varStatus="stat"> <span class="movieDirector">
+						<b>Director${fn:length(movieResult.directors) > 1 ? 's':''}</b>: <c:forEach items="${ movieResult.directors }" var="d" varStatus="stat"> <span class="movieDirector">
 							<c:url value="searchMovies4.html" var="myURL">
 							   <c:param name="searchTerm" value="${d}"/>
 							   <c:param name="type" value="3"/>
@@ -248,7 +248,7 @@ mark {
 							</c:url>
 							<a href="${myURL}">${d}</a>
 						</span> ${stat.last ? '' : '|'}</c:forEach><br />
-						<b>Artists</b>: <c:forEach items="${ movieResult.actors }" var="a" varStatus="stat"> <span class="movieActor">
+						<b>Artist${fn:length(movieResult.actors) > 1 ? 's':''}</b>: <c:forEach items="${ movieResult.actors }" var="a" varStatus="stat"> <span class="movieActor">
 							<c:url value="searchMovies4.html" var="myURL">
 							   <c:param name="searchTerm" value="${a}"/>
 							   <c:param name="type" value="4"/>
