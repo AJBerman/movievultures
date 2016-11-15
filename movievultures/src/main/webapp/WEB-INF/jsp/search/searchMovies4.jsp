@@ -27,6 +27,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 	crossorigin="anonymous"></script>
+	
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
 <title>Search for a Movie</title>
 <style>
 <!--
@@ -39,6 +42,9 @@ For search highlighting --> <%-- For search highlighting --%> mark {
 }
 .hidden {
 	display: none;
+}
+.gold {
+	color: #FFD700;
 }
 </style>
 
@@ -99,7 +105,7 @@ For search highlighting --> <%-- For search highlighting --%> mark {
 	}
 
 	window.onload = function() {
-		$(".hidden").("hidden");
+		$(".hidden").removeClass("hidden");
 		changePageReviews(1);
 	};
 </script>
@@ -202,17 +208,27 @@ For search highlighting --> <%-- For search highlighting --%> mark {
 						<c:forEach items="${ movieResult.reviews }" var="r">
 							<c:set var="sum" value="${ sum + r.rating }" />
 						</c:forEach>
+						<c:set var="rating" value="${sum/fn:length(movieResult.reviews)}" />
 						<span class="movieRating">
 							<c:choose>
 								<c:when test="${ not empty movieResult.reviews }">
-									<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movieResult.reviews)}"/>
-									<img height="15" width="15"
-										src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg">
+									<b>User Rating</b>: 
+									<c:forEach begin="1" end="${rating}" varStatus="loop">
+    									<i class="fa fa-star gold" aria-hidden="true" alt="${rating}"></i>
+									</c:forEach>
+									<c:choose>
+										<c:when test="${rating%1 >= 0.66}">
+	    									<i class="fa fa-star gold" aria-hidden="true" alt="${rating}"></i>
+										</c:when>
+										<c:when test="${rating%1 >= 0.33}">
+	    									<i class="fa fa-star-half-o gold" aria-hidden="true" alt="${rating}"></i>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
 								</c:when>
 								<c:otherwise>
-									<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum}"/>
-									<img height="15" width="15"
-										src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg">
+									<b>User Rating</b>: Unrated. Be the first to review this!
 								</c:otherwise>
 							</c:choose>
 						</span><br />
