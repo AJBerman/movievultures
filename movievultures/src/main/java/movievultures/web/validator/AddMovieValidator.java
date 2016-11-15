@@ -1,5 +1,7 @@
 package movievultures.web.validator;
 
+import java.time.Year;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
@@ -18,14 +20,16 @@ public class AddMovieValidator implements Validator{
 		return Movie.class.isAssignableFrom( clazz );
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void validate(Object target, Errors errors) {
 		Movie movie = (Movie)target;
 		if( !StringUtils.hasText(movie.getTitle() ) )
 			errors.rejectValue("title", "error.field.empty");
 		if(movie.getDate() != null){
-			Date now = new Date();
-			if(movie.getDate().getYear() > now.getYear() + 5  || movie.getDate().getYear() < 1900)
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(movie.getDate());
+			if(cal.get(Calendar.YEAR) > (Year.now().getValue() + 5)  || cal.get(Calendar.YEAR) < 1900)
 				errors.rejectValue("date","error.date.range");
 		}
 //		if( movie.getDate() == null )
