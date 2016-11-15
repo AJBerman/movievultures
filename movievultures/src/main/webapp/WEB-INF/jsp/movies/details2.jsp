@@ -27,8 +27,14 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 	crossorigin="anonymous"></script>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 <title>Details</title>
+<style>
+.gold {
+	color: #FFD700;
+}
+</style>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
 	var current_page_reviews = 1;
@@ -295,20 +301,29 @@
 						<c:forEach items="${ movie.reviews }" var="r">
 							<c:set var="sum" value="${ sum + r.rating }" />
 						</c:forEach>
-						<c:choose>
-								<c:when test="${ not empty movieResult.reviews }">
-									<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movieResult.reviews)}"/>
-									<img height="15" width="15"
-										src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg">
-									<br />
-								</c:when>
-								<c:otherwise>
-									<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum}"/>
-									<img height="15" width="15"
-										src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg">
-									<br />
-								</c:otherwise>
+						<c:set var="rating" value="${sum/fn:length(movie.reviews)}" />
+						<span title="${rating-rating%0.01}"><c:choose>
+							<c:when test="${ not empty movie.reviews }">
+								<b>User Rating</b>: 
+								<c:forEach begin="1" end="${rating}" varStatus="loop">
+   									<i class="fa fa-star gold" aria-hidden="true"></i>
+								</c:forEach>
+								<c:choose>
+									<c:when test="${rating%1 >= 0.66}">
+    									<i class="fa fa-star gold" aria-hidden="true"></i>
+									</c:when>
+									<c:when test="${rating%1 >= 0.33}">
+    									<i class="fa fa-star-half-o gold" aria-hidden="true"></i>
+									</c:when>
+									<c:otherwise>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+							<c:otherwise>
+								<b>User Rating</b>: Unrated. Be the first to review this!
+							</c:otherwise>
 						</c:choose>
+						</span><br />
 						<c:choose>
 							<c:when test="${ not empty movie.reviews }">
 								<!-- Client-Side Pagination. This is "bad" in some regards, but it's much simpler to implement. This was tested up to 10,000 reviews and works "okay" at that point (2 mb page weight and 5-ish second load time). We don't expect to have anywhere near 10,000 reviews any time soon. -->
