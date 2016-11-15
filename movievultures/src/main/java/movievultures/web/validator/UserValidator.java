@@ -34,6 +34,7 @@ public class UserValidator implements Validator{
 		if( !StringUtils.hasText(user.getEmail() ) )
 			errors.rejectValue("email", "error.field.empty");
 		
+		
 		//check user-name uniqueness
 		if(StringUtils.hasText(user.getUsername())){
 			boolean unique = true;

@@ -23,6 +23,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import movievultures.model.Movie;
 import movievultures.model.User;
+import movievultures.model.dao.EloRunoffDao;
 import movievultures.model.dao.MovieDao;
 import movievultures.model.dao.UserDao;
 import movievultures.recommender.RecommenderUtils;
@@ -38,6 +39,8 @@ public class UserController {
 	UserDao userDao;
 	@Autowired
 	MovieDao movieDao;
+	@Autowired
+	EloRunoffDao eloRunoffDao;
 	
 	@Autowired
 	UserValidator userValidator;
@@ -66,8 +69,10 @@ public class UserController {
 		String username_sec = "";
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if(!(authentication instanceof AnonymousAuthenticationToken) && username.equals(authentication.getName())){
-			username_sec = authentication.getName();			
-			models.put("user", userDao.getUserByUsername(username));
+			username_sec = authentication.getName();
+			User user = userDao.getUserByUsername(username_sec);
+			models.put("user", user);
+			models.put("elos", eloRunoffDao.getEloRunoffsByUser(user));
 			return "user/home";
 		}else if(!(authentication instanceof AnonymousAuthenticationToken) && !username.equals(authentication.getName())){
 			return "redirect:../";
@@ -83,6 +88,7 @@ public class UserController {
 		models.put("user", userDao.getUser(userId));
 		return "user/view";
 	}
+	
 	//register user
 	@RequestMapping(value="user/register.html", method=RequestMethod.GET)
 	public String register(ModelMap models){

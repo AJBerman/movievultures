@@ -1,8 +1,17 @@
 var current_page_rev = 1;
 var current_page_favs = 1;
 var current_page_watch = 1;
+var current_page_elo = 1;
 
 var records_per_page = 5;
+
+function changeEloBy(num, tableName){
+	if (current_page_elo + num >= 1
+			&& current_page_elo + num <= numPages('#' + tableName + ' tr')) {
+		current_page_rev += num;
+		changePage(current_page_elo, tableName);
+	}
+}
 
 function changeRevBy(num, tableName) {
 	// console.log('#' + tableName + " tr");
@@ -85,8 +94,17 @@ function toggleReviews() {
 	$('#revSlider').slideToggle();
 }
 
+function toggleElos(){
+	$('#eloSlider').slideToggle();
+}
+
+function toggleRec(){
+	$('#recSlider').slideToggle();
+}
+
 window.onload = function() {
 	changePage(1, "rev");
 	changePage(1, "watch");
 	changePage(1, "fav");
+	changePage(1, "elo");
 };
