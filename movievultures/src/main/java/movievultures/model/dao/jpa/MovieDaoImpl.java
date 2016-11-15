@@ -283,7 +283,7 @@ public class MovieDaoImpl implements MovieDao{
 					+ "ts_headline(m.plot || ' || ' || m.title, plainto_tsquery( :text )) as headline, "
 					+ "ts_rank(to_tsvector('english', m.plot || ' || ' || m.title), plainto_tsquery( :text )) AS rank "
 					+ "from movies m "
-					+ "having to_tsvector('english', m.plot || ' || ' || m.title) @@ plainto_tsquery( :text ) "
+					+ "where to_tsvector('english', m.plot || ' || ' || m.title) @@ plainto_tsquery( :text ) "
 					+ "order by rank desc;", "SearchResults" )
 			.setParameter("text", text)
 			.getResultList();
