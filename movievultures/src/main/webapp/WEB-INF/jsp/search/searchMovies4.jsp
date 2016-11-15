@@ -29,8 +29,9 @@
 	crossorigin="anonymous"></script>
 <title>Search for a Movie</title>
 <style>
-<!--
-For search highlighting --> <%-- For search highlighting --%> mark {
+<!-- For search highlighting -->
+<%-- For search highlighting --%>
+mark {
 	background: yellow;
 }
 
