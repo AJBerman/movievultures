@@ -27,15 +27,23 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 	crossorigin="anonymous"></script>
+	
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
 <title>Search for a Movie</title>
+<!-- For search highlighting -->
 <style>
-<!--
-For search highlighting --> <%-- For search highlighting --%> mark {
+mark {
 	background: yellow;
 }
-
 .marked {
 	background: yellow;
+}
+.hidden {
+	display: none;
+}
+.gold {
+	color: #FFD700;
 }
 </style>
 
@@ -96,6 +104,7 @@ For search highlighting --> <%-- For search highlighting --%> mark {
 	}
 
 	window.onload = function() {
+		$(".hidden").removeClass("hidden");
 		changePageReviews(1);
 	};
 </script>
@@ -186,7 +195,7 @@ For search highlighting --> <%-- For search highlighting --%> mark {
 			<ul id="results">
 			<c:forEach items="${ movieResults }" var="movieResult" varStatus="varStatus">
 				<c:if test="${ !movieResult.hidden }">
-					<li class="search searchpage${fn:replace(((varStatus.count/20)-((varStatus.count/20)%1)+1),'.0','')}"  style="display:none">
+					<li class="${varStatus.count <= 20 ? '' : 'hidden '}search searchpage${fn:replace(((varStatus.count/20)-((varStatus.count/20)%1)+1),'.0','')}">
 						<c:if test="${ not empty headlines }">
 							<span>...${headlines[varStatus.count-1]}...</span><br/>
 						</c:if>
@@ -198,22 +207,32 @@ For search highlighting --> <%-- For search highlighting --%> mark {
 						<c:forEach items="${ movieResult.reviews }" var="r">
 							<c:set var="sum" value="${ sum + r.rating }" />
 						</c:forEach>
-						<span class="movieRating">
+						<c:set var="rating" value="${sum/fn:length(movieResult.reviews)}" />
+						<span class="movieRating" title="${rating}">
 							<c:choose>
 								<c:when test="${ not empty movieResult.reviews }">
-									<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum/fn:length(movieResult.reviews)}"/>
-									<img height="15" width="15"
-										src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg">
+									<b>User Rating</b>: 
+									<c:forEach begin="1" end="${rating-rating%0.01}" varStatus="loop">
+    									<i class="fa fa-star gold" aria-hidden="true"></i>
+									</c:forEach>
+									<c:choose>
+										<c:when test="${rating%1 >= 0.66}">
+	    									<i class="fa fa-star gold" aria-hidden="true"></i>
+										</c:when>
+										<c:when test="${rating%1 >= 0.33}">
+	    									<i class="fa fa-star-half-o gold" aria-hidden="true"></i>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
 								</c:when>
 								<c:otherwise>
-									<b>Total User Rating</b>: <fmt:formatNumber type="number" maxFractionDigits="2" value="${sum}"/>
-									<img height="15" width="15"
-										src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg">
+									<b>User Rating</b>: Unrated. Be the first to review this!
 								</c:otherwise>
 							</c:choose>
 						</span><br />
 						<!-- c:url is used here to url-encode the genre/director/actor, so if their name is "null&illegalargument=foo" we don't get funny business. -->
-						<b>Genres</b>: <c:forEach items="${ movieResult.genres }" var="g" varStatus="stat">| <span class="movieGenre">
+						<b>Genre${fn:length(movieResult.genres) > 1 ? 's':''}</b>: <c:forEach items="${ movieResult.genres }" var="g" varStatus="stat"> <span class="movieGenre">
 							<c:url value="searchMovies4.html" var="myURL">
 							   <c:param name="searchTerm" value="${g}"/>
 							   <c:param name="type" value="2"/>
@@ -221,7 +240,7 @@ For search highlighting --> <%-- For search highlighting --%> mark {
 							</c:url>
 							<a href="${myURL}">${g}</a>
 						</span> ${stat.last ? '' : '|'}</c:forEach><br />
-						<b>Directors</b>: <c:forEach items="${ movieResult.directors }" var="d" varStatus="stat">| <span class="movieDirector">
+						<b>Director${fn:length(movieResult.directors) > 1 ? 's':''}</b>: <c:forEach items="${ movieResult.directors }" var="d" varStatus="stat"> <span class="movieDirector">
 							<c:url value="searchMovies4.html" var="myURL">
 							   <c:param name="searchTerm" value="${d}"/>
 							   <c:param name="type" value="3"/>
@@ -229,7 +248,7 @@ For search highlighting --> <%-- For search highlighting --%> mark {
 							</c:url>
 							<a href="${myURL}">${d}</a>
 						</span> ${stat.last ? '' : '|'}</c:forEach><br />
-						<b>Artists</b>: <c:forEach items="${ movieResult.actors }" var="a" varStatus="stat">| <span class="movieActor">
+						<b>Artist${fn:length(movieResult.actors) > 1 ? 's':''}</b>: <c:forEach items="${ movieResult.actors }" var="a" varStatus="stat"> <span class="movieActor">
 							<c:url value="searchMovies4.html" var="myURL">
 							   <c:param name="searchTerm" value="${a}"/>
 							   <c:param name="type" value="4"/>

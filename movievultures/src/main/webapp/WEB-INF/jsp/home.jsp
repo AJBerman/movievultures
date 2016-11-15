@@ -104,13 +104,20 @@
 							<tr>
 								<td><b>Title:</b> <a
 									href="movies/details2.html?id=${movie.movieId}">${movie.title}</a>
-									<br /> <b>Director(s):</b> <c:forEach
+									<br /> <b>Director${fn:length(movie.directors) > 1 ? 's':''}:</b> 
+								<c:forEach
 										items="${movie.directors}" var="dir" varStatus="status">
-									${dir},  
+									${dir}${!status.last ? ',' : ''}  
 								</c:forEach><br /> <b>Cast:</b> <c:forEach items="${movie.actors}"
 										var="actor" varStatus="status">
+<<<<<<< HEAD
 									${actor}${!status.last ? ',' : ''} 
 								</c:forEach><br /> <b>Genre:</b> <c:choose>
+=======
+									${actor}${!status.last ? ',' : ''}
+								</c:forEach><br /> 
+								<b>Genre${fn:length(movie.genres) > 1 ? 's':''}:</b> <c:choose>
+>>>>>>> c09def97cf118d6d824b019bb517151a81d31112
 										<c:when test="${ not empty movie.genres }">
 											<c:forEach items="${movie.genres}" var="genre"
 												varStatus="status">
@@ -149,7 +156,7 @@
 							<td>
 							<br />
 							<b>Title: </b><a href="movies/details2.html?id=${movie.movieId}">${movie.title}</a><br />
-							<b>Director(s): </b>
+							<b>Director${fn:length(movie.directors) > 1 ? 's':''}:</b>
 								<c:forEach items="${movie.directors}" var="dir" varStatus="status">
 									${dir}${!status.last ? ',' : ''} 
 								</c:forEach><br />
@@ -157,7 +164,7 @@
 								<c:forEach items="${movie.actors}" var="actor" varStatus="status">
 									${actor}${!status.last ? ',' : ''} 
 								</c:forEach><br />
-							<b>Genre:</b>
+							<b>Genre${fn:length(movie.genres) > 1 ? 's':''}:</b>
 								<c:choose>
 								<c:when test="${ not empty movie.genres }">
 									<c:forEach items="${movie.genres}" var="genre" varStatus="status">
@@ -191,7 +198,7 @@
 							<td>
 							<br />
 							<b>Title:</b> <a href="movies/details2.html?id=${movie.movieId}">${movie.title}</a> <br />
-							<b>Director(s):</b>
+							<b>Director${fn:length(movie.directors) > 1 ? 's':''}:</b>
 								<c:forEach items="${movie.directors}" var="dir" varStatus="status">
 									${dir} ${!status.last ? ',' : ''} 
 								</c:forEach><br />
@@ -200,7 +207,7 @@
 									${actor}, 
 								</c:forEach><br />
 								
-							<b>Genre:</b>
+							<b>Genre${fn:length(movie.genres) > 1 ? 's':''}:</b>
 							<c:choose>
 								<c:when test="${ not empty movie.genres }">
 									<c:forEach items="${movie.genres}" var="genre" varStatus="status">
@@ -237,7 +244,7 @@
 							<td>
 							<br />
 							<b>Title:</b> <a href="movies/details2.html?id=${movie2.movieId}">${movie2.title}</a> <br />
-							<b>Director(s):</b>
+							<b>Director${fn:length(movie2.directors) > 1 ? 's':''}:</b>
 								<c:forEach items="${movie2.directors}" var="dir2" varStatus="status">
 									${dir2}${!status.last ? ', ' : ''} 
 								</c:forEach><br /> <b>Cast:</b> <c:forEach items="${movie2.actors}"
@@ -245,7 +252,7 @@
 									${actor2}${!status.last ? ', ' : ''}
 								</c:forEach><br />
 								
-							<b>Genre:</b>
+							<b>Genre${fn:length(movie2.genres) > 1 ? 's':''}:</b>
 							<c:choose>
 								<c:when test="${ not empty movie2.genres }">
 									<c:forEach items="${movie2.genres}" var="genre" varStatus="status">

@@ -1,17 +1,11 @@
 package movievultures.model.dao.jpa;
 
-import java.util.ArrayList;
 import java.math.BigInteger;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityResult;
-import javax.persistence.ColumnResult;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.SqlResultSetMapping;
-
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
@@ -283,7 +277,7 @@ public class MovieDaoImpl implements MovieDao{
 					+ "ts_headline(m.plot || ' || ' || m.title, plainto_tsquery( :text )) as headline, "
 					+ "ts_rank(to_tsvector('english', m.plot || ' || ' || m.title), plainto_tsquery( :text )) AS rank "
 					+ "from movies m "
-					+ "having to_tsvector('english', m.plot || ' || ' || m.title) @@ plainto_tsquery( :text ) "
+					+ "where to_tsvector('english', m.plot || ' || ' || m.title) @@ plainto_tsquery( :text ) "
 					+ "order by rank desc;", "SearchResults" )
 			.setParameter("text", text)
 			.getResultList();

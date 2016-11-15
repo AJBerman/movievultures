@@ -42,12 +42,10 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/i18n/defaults-*.min.js"></script>
 
-
 <title>Search for a Movie</title>
 </head>
 <body>
-	<form class="form-inline"
-		action="/movievultures/search/searchMovies4.html" method="get">
+	<form class="form-inline" name="searchForm" action="/movievultures/search/searchMovies4.html" onsubmit="return numCheck()" method="get">
 		<input type="hidden" name="${_csrf.parameterName}"
 			value="${_csrf.token}" />
 		<div class="input-group">
@@ -55,9 +53,7 @@
 			<input placeholder="Search for..." class="form-control" type="text" name="searchTerm" />
 		</div>
 		
-		
-		<select class="selectpicker" data-live-search="true" id="searchType"
-			name="type">
+		<select class="selectpicker" data-live-search="true" id="searchType" name="type">
 	 		<option value="9">General Search</option>
 	 		<option value="10">General Search (Indexable)</option>
 			<option value="1">Title</option>
@@ -87,6 +83,19 @@
 			}
 		});
 	</script>
-
+	<script>
+	//http://stackoverflow.com/questions/18042133/check-if-input-is-number-or-letter-javascript
+	//http://www.w3schools.com/js/js_validation.asp
+	function numCheck() {
+		var input = document.forms["searchForm"]["searchTerm"].value;
+		var selection = document.forms["searchForm"]["type"].value;
+		//console.log("INPUT: " + input);
+		//console.log("TYPE: " + selection);
+		if ( (selection == 5 || selection == 6 || selection == 7) && isNaN(input) ) {
+			alert("The input is not a number");
+			return false;
+		}
+	}
+	</script>
 </body>
 </html>
