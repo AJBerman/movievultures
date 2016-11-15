@@ -2,6 +2,9 @@ package movievultures.web.validator;
 
 import java.util.List;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -34,6 +37,12 @@ public class UserValidator implements Validator{
 		if( !StringUtils.hasText(user.getEmail() ) )
 			errors.rejectValue("email", "error.field.empty");
 		
+		//check email
+		if(StringUtils.hasText(user.getEmail())){
+			if(!isValidEmailAddress(user.getEmail()))
+				errors.rejectValue("email", "error.invalid.email");
+		}
+		
 		//check user-name uniqueness
 		if(StringUtils.hasText(user.getUsername())){
 			boolean unique = true;
@@ -48,5 +57,16 @@ public class UserValidator implements Validator{
 		
 		
 	}
+	
+	public static boolean isValidEmailAddress(String email) {
+		   boolean valid = true;
+		   try {
+		      InternetAddress emailAddr = new InternetAddress(email);
+		      emailAddr.validate();
+		   } catch (AddressException ex) {
+		      valid = false;
+		   }
+		   return valid;
+		}
 
 }

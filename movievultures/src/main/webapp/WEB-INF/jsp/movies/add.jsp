@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
 <html>
@@ -78,51 +79,37 @@ function addDirector() {
 	</div>
 	</nav>
 	
-	<%-- <p align="right">
-		<a href="<c:url value='/' />" >Main</a> |
-		
-		<sec:authorize access="isAuthenticated()">
-			<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >
-			 	<sec:authentication property="principal.username" /></a> |
-			<a href="<c:url value='/logout'/>"   >Logout</a>
-		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-				| <a href="../user/list.html">All Users</a>
-		</sec:authorize>
-	</p> --%>
 	<div class="container">
 	<p align="left">
 		<a href="/movievultures/">Back</a>
 	</p>
 	<center>
 	<h1>Add a New Movie</h1></center>
-	
-		<form action="add.html" method="post">
+		<form:form modelAttribute="movie">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-			<div class="form-group row">
-				<div class="col-xs-2 col-form-label">Title of the Movie</div>
+		<div class="form-group row">
+			<div class="col-xs-2 col-form-label">Title of the Movie</div>
 				<div class="col-xs-10">
-					<input class="form-control" type="text"
-						placeholder="Enter title of the movie" name="addmovie_title"
-						required />
+					<form:input class="form-control" type="text"
+						placeholder="Enter title of the movie" path="title" /><br />
+						<font color="red"><form:errors path="title" /></font>
 				</div>
 				<br />
-			</div>
+				</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Plot</div>
 				<div class="col-xs-10">
-					<textarea style="width: 50%; height: 300px;" class="form-control"
-						placeholder="Enter plot of the movie" name="addmovie_plot"
-						required></textarea>
+					<form:textarea style="width: 50%; height: 300px;" class="form-control"
+						placeholder="Enter plot of the movie"
+						path="plot"></form:textarea>
 				</div>
 				<br />
 			</div>
 			<div class="form-group row">
 				<div class="col-xs-2 col-form-label">Date</div>
 				<div class="col-xs-10">
-					<input type="date" name="addmovie_date" id="moviedate" 
-					placeholder="YYYY"
-					required />
+					<form:input type="date" id="moviedate" placeholder="YYYY" path="date" /><br />
+					<font color="red"><form:errors path="date" /></font>
 				</div>
 				<br />
 			</div>
@@ -169,7 +156,7 @@ function addDirector() {
 				<br />
 			</div>
 			<input type="submit" class="btn btn-primary" />
-		</form>
+		</form:form>
 	</div>
 </body>
 </html>
