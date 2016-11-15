@@ -110,14 +110,11 @@
 									${dir}${!status.last ? ',' : ''}  
 								</c:forEach><br /> <b>Cast:</b> <c:forEach items="${movie.actors}"
 										var="actor" varStatus="status">
-<<<<<<< HEAD
-									${actor}${!status.last ? ',' : ''} 
-								</c:forEach><br /> <b>Genre:</b> <c:choose>
-=======
+
 									${actor}${!status.last ? ',' : ''}
 								</c:forEach><br /> 
 								<b>Genre${fn:length(movie.genres) > 1 ? 's':''}:</b> <c:choose>
->>>>>>> c09def97cf118d6d824b019bb517151a81d31112
+
 										<c:when test="${ not empty movie.genres }">
 											<c:forEach items="${movie.genres}" var="genre"
 												varStatus="status">
