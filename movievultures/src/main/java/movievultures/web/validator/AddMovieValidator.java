@@ -30,12 +30,8 @@ public class AddMovieValidator implements Validator{
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(movie.getDate()); //first movie made was in 1889 by Thomas Edison
 			if(cal.get(Calendar.YEAR) > (Year.now().getValue() + 5)  || cal.get(Calendar.YEAR) < 1889)
-				movie.setDate(null);
 				errors.rejectValue("date","error.date.range");
 		}
-		//check date is not null
-		if( movie.getDate() == null )
-			errors.rejectValue("date", "error.field.empty2");
 	}
 
 }
