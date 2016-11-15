@@ -37,6 +37,7 @@ public class UserValidator implements Validator{
 		if( !StringUtils.hasText(user.getEmail() ) )
 			errors.rejectValue("email", "error.field.empty");
 		
+		//check email
 		if(StringUtils.hasText(user.getEmail())){
 			if(!isValidEmailAddress(user.getEmail()))
 				errors.rejectValue("email", "error.invalid.email");
@@ -58,14 +59,14 @@ public class UserValidator implements Validator{
 	}
 	
 	public static boolean isValidEmailAddress(String email) {
-		   boolean result = true;
+		   boolean valid = true;
 		   try {
 		      InternetAddress emailAddr = new InternetAddress(email);
 		      emailAddr.validate();
 		   } catch (AddressException ex) {
-		      result = false;
+		      valid = false;
 		   }
-		   return result;
+		   return valid;
 		}
 
 }
