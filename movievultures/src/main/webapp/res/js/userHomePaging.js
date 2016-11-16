@@ -8,7 +8,7 @@ var records_per_page = 5;
 function changeEloBy(num, tableName){
 	if (current_page_elo + num >= 1
 			&& current_page_elo + num <= numPages('#' + tableName + ' tr')) {
-		current_page_rev += num;
+		current_page_elo += num;
 		changePage(current_page_elo, tableName);
 	}
 }

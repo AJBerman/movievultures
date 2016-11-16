@@ -32,10 +32,6 @@ public class AddMovieValidator implements Validator{
 			if(cal.get(Calendar.YEAR) > (Year.now().getValue() + 5)  || cal.get(Calendar.YEAR) < 1889)
 				errors.rejectValue("date","error.date.range");
 		}
-		//check date is not null
-		if( movie.getDate() == null )
-			errors.rejectValue("date", "error.field.empty");
-
 	}
 
 }
