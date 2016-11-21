@@ -79,7 +79,7 @@
 						</div><br />
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1">Password</span> 
-							<form:input path="password" type="text" class="form-control" placeholder="Password" aria-describedby="basic-addon1" /><font color="red"><form:errors path="password" /></font>
+							<form:input path="password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1" /><font color="red"><form:errors path="password" /></font>
 						</div><br />
 						<center>
 							<input class="btn btn-primary" type="submit" name="add" value="REGISTER" />
