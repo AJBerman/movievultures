@@ -30,7 +30,7 @@
 			<option value="7">Elo Rating</option>
 			<option value="8">Random Movies</option>
 		</select> 
-		<select class="selectpicker" id="comparator" name="comparator">
+		<select id="comparator" name="comparator">
 			<option value="3" selected="selected">=</option>
 			<option value="4">!=</option>
 			<option value="1">></option>

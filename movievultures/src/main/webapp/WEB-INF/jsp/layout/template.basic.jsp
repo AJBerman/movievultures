@@ -10,18 +10,24 @@
 <tiles:importAttribute name="javascripts"/>
 <tiles:importAttribute name="stylesheets"/>
 
-<style>
-.fixedHeader {
-	position: fixed;
-	width: 100%;
-	background-color: black;
-}
-</style>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<style>
+.fixedHeader {
+	position: fixed;
+	width: 100%;
+}
+</style>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
+
+<c:forEach var="script" items="${javascripts}">
+        <script type="text/javascript" src="<c:url value="${script}"/>" ></script>
+</c:forEach>
 
 <c:if test="${not empty stylesheets}">
 	<c:forEach var="css" items="${stylesheets}">
@@ -29,14 +35,24 @@
     </c:forEach>
 </c:if>
 
-<c:forEach var="script" items="${javascripts}">
-        <script type="text/javascript" src="<c:url value="${script}"/>" ></script>
-</c:forEach>
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js">
+</script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/i18n/defaults-*.min.js">
+</script>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	crossorigin="anonymous"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" 
 	rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" 
 	crossorigin="anonymous">
-
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -67,7 +83,7 @@
 <tiles:insertAttribute name="menu" />
 
 <!-- insert search bar -->
-	<tiles:insertAttribute name="searchbar" />
+	<%-- <tiles:insertAttribute name="searchbar" /> --%>
 </div>
 <br /><br /><br /><br /><br /> <br />
 
