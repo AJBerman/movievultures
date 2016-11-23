@@ -11,6 +11,7 @@
 	 -->
 	<definition name="defaultTemplate" template="/WEB-INF/jsp/layout/template.basic.jsp" >
 		<put-attribute name="menu" value="/WEB-INF/jsp/layout/menu.jsp" />
+		<!-- default javascript list, contains js library only. Add others as needed-->
  		<put-list-attribute name="javascripts">
         	<add-attribute value="/res/js/jquery-3.1.1.min.js" />
    		</put-list-attribute>
@@ -73,5 +74,41 @@
 			<add-attribute value="/res/js/userPaging.js" />
 		</put-list-attribute>
 	</definition>
+	<!-- 
+	************
+	*  Movies  *
+	************
+	 -->
+	 
+	 <!-- if there's no scripting is embedded, add it to the bottom of the file -->
+	<definition name="movies/add" extends="defaultTemplate">
+		<put-attribute name="title" value="Add Movie" />
+		<put-attribute name="content" value="/WEB-INF/jsp/movies/add.jsp" />
+	</definition>
+	
+	<definition name="movies/details2" extends="defaultTemplate">
+		<put-attribute name="title" value="Movie Details" />
+		<put-attribute name="content" value="/WEB-INF/jsp/movies/details2.jsp" />
+	</definition>
+	
+	<!-- 
+	************
+	*  Search  *
+	************
+	 -->
+	  
+	  
+	<!-- 
+	************
+	*  Review  *
+	************
+	 -->
+	
+	
+	<!-- 
+	***********
+	*   Elo   *
+	***********
+	 -->
 	
 </tiles-definitions>
