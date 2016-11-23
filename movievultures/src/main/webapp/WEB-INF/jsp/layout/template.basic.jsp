@@ -69,6 +69,7 @@
 <!-- insert search bar -->
 	<tiles:insertAttribute name="searchbar" />
 </div>
+<br /><br /><br /><br /><br /> <br />
 
 <!-- insert content -->
 <div>
