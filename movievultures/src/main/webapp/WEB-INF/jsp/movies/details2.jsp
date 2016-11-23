@@ -13,10 +13,6 @@
 	color: #FFD700;
 }
 </style>
-
-	<div class="container">
-		<jsp:include page="../search/searchMovies2.jsp" />
-		
 		<%-- ===== MOVIE DETAILS DISPLAY ===== --%>
 
 		<h1>${movie.title}</h1>

@@ -3,7 +3,6 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 	<div class="container">
-		<jsp:include page="search/searchMovies2.jsp" />
 	<br />
 	<br />
 	<!-- <br /><a href="/movievultures/home.html"><img src="images/MV_banner.png" alt="Banner of Movie Vultures" /></a><br /> -->

@@ -3,31 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-
-<!-- <title>Willkommen, Bienvenue, Welcome</title> -->
-
-
-<%-- 	<nav class="navbar navbar-inverse">
-	<div class="navbar-header">
-		<button type="button" class="navbar-toggle" data-toggle="collapse"
-			data-target=".navbar-collapse">
-			<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-				class="icon-bar"></span>
-		</button>
-	</div>
-	<div class="navbar-collapse collapse">
-		<ul class="nav navbar-nav navbar-left">
-			<li><a href="/movievultures/home.html">Movie Vultures</a></li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="<c:url value='/' />">Main</a></li>
-			<li><sec:authorize access="!isFullyAuthenticated()">
-					<li><a href="../login.html">Login</a></li>
-				</sec:authorize></li>
-		</ul>
-	</div>
-	</nav> --%>
-
+<br />
+<br />
 	<div class="container">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">

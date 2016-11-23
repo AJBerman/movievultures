@@ -57,6 +57,11 @@
 <!-- insert navigation bar -->
 <tiles:insertAttribute name="menu" />
 
+<!-- insert search bar -->
+<div>
+	<tiles:insertAttribute name="searchbar" />
+</div>
+
 <!-- insert content -->
 <div>
   	<tiles:insertAttribute name="content" />

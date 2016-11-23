@@ -11,6 +11,7 @@
 	 -->
 	<definition name="defaultTemplate" template="/WEB-INF/jsp/layout/template.basic.jsp" >
 		<put-attribute name="menu" value="/WEB-INF/jsp/layout/menu.jsp" />
+		<put-attribute name="searchbar" value="/WEB-INF/jsp/layout/searchMovies.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/jsp/layout/footer.jsp" />
 		<!-- default javascript list, contains js library only. Add others as needed-->
  		<put-list-attribute name="javascripts">
@@ -86,7 +87,7 @@
 	************
 	 -->
 	 
-	 <!-- if js is embedded in head of file, add it to the bottom of the file -->
+	<!-- if js is embedded in head of file, add it to the bottom of the file -->
 	<definition name="movies/add" extends="defaultTemplate">
 		<put-attribute name="title" value="Add Movie" />
 		<put-attribute name="content" value="/WEB-INF/jsp/movies/add.jsp" />
@@ -114,7 +115,12 @@
 	*  Search  *
 	************
 	 -->
-
+	<!-- if js is embedded in head of file, add it to the bottom of the file -->
+	<definition name="search/searchMovies4" extends="defaultTemplate">
+		<put-attribute name="title" value="Search for Awesomeness" />
+		<put-attribute name="content" value="/WEB-INF/jsp/search/searchMovies4.jsp" />
+	</definition>
+	
 	<!-- 
 	************
 	*  Review  *

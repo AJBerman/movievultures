@@ -9,8 +9,6 @@
 		<h2>User Management</h2>
 		<br />
 
-		<jsp:include page="searchForm.jsp" /><br />
-
 		<%-- Paging scripts for search results --%>
 		<table class="table table-hover table bordered table-striped" id="usersT">
 			<tr>

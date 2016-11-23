@@ -8,7 +8,6 @@
 	<div class="container">
 		<h2>User Management</h2>
 		<br />
-		<jsp:include page="searchForm.jsp" /><br />
 
 		<table class="table table-bordered table-hover table-striped" id="usersT">
 			<tr>

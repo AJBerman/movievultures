@@ -4,14 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
 <div class="container">
-		
-		<%-- ========= CONTENT VISIBLE ON PAGE =========== --%>
-		<jsp:include page="./search/searchMovies2.jsp" /><br /> 
-		<!-- <a href="/movievultures/home.html"><img src="./images/MV_banner.png" alt="Banner of Movie Vultures" /></a> <br /> -->
-
-
 		<%-- ===== LOGIN AUTHENTICATION ===== --%>
 		<br />
 		<sec:authorize access="isAuthenticated()">
