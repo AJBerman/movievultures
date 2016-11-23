@@ -10,6 +10,14 @@
 <tiles:importAttribute name="javascripts"/>
 <tiles:importAttribute name="stylesheets"/>
 
+<style>
+.fixedHeader {
+	position: fixed;
+	width: 100%;
+	background-color: black;
+}
+</style>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,6 +28,10 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="${css}"/>">
     </c:forEach>
 </c:if>
+
+<c:forEach var="script" items="${javascripts}">
+        <script type="text/javascript" src="<c:url value="${script}"/>" ></script>
+</c:forEach>
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" 
 	rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" 
@@ -44,21 +56,17 @@
 	crossorigin="anonymous">
 </script>
 
-<c:forEach var="script" items="${javascripts}">
-        <script type="text/javascript" src="<c:url value="${script}"/>" ></script>
-</c:forEach>
-
 <title><tiles:insertAttribute name="title" defaultValue="MovieVultures" defaultValueType="string" /></title>
 </head>
 <body>
 <%-- <!-- navigation bar --> 
 <tiles:insertAttribute name="header" /> --%>
 
+<div class="fixedHeader">
 <!-- insert navigation bar -->
 <tiles:insertAttribute name="menu" />
 
 <!-- insert search bar -->
-<div>
 	<tiles:insertAttribute name="searchbar" />
 </div>
 

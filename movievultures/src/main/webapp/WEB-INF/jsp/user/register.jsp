@@ -3,8 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<br />
-<br />
 	<div class="container">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">

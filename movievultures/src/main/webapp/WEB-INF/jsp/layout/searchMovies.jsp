@@ -9,21 +9,7 @@
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
 
-<style>
-.searchB {
-	position: fixed;
-	padding: 3px 3px 3px 3px;
-	width: 100%;
-	left: 50%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	background-color: black;
-}
-</style>
-
-<div class="outerDiv">
 <center>
-<div class="searchB">
 	<form class="form-inline" name="searchForm" action="/movievultures/search/searchMovies4.html" onsubmit="return numCheck()" method="get">
 		<input type="hidden" name="${_csrf.parameterName}"
 			value="${_csrf.token}" />
@@ -44,7 +30,7 @@
 			<option value="7">Elo Rating</option>
 			<option value="8">Random Movies</option>
 		</select> 
-		<select id="comparator" name="comparator">
+		<select class="selectpicker" id="comparator" name="comparator">
 			<option value="3" selected="selected">=</option>
 			<option value="4">!=</option>
 			<option value="1">></option>
@@ -52,9 +38,7 @@
 		</select> 
 		<input class="btn btn-primary" name="search" type="submit" value="GO"/>
 	</form>
-</div>
 </center>
-</div>
 
 <!-- Latest compiled and minified JavaScript -->
 <script
