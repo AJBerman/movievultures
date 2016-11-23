@@ -12,12 +12,16 @@
 <style>
 .searchB {
 	position: fixed;
+	padding: 3px 3px 3px 3px;
+	width: 100%;
 	left: 50%;
 	margin-right: -50%;
 	transform: translate(-50%, -50%);
+	background-color: black;
 }
 </style>
 
+<div class="outerDiv">
 <center>
 <div class="searchB">
 	<form class="form-inline" name="searchForm" action="/movievultures/search/searchMovies4.html" onsubmit="return numCheck()" method="get">
@@ -50,6 +54,7 @@
 	</form>
 </div>
 </center>
+</div>
 
 <!-- Latest compiled and minified JavaScript -->
 <script
