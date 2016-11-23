@@ -15,6 +15,10 @@
  		<put-list-attribute name="javascripts">
         	<add-attribute value="/res/js/jquery-3.1.1.min.js" />
    		</put-list-attribute>
+   		
+   		<!-- default style sheet list contains nothing, but can add to it later -->
+   		<put-list-attribute name="stylesheets">
+   		</put-list-attribute>
 	</definition>	
 <!-- 
 	 **************
@@ -90,6 +94,18 @@
 		<put-attribute name="title" value="Movie Details" />
 		<put-attribute name="content" value="/WEB-INF/jsp/movies/details2.jsp" />
 	</definition>
+	
+	<definition name="movies/edit" extends="defaultTemplate">
+		<put-attribute name="title" value="Edit Movie" />
+		<put-attribute name="content" value="/WEB-INF/jsp/movies/edit.jsp" />
+	</definition>
+	
+	<!-- 
+		Do we still use these?
+		- movieDetails?
+		- movies?
+		- movies2?
+	 -->
 	
 	<!-- 
 	************
