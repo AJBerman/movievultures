@@ -19,6 +19,7 @@
 .fixedHeader {
 	position: fixed;
 	width: 100%;
+	z-index: 99;
 }
 </style>
 
@@ -72,19 +73,18 @@
 	crossorigin="anonymous">
 </script>
 
-<title><tiles:insertAttribute name="title" defaultValue="MovieVultures" defaultValueType="string" /></title>
+<title>
+	<tiles:insertAttribute name="title" defaultValue="MovieVultures" defaultValueType="string" />
+</title>
+
 </head>
 <body>
-<%-- <!-- navigation bar --> 
-<tiles:insertAttribute name="header" /> --%>
 
 <div class="fixedHeader">
-<!-- insert navigation bar -->
-<tiles:insertAttribute name="menu" />
-
-<!-- insert search bar -->
-	<%-- <tiles:insertAttribute name="searchbar" /> --%>
+	<!-- insert navigation bar -->
+	<tiles:insertAttribute name="menu" />
 </div>
+
 <br /><br /><br /><br /><br /> <br />
 
 <!-- insert content -->
