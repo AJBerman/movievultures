@@ -61,4 +61,17 @@
 		<put-attribute name="content" value="/WEB-INF/jsp/user/management.jsp" />
 	</definition>
 	
+	<definition name="user/profile" extends="defaultTemplate" >
+		<put-attribute name="title" value="User Profile" />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/profile.jsp" />
+	</definition>
+	
+		<definition name="user/searchResults" extends="defaultTemplate" >
+		<put-attribute name="title" value="User Search" />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/searchResults.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/res/js/userPaging.js" />
+		</put-list-attribute>
+	</definition>
+	
 </tiles-definitions>
