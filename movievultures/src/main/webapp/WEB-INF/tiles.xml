@@ -4,14 +4,17 @@
     "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-
+	<!-- 
+	*****************
+	* Base Template *
+	*****************
+	 -->
 	<definition name="defaultTemplate" template="/WEB-INF/jsp/layout/template.basic.jsp" >
 		<put-attribute name="menu" value="/WEB-INF/jsp/layout/menu.jsp" />
-		<put-list-attribute name="javascripts">
+ 		<put-list-attribute name="javascripts">
         	<add-attribute value="/res/js/jquery-3.1.1.min.js" />
    		</put-list-attribute>
-	</definition>
-	
+	</definition>	
 <!-- 
 	 **************
 	 *  Home/Main *
@@ -19,24 +22,43 @@
  -->
 	<definition name="home" extends="defaultTemplate" >
 		<put-attribute name="content" value="/WEB-INF/jsp/home.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/res/js/movieTableTruncate.js"/>
+		</put-list-attribute>
 	</definition>
 	
 	<definition name="login" extends="defaultTemplate" >
 		<put-attribute name="content" value="/WEB-INF/jsp/login.jsp" />
 	</definition>
-	
-	
 <!-- 
 	 ***************
 	 *  User Pages *
 	 ***************
 -->  
-
 	<definition name="user/home" extends="defaultTemplate" >
 		<put-attribute name="content" value="/WEB-INF/jsp/user/home.jsp" />
+		<put-attribute name="title" value="There's No Place Like Home!" />
+ 		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/res/js/userHomePaging.js"/>
+		</put-list-attribute> 
+	</definition>
+	
+	<definition name="user/register" extends="defaultTemplate" >
+		<put-attribute name="title" value="Willkommen, Bienvenue, Welcome!" />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/register.jsp" />
+	</definition>
+	
+	<definition name="user/list" extends="defaultTemplate" >
+		<put-attribute name="title" value="With great power comes..." />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/list.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">
-        	<add-attribute value="/res/js/userPaging.js" />
-    	</put-list-attribute>
+			<add-attribute value="/res/js/userPaging.js" />
+		</put-list-attribute>
+	</definition>
+	
+	<definition name="user/management" extends="defaultTemplate" >
+		<put-attribute name="title" value="User Management" />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/management.jsp" />
 	</definition>
 	
 </tiles-definitions>

@@ -7,13 +7,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<tiles:importAttribute name="javascripts" />
+<tiles:importAttribute name="javascripts"/>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- Latest compiled and minified CSS -->
+
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -33,7 +33,7 @@
 </script>
 
 <c:forEach var="script" items="${javascripts}">
-        <script src="<c:url value="${script}"/>"></script>
+        <script type="text/javascript" src="<c:url value="${script}"/>" ></script>
 </c:forEach>
 
 <title><tiles:insertAttribute name="title" defaultValue="MovieVultures" defaultValueType="string" /></title>
