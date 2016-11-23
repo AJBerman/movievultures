@@ -141,5 +141,14 @@
 	*   Elo   *
 	***********
 	 -->
+	 <definition name="elo/add" extends="defaultTemplate">
+	 	<put-attribute name="title" value="Elo Duel" />
+	 	<put-attribute name="content" value="/WEB-INF/jsp/elo/add.jsp" />
+	 </definition>
+	 
+	 <definition name="elo/view" extends="defaultTemplate">
+	 	<put-attribute name="title" value="Elo Instance" />
+	 	<put-attribute name="content" value="/WEB-INF/jsp/elo/view.jsp" />
+	 </definition>
 	
 </tiles-definitions>
