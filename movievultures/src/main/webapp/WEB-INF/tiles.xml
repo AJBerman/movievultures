@@ -84,7 +84,7 @@
 	************
 	 -->
 	 
-	 <!-- if there's no scripting is embedded, add it to the bottom of the file -->
+	 <!-- if js is embedded in head of file, add it to the bottom of the file -->
 	<definition name="movies/add" extends="defaultTemplate">
 		<put-attribute name="title" value="Add Movie" />
 		<put-attribute name="content" value="/WEB-INF/jsp/movies/add.jsp" />
@@ -112,14 +112,27 @@
 	*  Search  *
 	************
 	 -->
-	  
-	  
+
 	<!-- 
 	************
 	*  Review  *
 	************
 	 -->
+	<definition name="review/add" extends="defaultTemplate">
+		<put-attribute name="title" value="Review Film" />
+		<put-attribute name="content" value="/WEB-INF/jsp/review/add.jsp" />
+		<put-list-attribute name="stylesheets" inherit="true">
+			<add-attribute value="/res/css/starrating.css" />
+		</put-list-attribute>
+	</definition>
 	
+	<definition name="review/edit" extends="defaultTemplate">
+		<put-attribute name="title" value="Edit Film" />
+		<put-attribute name="content" value="/WEB-INF/jsp/review/edit.jsp" />
+		<put-list-attribute name="stylesheets" inherit="true">
+			<add-attribute value="/res/css/starrating.css" />
+		</put-list-attribute>
+	</definition>
 	
 	<!-- 
 	***********
