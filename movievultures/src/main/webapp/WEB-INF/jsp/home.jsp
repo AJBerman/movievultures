@@ -3,90 +3,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
 
-<!-- Optional theme -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	crossorigin="anonymous"></script>
-<title>Home</title>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="<c:url value="/res/js/movieTableTruncate.js" />"></script>
-</head>
-<body>
-	<%-- ===== REGISTRATION AUTHENTICATION ===== --%>
-	<nav class="navbar navbar-inverse">
-	<div class="navbar-header">
-		<button type="button" class="navbar-toggle" data-toggle="collapse"
-			data-target=".navbar-collapse">
-			<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-				class="icon-bar"></span>
-		</button>
-	</div>
-	<div class="navbar-collapse collapse">
-		<ul class="nav navbar-nav navbar-left">
-			<li><a href="/movievultures/home.html">Movie Vultures</a></li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<sec:authorize access="!isFullyAuthenticated()">
-				<li><a href="user/register.html">Register</a></li>
-				<li><a href="login.html">Login</a></li>
-			</sec:authorize>
-			<sec:authorize access="isAuthenticated()">
-				<li><a
-					href="user/home.html?username=<sec:authentication property="principal.username" />">
-						<sec:authentication property="principal.username" />
-				</a></li>
-				<li><a href="logout">Logout</a></li>
-			</sec:authorize>
-			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<li><a href="user/list.html">Management</a></li>
-			</sec:authorize>
-		</ul>
-	</div>
-	</nav>
-
-
-
-
-	<%-- <p align="right">
-		<sec:authorize access="!isFullyAuthenticated()">
-			<a href="user/register.html">Register</a> |
-			<a href="login.html">Login</a>
-		</sec:authorize>
-		
-		<sec:authorize access="isAuthenticated()">
-			<a href="user/home.html?username=<sec:authentication property="principal.username" />" >
-			 	<sec:authentication property="principal.username" /></a> |
-			<a href="logout">Logout</a> 
-		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-				| <a href="user/list.html">Management</a>
-		</sec:authorize>
-	</p> --%>
-	
-	<div class="container">
-		
-		<%-- ========= CONTENT VISIBLE ON PAGE =========== --%>
-		<jsp:include page="./search/searchMovies2.jsp" /><br /> 
-		<!-- <a href="/movievultures/home.html"><img src="./images/MV_banner.png" alt="Banner of Movie Vultures" /></a> <br /> -->
-
-
+<div class="container">
 		<%-- ===== LOGIN AUTHENTICATION ===== --%>
 		<br />
 		<sec:authorize access="isAuthenticated()">
@@ -276,5 +194,3 @@
 			</c:choose>
 		</sec:authorize>
 	</div>
-</body>
-</html>

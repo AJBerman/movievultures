@@ -6,205 +6,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
 
-<!-- Optional theme -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
 
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	crossorigin="anonymous"></script>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
-<title>Details</title>
 <style>
 .gold {
 	color: #FFD700;
 }
 </style>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script>
-	var current_page_reviews = 1;
-	var records_per_page = 10;
-	var current_page_elo = 1;
-	var records_per_page_elo = 50;
-
-	function changePageBy(num) {
-		if (current_page_reviews + num >= 1
-				&& current_page_reviews + num <= numPagesReviews()) {
-			current_page_reviews += num;
-			changePageReviews(current_page_reviews);
-		}
-	}
-	function changeEloPageBy(num) {
-		if (current_page_elo + num >= 1
-				&& current_page_elo + num <= numPagesElo()) {
-			current_page_elo += num;
-			changePageElo(current_page_elo);
-		}
-	}
-
-	function changePageReviews(page) {
-		// Validate page
-		if (page < 1)
-			page = 1;
-		if (page > numPagesReviews())
-			page = numPagesReviews();
-
-		$(".review").hide();
-		$(".reviewpage" + page).filter(":not(.userReview)").show();
-		$("#reviewpageno").html(page);
-		for (var i = 1; i <= 4; i++) {
-			if (page - i >= 1) {
-				$("#reviewpageno-" + i).show().html(page - i);
-
-			} else {
-				$("#reviewpageno-" + i).hide();
-			}
-			console.log($("#reviewpageno" + i));
-			if (page + i <= numPagesReviews()) {
-				$("#reviewpageno" + i).show().html(page + i);
-			} else {
-				$("#reviewpageno" + i).hide();
-			}
-		}
-
-		if (page == 1) {
-			$("#review_btn_prev").hide();
-		} else {
-			$("#review_btn_prev").show();
-		}
-
-		if (page == numPagesReviews()) {
-			$("#review_btn_next").hide();
-		} else {
-			$("#review_btn_next").show();
-		}
-	}
-
-	function changePageElo(page) {
-		// Validate page
-		if (page < 1)
-			page = 1;
-		if (page > numPagesReviews())
-			page = numPagesElo();
-
-		$(".elo").filter(":not(.userElo)").hide();
-		$(".elopage" + page).show();
-		$("#elopageno").html(page);
-		for (var i = 1; i <= 4; i++) {
-			if (page - i >= 1) {
-				$("#elopageno-" + i).show().html(page - i);
-
-			} else {
-				$("#elopageno-" + i).hide();
-			}
-			console.log($("#elopageno" + i));
-			if (page + i <= numPagesElo()) {
-				$("#elopageno" + i).show().html(page + i);
-			} else {
-				$("#elopageno" + i).hide();
-			}
-		}
-
-		if (page == 1) {
-			$("#elo_btn_prev").hide();
-		} else {
-			$("#elo_btn_prev").show();
-		}
-
-		if (page == numPagesElo()) {
-			$("#elo_btn_next").hide();
-		} else {
-			$("#elo_btn_next").show();
-		}
-	}
-
-	function numPagesReviews() {
-		console.log(Math.ceil($("#reviews > li").length / records_per_page));
-		return Math.ceil($("#reviews > li").length / records_per_page);
-	}
-
-	function numPagesElo() {
-		console.log(Math.ceil($(".elo").length / records_per_page));
-		return Math.ceil($(".elo").length / records_per_page);
-	}
-
-	window.onload = function() {
-		changePageReviews(1);
-		changePageElo(1);
-	};
-</script>
-</head>
-
-<body>
-	<nav class="navbar navbar-inverse">
-	<div class="navbar-header">
-		<button type="button" class="navbar-toggle" data-toggle="collapse"
-			data-target=".navbar-collapse">
-			<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-				class="icon-bar"></span>
-		</button>
-	</div>
-	<div class="navbar-collapse collapse">
-		<ul class="nav navbar-nav navbar-left">
-			<li><a href="/movievultures/home.html">Movie Vultures</a></li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="<c:url value='/' />">Main</a></li>
-			<sec:authorize access="!isFullyAuthenticated()">
-				<li><a href="user/register.html">Register</a></li>
-				<li><a href=" <c:url value='/login.html'/>">Login</a></li>
-			</sec:authorize>
-			<sec:authorize access="isAuthenticated()">
-				<li><a
-					href="../user/home.html?username=<sec:authentication property="principal.username" />">
-						<sec:authentication property="principal.username" />
-				</a></li>
-				<li><a href="<c:url value='/logout'/>">Logout</a></li>
-			</sec:authorize>
-			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<li><a href="../user/list.html">Management</a></li>
-			</sec:authorize>
-		</ul>
-	</div>
-	</nav>
-
-	<%-- <p align="right">
-		<a href="<c:url value='/' />" >Main</a> |
-		
-		<sec:authorize access="!isFullyAuthenticated()">
-			<a href="../user/register.html">Register</a> |
-			<a href= "<c:url value='/login.html'/>"  >Login</a>
-		</sec:authorize>
-		
-		<sec:authorize access="isAuthenticated()">
-			<a href="../user/home.html?username=<sec:authentication property="principal.username" />" >
-			 	<sec:authentication property="principal.username" /></a> |
-			<a href="<c:url value='/logout'/>"   >Logout</a>
-		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-				| <a href="../user/list.html">Management</a>
-		</sec:authorize>
-	</p> --%>
-	<div class="container">
-		<jsp:include page="../search/searchMovies2.jsp" />
-		<!-- <p><a href="/movievultures/home.html"><img src="../images/MV_banner.png" alt="Banner of Movie Vultures" /></a></p> -->
-
-
 		<%-- ===== MOVIE DETAILS DISPLAY ===== --%>
 
 		<h1>${movie.title}</h1>
@@ -439,5 +247,116 @@
 			</div>
 		</div>
 	</div>
-</body>
-</html>
+	
+<script>
+	var current_page_reviews = 1;
+	var records_per_page = 10;
+	var current_page_elo = 1;
+	var records_per_page_elo = 50;
+
+	function changePageBy(num) {
+		if (current_page_reviews + num >= 1
+				&& current_page_reviews + num <= numPagesReviews()) {
+			current_page_reviews += num;
+			changePageReviews(current_page_reviews);
+		}
+	}
+	function changeEloPageBy(num) {
+		if (current_page_elo + num >= 1
+				&& current_page_elo + num <= numPagesElo()) {
+			current_page_elo += num;
+			changePageElo(current_page_elo);
+		}
+	}
+
+	function changePageReviews(page) {
+		// Validate page
+		if (page < 1)
+			page = 1;
+		if (page > numPagesReviews())
+			page = numPagesReviews();
+
+		$(".review").hide();
+		$(".reviewpage" + page).filter(":not(.userReview)").show();
+		$("#reviewpageno").html(page);
+		for (var i = 1; i <= 4; i++) {
+			if (page - i >= 1) {
+				$("#reviewpageno-" + i).show().html(page - i);
+
+			} else {
+				$("#reviewpageno-" + i).hide();
+			}
+			console.log($("#reviewpageno" + i));
+			if (page + i <= numPagesReviews()) {
+				$("#reviewpageno" + i).show().html(page + i);
+			} else {
+				$("#reviewpageno" + i).hide();
+			}
+		}
+
+		if (page == 1) {
+			$("#review_btn_prev").hide();
+		} else {
+			$("#review_btn_prev").show();
+		}
+
+		if (page == numPagesReviews()) {
+			$("#review_btn_next").hide();
+		} else {
+			$("#review_btn_next").show();
+		}
+	}
+
+	function changePageElo(page) {
+		// Validate page
+		if (page < 1)
+			page = 1;
+		if (page > numPagesReviews())
+			page = numPagesElo();
+
+		$(".elo").filter(":not(.userElo)").hide();
+		$(".elopage" + page).show();
+		$("#elopageno").html(page);
+		for (var i = 1; i <= 4; i++) {
+			if (page - i >= 1) {
+				$("#elopageno-" + i).show().html(page - i);
+
+			} else {
+				$("#elopageno-" + i).hide();
+			}
+			console.log($("#elopageno" + i));
+			if (page + i <= numPagesElo()) {
+				$("#elopageno" + i).show().html(page + i);
+			} else {
+				$("#elopageno" + i).hide();
+			}
+		}
+
+		if (page == 1) {
+			$("#elo_btn_prev").hide();
+		} else {
+			$("#elo_btn_prev").show();
+		}
+
+		if (page == numPagesElo()) {
+			$("#elo_btn_next").hide();
+		} else {
+			$("#elo_btn_next").show();
+		}
+	}
+
+	function numPagesReviews() {
+		console.log(Math.ceil($("#reviews > li").length / records_per_page));
+		return Math.ceil($("#reviews > li").length / records_per_page);
+	}
+
+	function numPagesElo() {
+		console.log(Math.ceil($(".elo").length / records_per_page));
+		return Math.ceil($(".elo").length / records_per_page);
+	}
+
+	window.onload = function() {
+		changePageReviews(1);
+		changePageElo(1);
+	};
+</script>
