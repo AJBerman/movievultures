@@ -3,8 +3,6 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 	<div class="container">
-	<br />
-	<br />
 	<!-- <br /><a href="/movievultures/home.html"><img src="images/MV_banner.png" alt="Banner of Movie Vultures" /></a><br /> -->
 
 	<c:if test="${not empty error}">

@@ -24,7 +24,7 @@
 						<input placeholder="Search for..." class="form-control" type="text" name="searchTerm" />
 					</div>
 					
-					<select class="selectpicker" data-live-search="true" id="searchType" name="type">
+					<select class="selectpicker" id="searchType" name="type">
 				 		<option value="9">General Search</option>
 				 		<option value="10">General Search (Indexable)</option>
 						<option value="1">Title</option>
@@ -36,7 +36,7 @@
 						<option value="7">Elo Rating</option>
 						<option value="8">Random Movies</option>
 					</select> 
-					<select id="comparator" name="comparator">
+					<select class="selectpicker" data-live-search="true" id="comparator" name="comparator">
 						<option value="3" selected="selected">=</option>
 						<option value="4">!=</option>
 						<option value="1">></option>
@@ -69,14 +69,35 @@
 </nav>
 
 <script>
-	$("#comparator").hide();
-	$("#searchType").bind("change", function() {
-		if ($(this).val() > "4" && $(this).val() < "8") {
-			$("#comparator").show();
-		} else {
-			$("#comparator").hide();
-		}
+	$(function() {
+		$("[data-id=\"comparator\"]").parent().hide();
+		$("#searchType").bind("change", function() {
+			if ($(this).val() > "4" && $(this).val() < "8") {
+				$("[data-id=\"comparator\"]").parent().show();
+			} else {
+				$("[data-id=\"comparator\"]").parent().hide();
+			}
+		});
 	});
+
+// 	var searchDropDown = document.getElementById("searchType");
+// 	var hidden = true;
+// 	$(searchDropDown.options[searchDropDown.selectedIndex].value).bind("change", function() {
+// 		if ($(this).val() > "4" && $(this).val() < "8") {
+// 			document.getElementById("comparator").style.visibility = "visible";
+// 		} else {
+// 			document.getElementById("comparator").style.visibility = "hidden";
+// 		}
+// 	});
+
+// 	$("#comparator").hide();
+// 	$("#searchType").bind("change", function() {
+// 		if ($(this).val() > "4" && $(this).val() < "8") {
+// 			$("#comparator").show();
+// 		} else {
+// 			$("#comparator").hide();
+// 		}
+// 	});
 </script>
 
 <script>

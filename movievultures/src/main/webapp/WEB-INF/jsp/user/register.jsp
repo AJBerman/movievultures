@@ -21,7 +21,7 @@
 						</div><br />
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1">Email</span> 
-							<form:input path="email" type="text" class="form-control" placeholder="someting@abc.com" aria-describedby="basic-addon1" /><font color="red"><form:errors path="email" /></font>
+							<form:input path="email" type="text" class="form-control" placeholder="email@abc.com" aria-describedby="basic-addon1" /><font color="red"><form:errors path="email" /></font>
 						</div><br />
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1">Password</span> 
