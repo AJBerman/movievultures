@@ -204,11 +204,11 @@
 											<td>${movie.title}</td>
 											<c:choose>
 												<c:when test="${r.winner.movieId == movie.movieId}">
-													<td>></td>
+													<td> > </td>
 													<td><a href="details2.html?id=${r.loser.movieId}">${r.loser.title}</a></td>
 												</c:when>
 												<c:otherwise>
-													<td><</td>
+													<td> < </td>
 													<td><a href="details2.html?id=${r.winner.movieId}">${r.winner.title}</a></td>
 												</c:otherwise>
 											</c:choose>
