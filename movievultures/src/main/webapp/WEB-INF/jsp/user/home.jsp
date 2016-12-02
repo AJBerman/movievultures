@@ -9,7 +9,7 @@
 <div class="container">
 	<h2>Welcome ${user.username}</h2>
 	
-	<h3>Profile:</h3> <a href="profile.html?userId=${user.userId}">Edit Profile</a>
+	<h3>Profile:</h3> <a href="profile/userId=${user.userId}">Edit Profile</a>
 	
 	<table class="table table-bordered table-striped table-hover">
 		<tr><th>Member #: </th><td>${user.userId }</td></tr>
@@ -26,7 +26,7 @@
 		<c:if test="${not empty user.recommendations}">
 			<ul>
 			<c:forEach items="${user.recommendations}" var="movie" varStatus="status">
-				<li><a href="../movies/details2.html?id=${ movie.movieId }">${movie.title}</a></li>
+				<li><a href="../movies/details2/id=${ movie.movieId }">${movie.title}</a></li>
 			</c:forEach>
 			</ul>
 		</c:if>
@@ -41,9 +41,9 @@
 				<tr><th>Title</th><th>action</th></tr>
 				<c:forEach items="${user.favorites}" var="movie" varStatus="status" >
 					<tr class="fav favpage${fn:replace(((status.count/5)-((status.count/5)%1)+1),'.0','')}">
-						<td><a href="../movies/details2.html?id=${ movie.movieId }">${movie.title }</a></td>
+						<td><a href="../movies/details2/id=${ movie.movieId }">${movie.title }</a></td>
 						<td>
-							<a href="removeFav.html?index=${status.index}&userId=${user.userId}">
+							<a href="removeFav/index=${status.index}/userId=${user.userId}">
 								<img src="../images/delete.png"></img> Delete
 							</a>
 						</td>
@@ -74,9 +74,9 @@
 				<tr><th>Title</th><th>action</th></tr>
 				<c:forEach items="${user.watchLater}" var="movie" varStatus="status" >
 					<tr class="watch watchpage${fn:replace(((status.count/5)-((status.count/5)%1)+1),'.0','')}">
-						<td><a href="../movies/details2.html?id=${ movie.movieId }">${movie.title }</a></td>
+						<td><a href="../movies/details2/id=${ movie.movieId }">${movie.title }</a></td>
 						<td>
-							<a href="removeWL.html?index=${status.index}&userId=${user.userId}">
+							<a href="removeWL/index=${status.index}/userId=${user.userId}">
 								<img src="../images/delete.png"></img> Delete
 							</a>
 						</td>
@@ -107,11 +107,11 @@
 				<tr><th>Movie Title</th> <th>Rating</th><th>Operations</th></tr>
 				<c:forEach items="${user.reviewedMovies}" var="review" varStatus="varStatus">
 					<tr class="rev revpage${fn:replace(((varStatus.count/5)-((varStatus.count/5)%1)+1),'.0','')}" >
-						<td><a href="../movies/details2.html?id=${ review.movie.movieId }">${review.movie.title}</a></td>
+						<td><a href="../movies/details2/id=${ review.movie.movieId }">${review.movie.title}</a></td>
 						<td>${review.rating }  
 						<img height="15" width="15" src="http://st.depositphotos.com/1216158/4699/v/170/depositphotos_46997115-stock-illustration-yellow-stars-vector-illustration-single.jpg"></td>
 						<td>
-							<a href="../review/edit.html?id=${review.movie.movieId}">Edit</a>
+							<a href="../review/edit/id=${review.movie.movieId}">Edit</a>
 						</td>
 					</tr>
 				</c:forEach>
@@ -141,9 +141,9 @@
 				<tr><th>Winning Film</th><th>Elo Rating</th><th>Losing Film</th><th>Elo Rating</th></tr>
 				<c:forEach items="${elos}" var="elo" varStatus="varStatus">
 				<tr class="elo elopage${fn:replace(((varStatus.count/5)-((varStatus.count/5)%1)+1),'.0','')}">
-					<td><a href="../movies/details2.html?id=${ elo.winner.movieId }">${elo.winner.title}</a></td>
+					<td><a href="../movies/details2/id=${ elo.winner.movieId }">${elo.winner.title}</a></td>
 					<td>${elo.winner.eloRating}</td>
-					<td><a href="../movies/details2.html?id=${ elo.loser.movieId }">${elo.loser.title}</a></td>
+					<td><a href="../movies/details2/id=${ elo.loser.movieId }">${elo.loser.title}</a></td>
 					<td>${elo.loser.eloRating}</td>
 				</tr>
 				</c:forEach>

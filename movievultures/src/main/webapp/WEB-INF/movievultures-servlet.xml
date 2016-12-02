@@ -10,13 +10,16 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-    <mvc:annotation-driven >
+    <mvc:annotation-driven>
     	<!-- spring/Jackson stuff -->
     	<mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
             <bean class="org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter" />
         </mvc:message-converters>
     </mvc:annotation-driven>
+    
+    <mvc:view-controller path="/" view-name="home" />
+    <mvc:view-controller path="/login" view-name="login" />
 
     <context:component-scan base-package="movievultures.web" />
 

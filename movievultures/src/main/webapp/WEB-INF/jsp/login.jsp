@@ -33,7 +33,7 @@
 							color="red"><form:errors path="username" /></font>
 					</div>
 					<br />
-					<center>New User? <a href="user/register.html">Register Here</a></center><br /><br />
+					<center>New User? <a href="user/register">Register Here</a></center><br /><br />
 					<center><input type="submit" value="Login" class="btn btn-primary"></center>
 					<!-- <table class="general" style="width: auto;">
 						<tr>

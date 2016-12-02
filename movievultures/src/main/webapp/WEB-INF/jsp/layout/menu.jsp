@@ -12,11 +12,11 @@
 	</div>
 	<div class="navbar-collapse collapse">
 		<ul class="nav navbar-nav navbar-left">
-			<li><a href="/movievultures/home.html">Movie Vultures</a></li>
+			<li><a href="/movievultures/home">Movie Vultures</a></li>
 			<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
 			<li>
 				<p>
-				<form class="form-inline" name="searchForm" action="/movievultures/search/searchMovies4.html" onsubmit="return numCheck()" method="get">
+				<form class="form-inline" name="searchForm" action="/movievultures/search/searchMovies4" onsubmit="return numCheck()" method="get">
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
 					<div class="input-group">
@@ -50,19 +50,19 @@
 		
 		<ul class="nav navbar-nav navbar-right">
 			<sec:authorize access="!isFullyAuthenticated()">
-				<li><a href="<c:url value="/user/register.html" />" > Register</a></li>
-				<li><a href="<c:url value="/login.html" />" >Login</a></li>
+				<li><a href="<c:url value="/user/register" />" > Register</a></li>
+				<li><a href="<c:url value="/login" />" >Login</a></li>
 			</sec:authorize>
 			<sec:authorize access="isAuthenticated()">
 				<li>
 				<a
-					href="/movievultures/user/home.html?username=<sec:authentication property="principal.username" />">
+					href="/movievultures/user/home/<sec:authentication property="principal.username" />">
 						<sec:authentication property="principal.username" />
 				</a></li>
 				<li><a href="<c:url value="/logout" />" >Logout</a></li>
 			</sec:authorize>
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<li><a href="<c:url value="/user/list.html" />" >Management</a></li>
+				<li><a href="<c:url value="/user/list" />" >Management</a></li>
 			</sec:authorize>
 		</ul>
 	</div>
