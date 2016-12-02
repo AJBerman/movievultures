@@ -82,29 +82,30 @@ function numPages(tableName) {
 	return Math.ceil(count / records_per_page);
 }
 
-function toggleFavorites() {
-	$('#favSlider').slideToggle();
-};
-
-function toggleWatch() {
-	$('#watchSlider').slideToggle();
-}
-
-function toggleReviews() {
-	$('#revSlider').slideToggle();
-}
-
-function toggleElos(){
-	$('#eloSlider').slideToggle();
-}
-
-function toggleRec(){
-	$('#recSlider').slideToggle();
-}
+//function toggleFavorites() {
+//	$('#favSlider').slideToggle();
+//};
+//
+//function toggleWatch() {
+//	$('#watchSlider').slideToggle();
+//}
+//
+//function toggleReviews() {
+//	$('#revSlider').slideToggle();
+//}
+//
+//function toggleElos(){
+//	$('#eloSlider').slideToggle();
+//}
+//
+//function toggleRec(){
+//	$('#recSlider').slideToggle();
+//}
 
 window.onload = function() {
 	changePage(1, "rev");
 	changePage(1, "watch");
 	changePage(1, "fav");
 	changePage(1, "elo");
+	$( "#toggles" ).accordion();
 };

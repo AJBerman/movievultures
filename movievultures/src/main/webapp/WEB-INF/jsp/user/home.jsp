@@ -6,7 +6,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
-	<div class="container">
+<div class="container">
 	<h2>Welcome ${user.username}</h2>
 	
 	<h3>Profile:</h3> <a href="profile.html?userId=${user.userId}">Edit Profile</a>
@@ -17,10 +17,9 @@
 		<tr><th>e-mail: </th><td>${user.email}</td></tr>
 	</table>
 	
-	
-	<br />
-	<h3><a href="javascript:toggleRec();">Recommendations:</a></h3>
-		<div id="recSlider" style="display: none;">
+	<div id=toggles>
+	<h3>Recommendations:</h3>
+		<div>
 		<c:if test="${empty user.recommendations}">
 			<p>None at the moment.</p>
 		</c:if>
@@ -31,11 +30,9 @@
 			</c:forEach>
 			</ul>
 		</c:if>
-		</div>
-	<br />
-	
-	<h3><a href="javascript:toggleFavorites()">Favorites:</a></h3>
-	<div id="favSlider" style="display: none;">
+		</div>	
+	<h3>Favorites:</h3>
+	<div>
 		<c:if test="${empty user.favorites}">
 			<p>None at the moment.</p>
 		</c:if>
@@ -64,12 +61,11 @@
 				<a href="javascript:void(0);" onclick="changeFavBy(3, 'fav');" id="favpageno3" style="display: none;"></a> 
 				<a href="javascript:void(0);" onclick="changeFavBy(4, 'fav');" id="favpageno4" style="display: none;"></a> 
 				<a href="javascript:void(0);" onclick="changeFavBy(1, 'fav');" id="fav_btn_next">Next</a> 
+				<br /><br />
 		</c:if>
-	</div>
-	<br />
-	
-	<h3><a href="javascript:toggleWatch()">Watch Later:</a></h3>
-	<div id="watchSlider" style="display: none;">
+	</div>	
+	<h3>Watch Later:</h3>
+	<div>
 		<c:if test="${empty user.watchLater}">
 			<p>None at the moment.</p>
 		</c:if>
@@ -98,12 +94,11 @@
 			<a href="javascript:void(0);" onclick="changeWatchBy(3, 'watch');" id="watchpageno3" style="display: none;"></a> 
 			<a href="javascript:void(0);" onclick="changeWatchBy(4, 'watch');" id="watchpageno4" style="display: none;"></a> 
 			<a href="javascript:void(0);" onclick="changeWatchBy(1, 'watch');" id="watch_btn_next">Next</a> 
+			<br /><br />
 		</c:if>
 		</div>
-		<br />
-
-		<h3> <a href="javascript:toggleReviews()">Reviewed Movies:</a></h3>
-		<div id="revSlider" style="display: none;">
+		<h3>Reviewed Movies:</h3>
+		<div>
 			<c:if test="${empty user.reviewedMovies}">
 				<p>You haven't reviewed any movies yet!</p>
 			</c:if>
@@ -132,12 +127,12 @@
 			<a href="javascript:void(0);" onclick="changeRevBy(3, 'rev');" id="revpageno3" style="display: none;"></a> 
 			<a href="javascript:void(0);" onclick="changeRevBy(4, 'rev');" id="revpageno4" style="display: none;"></a> 
 			<a href="javascript:void(0);" onclick="changeRevBy(1, 'rev');" id="rev_btn_next">Next</a> 
+			<br /><br />
 			</c:if>
-		</div>
-		<br />
-		
-		<h3> <a href="javascript:toggleElos()">Elo-Runoffs:</a></h3>
-		<div id="eloSlider" style="display:none;">
+			
+		</div>		
+		<h3>Elo-Runoffs:</h3>
+		<div>
 			<c:if test="${empty elos}">
 				<p> You haven't ranked any movies yet! </p>
 			</c:if>
@@ -163,7 +158,9 @@
 				<a href="javascript:void(0);" onclick="changeEloBy(2, 'elo');" id="elopageno2" style="display: none;"></a> 
 				<a href="javascript:void(0);" onclick="changeEloBy(3, 'elo');" id="elopageno3" style="display: none;"></a> 
 				<a href="javascript:void(0);" onclick="changeEloBy(4, 'elo');" id="elopageno4" style="display: none;"></a> 
-				<a href="javascript:void(0);" onclick="changeEloBy(1, 'elo');" id="elo_btn_next">Next</a> 
+				<a href="javascript:void(0);" onclick="changeEloBy(1, 'elo');" id="elo_btn_next">Next</a>
+				<br /> <br />
 			</c:if>
 		</div>
 		</div>
+</div>
