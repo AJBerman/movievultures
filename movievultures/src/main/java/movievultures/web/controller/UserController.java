@@ -173,10 +173,10 @@ public class UserController {
 		return "redirect:/user/"+ user.getUsername() + "/home";
 	}
 	
-	@RequestMapping("user/removeWL")
-	public String watchLater(@RequestParam int index, @RequestParam int userId, SessionStatus status){
+	@RequestMapping("user/{userId}/{movieIndex}/removeWL")
+	public String watchLater(@PathVariable int userId, @PathVariable int movieIndex, SessionStatus status){
 		User user = userDao.getUser(userId);
-		user.getWatchLater().remove(index);
+		user.getWatchLater().remove(movieIndex);
 		userDao.saveUser(user);
 		status.setComplete();
 		return "redirect:/user/" + user.getUsername() + "/home";

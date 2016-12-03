@@ -45,7 +45,7 @@
 <title>Search for a Movie</title>
 </head>
 <body>
-	<form class="form-inline" name="searchForm" action="/movievultures/search/searchMovies4.html" onsubmit="return numCheck()" method="get">
+	<form class="form-inline" name="searchForm" action="/movievultures/search/searchMovies4" onsubmit="return numCheck()" method="get">
 		<input type="hidden" name="${_csrf.parameterName}"
 			value="${_csrf.token}" />
 		<div class="input-group">

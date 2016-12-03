@@ -21,7 +21,7 @@
 						<c:forEach items="${movies}" var="movie" varStatus="status">
 							<tr>
 								<td><b>Title:</b> <a
-									href="movies/details2.html?id=${movie.movieId}">${movie.title}</a>
+									href="movies/details2?id=${movie.movieId}">${movie.title}</a>
 									<br /> <b>Director${fn:length(movie.directors) > 1 ? 's':''}:</b> 
 								<c:forEach
 										items="${movie.directors}" var="dir" varStatus="status">
@@ -70,7 +70,7 @@
 						<c:forEach items="${recomms}" var="movie" varStatus="status" >
 							<td>
 							<br />
-							<b>Title: </b><a href="movies/details2.html?id=${movie.movieId}">${movie.title}</a><br />
+							<b>Title: </b><a href="movies/details2?id=${movie.movieId}">${movie.title}</a><br />
 							<b>Director${fn:length(movie.directors) > 1 ? 's':''}:</b>
 								<c:forEach items="${movie.directors}" var="dir" varStatus="status">
 									${dir}${!status.last ? ',' : ''} 
@@ -112,7 +112,7 @@
 						<c:forEach items="${movies}" var="movie" varStatus="status">
 							<td>
 							<br />
-							<b>Title:</b> <a href="movies/details2.html?id=${movie.movieId}">${movie.title}</a> <br />
+							<b>Title:</b> <a href="movies/details2?id=${movie.movieId}">${movie.title}</a> <br />
 							<b>Director${fn:length(movie.directors) > 1 ? 's':''}:</b>
 								<c:forEach items="${movie.directors}" var="dir" varStatus="status">
 									${dir} ${!status.last ? ',' : ''} 
@@ -158,7 +158,7 @@
 						<c:forEach items="${movies2}" var="movie2" varStatus="status">
 							<td>
 							<br />
-							<b>Title:</b> <a href="movies/details2.html?id=${movie2.movieId}">${movie2.title}</a> <br />
+							<b>Title:</b> <a href="movies/details2?id=${movie2.movieId}">${movie2.title}</a> <br />
 							<b>Director${fn:length(movie2.directors) > 1 ? 's':''}:</b>
 								<c:forEach items="${movie2.directors}" var="dir2" varStatus="status">
 									${dir2}${!status.last ? ', ' : ''} 

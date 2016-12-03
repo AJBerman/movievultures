@@ -19,13 +19,13 @@ public class SearchController {
 	@Autowired
 	private MovieDao movieDao;
 	
-	@RequestMapping("/search/searchMovies2.html")
+	@RequestMapping("/search/searchMovies2")
 	public String noSearch( ModelMap models )
 	{
 		return "../search/searchMovies4";
 	}
 	
-	@RequestMapping(value = "/search/searchMovies4.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/search/searchMovies4", method = RequestMethod.GET)
 	public String search( ModelMap models, @RequestParam String searchTerm, @RequestParam Integer type, @RequestParam Integer comparator )
 	{
 		//System.out.println("Search Term: " + searchTerm);
