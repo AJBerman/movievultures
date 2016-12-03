@@ -18,30 +18,30 @@
 		<h1>${movie.title}</h1>
 
 		<sec:authorize access="isAuthenticated()">
-			<a href="edit.html?id=${movie.movieId}" class="btn btn-primary">Edit
+			<a href="edit?id=${movie.movieId}" class="btn btn-primary">Edit
 				Movie</a>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
-		| <a href="delete.html?id=${movie.movieId}" class="btn btn-primary">Delete
+		| <a href="delete?id=${movie.movieId}" class="btn btn-primary">Delete
 				Movie</a>
 		</sec:authorize>
 
 		<c:if test="${not empty user.username}"> |
 		<c:choose>
 				<c:when test="${empty userreview}">
-					<a href="../review/add.html?id=${movie.movieId}"
+					<a href="<c:url value="/review/add?id=${movie.movieId}" />"
 						class="btn btn-primary">Review this movie</a>
 				</c:when>
 				<c:otherwise>
-					<a href="../review/edit.html?id=${movie.movieId}"
+					<a href="<c:url value="/review/edit?id=${movie.movieId}" />"
 						class="btn btn-primary">Edit your review</a>
 				</c:otherwise>
 			</c:choose> |
-		<a href="../elo/add.html?movie1=${movie.movieId}"
+		<a href="<c:url value="/elo/add?movie1=${movie.movieId}" />"
 				class="btn btn-primary">Elo rate this movie</a> |
-		<a href="../user/addFav.html?movieId=${movie.movieId}"
+		<a href="<c:url value="/user/addFav?movieId=${movie.movieId}" />"
 				class="btn btn-primary">Add to Favorites?</a> |
-		<a href="../user/addWL.html?movieId=${movie.movieId}"
+		<a href="<c:url value="/user/addWL?movieId=${movie.movieId}" />"
 				class="btn btn-primary">Add to WatchList?</a>
 		</c:if>
 		<br /> <br />
@@ -141,7 +141,7 @@
 								<ul id="reviews">
 									<c:if test="${not empty userreview}">
 										<li>${user.username}-${userreview.rating}|<a
-											href="../review/edit.html?id=${movie.movieId}"> Changed
+											href="<c:url value="/review/edit?id=${movie.movieId}" />"> Changed
 												your mind?</a> <br /> ${userreview.review}<br />
 										</li>
 									</c:if>
@@ -152,7 +152,7 @@
 											style="${r.user.username == user.username ? '' : 'display: none;'}">
 											${r.user.username} - ${r.rating} <c:if
 												test="${r.user.username == user.username}">
-				  	 | <a href="../review/edit.html?id=${movie.movieId}"> Changed
+				  	 | <a href="<c:url value="/review/edit?id=${movie.movieId}" />"> Changed
 													your mind?</a>
 											</c:if> <br /> ${r.review}<br />
 										</li>
@@ -205,11 +205,11 @@
 											<c:choose>
 												<c:when test="${r.winner.movieId == movie.movieId}">
 													<td> > </td>
-													<td><a href="details2.html?id=${r.loser.movieId}">${r.loser.title}</a></td>
+													<td><a href="<c:url value="details2?id=${r.loser.movieId}" />">${r.loser.title}</a></td>
 												</c:when>
 												<c:otherwise>
 													<td> < </td>
-													<td><a href="details2.html?id=${r.winner.movieId}">${r.winner.title}</a></td>
+													<td><a href="<c:url value="details2?id=${r.winner.movieId}" />">${r.winner.title}</a></td>
 												</c:otherwise>
 											</c:choose>
 											<td>- <i>Rated By: ${r.user.username}</i></td>

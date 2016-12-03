@@ -8,8 +8,8 @@
 		<%-- ===== LOGIN AUTHENTICATION ===== --%>
 		<br />
 		<sec:authorize access="isAuthenticated()">
-			<a href="elo/add.html">Elo Rate two random movies</a> |
-			<a href="movies/add.html">Add a new movie</a>
+			<a href="elo/add">Elo Rate two random movies</a> |
+			<a href="movies/add">Add a new movie</a>
 		</sec:authorize>
 
 		<%-- ===== NOT LOGGED IN ===== --%>

@@ -20,24 +20,24 @@ public class UserService {
 	@Autowired
 	private UserDao userDao;
 	
-	@RequestMapping(value = "/user/user/{id}.json",
+	@RequestMapping(value = "service/{id}/user.json",
 	        method = RequestMethod.GET)
 	String getUserJson(@PathVariable Integer id, ModelMap models){
 		models.put( "user", userDao.getUser( id ) );
-		return "user.json";
+		return "service/user.json";
 	}
 	
-	@RequestMapping(value = "/user/user/{id}.xml", 
+	@RequestMapping(value = "service/{id}/user.xml", 
 			method = RequestMethod.GET)
 	String getUserXml( @PathVariable Integer id, ModelMap models){
 		models.put( "user", userDao.getUser( id ) );
-		return "user.xml";
+		return "service/user.xml";
 	}
-	
-	@RequestMapping("user/user/{id}")
-	@ResponseBody
-	public void removeFav(@RequestParam int index, @RequestBody User user){
-
-		userDao.saveUser(user);
-	}
+//	
+//	@RequestMapping("user/user/{id}")
+//	@ResponseBody
+//	public void removeFav(@RequestParam int index, @RequestBody User user){
+//
+//		userDao.saveUser(user);
+//	}
 }

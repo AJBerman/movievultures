@@ -8,7 +8,7 @@
 
 	<div class="container">
 		<p align="left">
-			<a href="../movies/details2.html?id=${ movie.movieId }">Back</a>
+			<a href="../movies/details2?id=${ movie.movieId }">Back</a>
 		</p>
 
 		<h2>Leave a Review for "${ review.movie.title }"</h2>

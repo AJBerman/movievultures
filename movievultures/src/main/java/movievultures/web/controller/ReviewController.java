@@ -39,7 +39,7 @@ public class ReviewController {
 	@Autowired
 	ReviewFormsValidator reviewFormsValidator;
 	
-	@RequestMapping(value = "/review/add.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/review/add", method = RequestMethod.GET)
     public String add(@RequestParam("id") int id, ModelMap models ) // e.g. /rate?id=5267
     {
         User user = userDao.getUserByUsername(SecurityUtils.getUserName());
@@ -54,7 +54,7 @@ public class ReviewController {
         return "review/add";
     }
 	
-	@RequestMapping(value = "/review/add.html", method = RequestMethod.POST)
+	@RequestMapping(value = "/review/add", method = RequestMethod.POST)
     public String add( @ModelAttribute("review") Review review, BindingResult result, SessionStatus status ) // e.g. /rate?id=5267
     {
 		//Debugging statement
@@ -74,10 +74,10 @@ public class ReviewController {
 			review = reviewDao.saveReview(review);
 		}
 		status.setComplete();
-        return "redirect:../movies/details2.html?id=" + review.getMovie().getMovieId();
+        return "redirect:../movies/details2?id=" + review.getMovie().getMovieId();
     }
 
-	@RequestMapping(value = "/review/edit.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/review/edit", method = RequestMethod.GET)
 	public String edit(@RequestParam("id") int id, ModelMap models ) 
 	{
         User user = userDao.getUserByUsername(SecurityUtils.getUserName());
@@ -87,7 +87,7 @@ public class ReviewController {
 		return "review/edit";
 	}
 	
-	@RequestMapping(value = "/review/edit.html", method = RequestMethod.POST)
+	@RequestMapping(value = "/review/edit", method = RequestMethod.POST)
 	public String edit( @ModelAttribute Review review, BindingResult result, SessionStatus status )
 	{
 		//Debugging statement
@@ -107,7 +107,7 @@ public class ReviewController {
 			review = reviewDao.saveReview(review);
 		}
 		status.setComplete();
-        return "redirect:../movies/details2.html?id=" + review.getMovie().getMovieId();
+        return "redirect:../movies/details2?id=" + review.getMovie().getMovieId();
 	}
 
 	@InitBinder

@@ -1,4 +1,3 @@
-<%@ page contentType="application/json" trimDirectiveWhitespaces="true" %>
 {
 	"id" : ${user.userId},
 	"username" : "${user.username}",
