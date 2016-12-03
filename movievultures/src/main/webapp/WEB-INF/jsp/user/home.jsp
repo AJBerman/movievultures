@@ -44,7 +44,7 @@
 						<td><a href="../movies/details2/id=${ movie.movieId }">${movie.title }</a></td>
 						<td>
 							<a href="removeFav/index=${status.index}/userId=${user.userId}">
-								<img src="../images/delete.png"></img> Delete
+								<img src="<c:url value="/images/delete.png" />"></img> Delete
 							</a>
 						</td>
 					</tr>
@@ -77,7 +77,7 @@
 						<td><a href="../movies/details2/id=${ movie.movieId }">${movie.title }</a></td>
 						<td>
 							<a href="removeWL/index=${status.index}/userId=${user.userId}">
-								<img src="../images/delete.png"></img> Delete
+								<img src="<c:url value="/images/delete.png" />" ></img> Delete
 							</a>
 						</td>
 					</tr>

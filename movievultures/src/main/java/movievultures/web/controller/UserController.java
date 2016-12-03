@@ -65,7 +65,7 @@ public class UserController {
 	}
 	
 	//this will take user to user's home page, can view everything
-	@RequestMapping("user/home/{username}")
+	@RequestMapping("user/{username}/home")
 	public String home(@PathVariable String username, ModelMap models){
 		String username_sec = "";
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -74,7 +74,7 @@ public class UserController {
 			User user = userDao.getUserByUsername(username_sec);
 			models.put("user", user);
 			models.put("elos", eloRunoffDao.getEloRunoffsByUser(user));
-			return "user/home/" + user.getUsername();
+			return "user/home";
 		}else if(!(authentication instanceof AnonymousAuthenticationToken) && !username.equals(authentication.getName())){
 			return "redirect:../";
 		}else{
@@ -139,7 +139,7 @@ public class UserController {
 			return "user/profile";
 		userDao.saveUser(user);
 		status.setComplete();
-		return "redirect:/user/home/" + user.getUsername();
+		return "redirect:/user/" + user.getUsername() + "/home";
 	}
 	
 	//These methods only delete items from their lists - adding should be done at a movie page.
@@ -158,7 +158,7 @@ public class UserController {
 		if(!user.getFavorites().contains(movie))
 			user.getFavorites().add(movie);
 		userDao.saveUser(user);
-		return "redirect:/user/home/" + user.getUsername();
+		return "redirect:/user/" + user.getUsername() + "/home";
 	}
 	
 //	@RequestMapping("user/removeFav")
@@ -177,7 +177,7 @@ public class UserController {
 		user.getRecommendations().remove(index);
 		userDao.saveUser(user);
 		status.setComplete();
-		return "redirect:/user/home/" + user.getUsername();
+		return "redirect:/user/"+ user.getUsername() + "/home";
 	}
 	
 	@RequestMapping("user/removeWL")
@@ -186,7 +186,7 @@ public class UserController {
 		user.getWatchLater().remove(index);
 		userDao.saveUser(user);
 		status.setComplete();
-		return "redirect:/user/home/" + user.getUsername();
+		return "redirect:/user/" + user.getUsername() + "/home";
 	}
 	
 	@RequestMapping("user/addWL")
@@ -203,7 +203,7 @@ public class UserController {
 		if(!user.getWatchLater().contains(movie))
 			user.getWatchLater().add(movie);
 		userDao.saveUser(user);
-		return "redirect:/user/home/" + user.getUsername();
+		return "redirect:/user/" + user.getUsername() + "/home";
 	}
 	
 	//authorize user

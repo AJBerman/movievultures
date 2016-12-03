@@ -56,7 +56,7 @@
 			<sec:authorize access="isAuthenticated()">
 				<li>
 				<a
-					href="/movievultures/user/home/<sec:authentication property="principal.username" />">
+					href="/movievultures/user/<sec:authentication property="principal.username" />/home">
 						<sec:authentication property="principal.username" />
 				</a></li>
 				<li><a href="<c:url value="/logout" />" >Logout</a></li>
