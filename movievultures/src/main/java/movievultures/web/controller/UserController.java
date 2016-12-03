@@ -208,26 +208,26 @@ public class UserController {
 		return "redirect:/user/list";
 	}
 	
-	@RequestMapping(value="user/{userId}/management", method=RequestMethod.GET)
-	public String manage(@PathVariable int userId, ModelMap models){
-		//only authenticated users allowed here
-		if(!SecurityUtils.getRoles().contains("ROLE_ADMIN"))
-			return "redirect:/home";
-		models.put("user", userDao.getUser(userId));
-		return "user/management";
-	}
-	
-	@RequestMapping(value="user/{userId}/management", method=RequestMethod.POST)
-	public String manage( @ModelAttribute User user,
-			@RequestParam(required = false) boolean authority,
-			SessionStatus status){
-		if(authority){
-			user.getRoles().add("ROLE_ADMIN");
-		}
-		userDao.saveUser(user);
-		status.setComplete();
-		return "redirect:/user/list";
-	}
+//	@RequestMapping(value="user/{userId}/management", method=RequestMethod.GET)
+//	public String manage(@PathVariable int userId, ModelMap models){
+//		//only authenticated users allowed here
+//		if(!SecurityUtils.getRoles().contains("ROLE_ADMIN"))
+//			return "redirect:/home";
+//		models.put("user", userDao.getUser(userId));
+//		return "user/management";
+//	}
+//	
+//	@RequestMapping(value="user/{userId}/management", method=RequestMethod.POST)
+//	public String manage( @ModelAttribute User user,
+//			@RequestParam(required = false) boolean authority,
+//			SessionStatus status){
+//		if(authority){
+//			user.getRoles().add("ROLE_ADMIN");
+//		}
+//		userDao.saveUser(user);
+//		status.setComplete();
+//		return "redirect:/user/list";
+//	}
 
 	
 	@RequestMapping(value="user/searchForm", method=RequestMethod.GET)
