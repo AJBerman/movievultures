@@ -58,7 +58,8 @@
 	</div>
 	
 	<!-- Adding management div here for ajax operations -->
-			<div class="col-md-6" id="management">
+			<div id="management">
+			<div class="col-md-6">
 				<div class="panel panel-default">
 					<div class="panel-header">
 						<h2>Update User Privileges</h2>
@@ -106,6 +107,7 @@
 							</c:when>
 						</c:choose>
 					</div>
+				</div>
 				</div>
 
 			</div>
