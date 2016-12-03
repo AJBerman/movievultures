@@ -76,18 +76,11 @@ public class UserController {
 			models.put("elos", eloRunoffDao.getEloRunoffsByUser(user));
 			return "user/home";
 		}else if(!(authentication instanceof AnonymousAuthenticationToken) && !username.equals(authentication.getName())){
-			return "redirect:../";
+			return "redirect:/";
 		}else{
-			return "redirect:../login";
+			return "redirect:/login";
 		}
 		
-	}
-	
-	//Can view other users movie ratings? Can't edit.
-	@RequestMapping("user/view")
-	public String view(@RequestParam int userId, ModelMap models){
-		models.put("user", userDao.getUser(userId));
-		return "user/view";
 	}
 	
 	//register user
@@ -122,21 +115,21 @@ public class UserController {
 		msg.setText( msgBody );
 		mailSender.send( msg );
 		
-		return "redirect:../home";
+		return "redirect:/home";
 	}
 	
 	//updateProfile
-	@RequestMapping(value="user/profile", method=RequestMethod.GET)
-	public String profile(@RequestParam int userId, ModelMap models){
+	@RequestMapping(value="user/{userId}/profile", method=RequestMethod.GET)
+	public String profile(@PathVariable int userId, ModelMap models){
 		models.put("user", userDao.getUser(userId));
-		return "user/profile";
+		return "/user/profile";
 	}
 	
-	@RequestMapping(value="user/profile", method=RequestMethod.POST)
+	@RequestMapping(value="user/{userId}/profile", method=RequestMethod.POST)
 	public String profile(@ModelAttribute User user, BindingResult result, SessionStatus status){
 		editUserValidator.validate(user, result);
 		if(result.hasErrors())
-			return "user/profile";
+			return "/user/profile";
 		userDao.saveUser(user);
 		status.setComplete();
 		return "redirect:/user/" + user.getUsername() + "/home";
@@ -161,20 +154,20 @@ public class UserController {
 		return "redirect:/user/" + user.getUsername() + "/home";
 	}
 	
-//	@RequestMapping("user/removeFav")
-//	public String removeFav(@RequestParam int index, @RequestParam int userId, SessionStatus status){
-//		User user = userDao.getUser(userId);
-//		user.getFavorites().remove(index);
-//		userDao.saveUser(user);
-//		status.setComplete();
-//		return "redirect:/user/home.html?username=" + user.getUsername();
-//	}
+	@RequestMapping("user/{userId}/{movieIndex}/removeFav")
+	public String removeFav(@PathVariable int userId, @PathVariable int movieIndex, SessionStatus status){
+		User user = userDao.getUser(userId);
+		user.getFavorites().remove(movieIndex);
+		userDao.saveUser(user);
+		status.setComplete();
+		return "redirect:/user/" + user.getUsername() + "/home";
+	}
 	
 	//update recommendations	
-	@RequestMapping("user/removeRec")
-	public String removeRec(@RequestParam int index, @RequestParam int userId, SessionStatus status){
+	@RequestMapping("user/{userId}/{movieIndex}/removeRec")
+	public String removeRec(@PathVariable int userId, @PathVariable int movieIndex, SessionStatus status){
 		User user = userDao.getUser(userId);
-		user.getRecommendations().remove(index);
+		user.getRecommendations().remove(movieIndex);
 		userDao.saveUser(user);
 		status.setComplete();
 		return "redirect:/user/"+ user.getUsername() + "/home";
@@ -215,17 +208,18 @@ public class UserController {
 		return "redirect:/user/list";
 	}
 	
-	@RequestMapping(value="user/management", method=RequestMethod.GET)
-	public String manage(@RequestParam int userid, ModelMap models){
+	@RequestMapping(value="user/{userId}/management", method=RequestMethod.GET)
+	public String manage(@PathVariable int userId, ModelMap models){
 		//only authenticated users allowed here
 		if(!SecurityUtils.getRoles().contains("ROLE_ADMIN"))
 			return "redirect:/home";
-		models.put("user", userDao.getUser(userid));
+		models.put("user", userDao.getUser(userId));
 		return "user/management";
 	}
 	
-	@RequestMapping(value="user/management", method=RequestMethod.POST)
-	public String manage(@ModelAttribute User user, @RequestParam(required = false) boolean authority,
+	@RequestMapping(value="user/{userId}/management", method=RequestMethod.POST)
+	public String manage( @ModelAttribute User user,
+			@RequestParam(required = false) boolean authority,
 			SessionStatus status){
 		if(authority){
 			user.getRoles().add("ROLE_ADMIN");

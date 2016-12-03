@@ -17,42 +17,26 @@
 					<form:form modelAttribute="user">
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1">@</span> 
-							<form:input path="username" type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" /><font color="red"><form:errors path="username" /></font>
+							<form:input path="username" type="text" class="form-control" 
+								placeholder="Username" aria-describedby="basic-addon1" />
+							<font color="red"><form:errors path="username" /></font>
 						</div><br />
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1">Email</span> 
-							<form:input path="email" type="text" class="form-control" placeholder="email@abc.com" aria-describedby="basic-addon1" /><font color="red"><form:errors path="email" /></font>
+							<form:input path="email" type="text" class="form-control" 
+								placeholder="email@abc.com" aria-describedby="basic-addon1" />
+							<font color="red"><form:errors path="email" /></font>
 						</div><br />
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1">Password</span> 
-							<form:input path="password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1" /><font color="red"><form:errors path="password" /></font>
+							<form:input path="password" type="password" class="form-control" 
+								placeholder="Password" aria-describedby="basic-addon1" />
+							<font color="red"><form:errors path="password" /></font>
 						</div><br />
 						<center>
 							<input class="btn btn-primary" type="submit" name="add" value="REGISTER" />
 						</center>
-						<%-- <div class="col-md-2">Username:</div>
-						<div class="col-md-4">
-							<form:input path="username" />
-						</div>
-						<font color="red"><form:errors path="username" /></font>
-						<br />
-						<br />
-						<div class="col-md-2">E-mail:</div>
-						<div class="col-md-4">
-							<form:input path="email" />
-						</div>
-						<font color="red"><form:errors path="email" /> </font>
-						<br />
-						<br />
-						<div class="col-md-2">Password:</div>
-						<div class="col-md-4">
-							<form:input path="password" />
-						</div>
-						<font color="red"><form:errors path="password" /> </font>
-						<br />
-						<br />
-						<input class="btn btn-primary" type="submit" name="add"
-							value="REGISTER" /> --%>
+
 					</form:form>
 				</div>
 			</div>

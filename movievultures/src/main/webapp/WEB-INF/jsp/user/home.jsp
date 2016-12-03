@@ -9,7 +9,7 @@
 <div class="container">
 	<h2>Welcome ${user.username}</h2>
 	
-	<h3>Profile:</h3> <a href="profile/userId=${user.userId}">Edit Profile</a>
+	<h3>Profile:</h3> <a href="<c:url value="/user/${user.userId}/profile"/>">Edit Profile</a>
 	
 	<table class="table table-bordered table-striped table-hover">
 		<tr><th>Member #: </th><td>${user.userId }</td></tr>
@@ -43,7 +43,7 @@
 					<tr class="fav favpage${fn:replace(((status.count/5)-((status.count/5)%1)+1),'.0','')}">
 						<td><a href="../movies/details2/id=${ movie.movieId }">${movie.title }</a></td>
 						<td>
-							<a href="removeFav/index=${status.index}/userId=${user.userId}">
+							<a href="<c:url value="/user/${user.userId}/${status.index}/removeFav" />">
 								<img src="<c:url value="/images/delete.png" />"></img> Delete
 							</a>
 						</td>
@@ -76,7 +76,7 @@
 					<tr class="watch watchpage${fn:replace(((status.count/5)-((status.count/5)%1)+1),'.0','')}">
 						<td><a href="../movies/details2/id=${ movie.movieId }">${movie.title }</a></td>
 						<td>
-							<a href="removeWL/index=${status.index}/userId=${user.userId}">
+							<a href="<c:url value="/user/${user.userId}/${status.index}/removeWL" />">
 								<img src="<c:url value="/images/delete.png" />" ></img> Delete
 							</a>
 						</td>

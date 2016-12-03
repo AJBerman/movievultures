@@ -26,7 +26,7 @@ public class HomeController {
 	@Autowired
 	UserDao userDao;
 
-	@RequestMapping({"/index", "/home"})
+	@RequestMapping({"/index", "/home", "/"})
 	public String home(ModelMap models){ 
 		//check to see if we're authenticated
 		List<Movie> movies;

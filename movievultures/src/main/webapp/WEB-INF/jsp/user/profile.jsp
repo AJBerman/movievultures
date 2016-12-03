@@ -33,19 +33,6 @@
 						</div><br />
 						<center><input type="submit" class="btn btn-primary" name="update" value="Update" /></center>
 						
-						<%-- Username: ${user.username}<br />
-						<form:input path="username" type="hidden"
-							value="${user.username }" />
-						<br />
-						Password: <form:input path="password" />
-						<font color="red"><form:errors path="password" /></font>
-						<br />
-						<br />
-						E-mail: <form:input path="email" />
-						<font color="red"><form:errors path="email" /></font>
-						<br />
-						<br />
-						<input type="submit" name="update" value="Update" /> --%>
 					</form:form>
 				</div>
 			</div>

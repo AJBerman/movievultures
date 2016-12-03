@@ -32,7 +32,7 @@
 							</c:if>
 						</c:forEach> <c:choose>
 							<c:when test="${!contains}">
-								<a href="management/userid=${user.userId}">Manage</a>
+								<a href="<c:url value="/user/${user.userId}/management" />">Manage</a>
 							</c:when>
 							<c:when test="${contains}">
 								Admin
