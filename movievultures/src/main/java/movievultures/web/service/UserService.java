@@ -34,12 +34,16 @@ public class UserService {
 		return "service/user.xml";
 	}
 	
-    @RequestMapping(value = "/service/{id}/user/", method = RequestMethod.GET)
+    @RequestMapping(value = "/service/user/{id}/{enabled}/{authorized}", method = RequestMethod.PUT)
     @ResponseBody
-    public User getUser( @PathVariable Integer id, ModelMap models )
+    public User updateUser( @PathVariable Integer id, @PathVariable boolean enabled, @PathVariable boolean authorized )
     {
-    	System.out.println("Viewing user here");
-        return userDao.getUser( id );
+        User user = userDao.getUser(id);
+        user.setEnabled(enabled);
+        if(authorized){
+        	user.getRoles().add("ROLE_ADMIN");
+        }
+        return userDao.saveUser( user );
     }
 
 }

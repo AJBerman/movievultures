@@ -17,9 +17,9 @@
 
 <style>
 .fixedHeader {
-	position: fixed;
-	width: 100%;
-	z-index: 1000;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
 }
 </style>
 
@@ -32,74 +32,78 @@
 </c:forEach>
 
 <c:if test="${not empty stylesheets}">
-	<c:forEach var="css" items="${stylesheets}">
+    <c:forEach var="css" items="${stylesheets}">
         <link rel="stylesheet" type="text/css" href="<c:url value="${css}"/>">
     </c:forEach>
 </c:if>
 
 <!-- Latest compiled and minified JavaScript -->
+
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js">
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js">
 </script>
 
 <!-- (Optional) Latest compiled and minified JavaScript translation files -->
 
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"
-	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-	crossorigin="anonymous">
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous">
 </script>
-	
+  
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/i18n/defaults-*.min.js">
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/i18n/defaults-*.min.js">
 </script>
 
-<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" 
-	rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" 
-	crossorigin="anonymous">
+    rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" 
+    crossorigin="anonymous">
 
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
 
 <!-- Optional theme -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
 
 <!-- Latest compiled and minified JavaScript -->
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	crossorigin="anonymous">
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous">
 </script>
 
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
 <title>
-	<tiles:insertAttribute name="title" defaultValue="MovieVultures" defaultValueType="string" />
+    <tiles:insertAttribute name="title" defaultValue="MovieVultures" defaultValueType="string" />
 </title>
 
 </head>
 <body>
 
 <div class="fixedHeader">
-	<!-- insert navigation bar -->
-	<tiles:insertAttribute name="menu" />
+    <!-- insert navigation bar -->
+    <tiles:insertAttribute name="menu" />
 </div>
 
 <br /><br /><br /><br /><br /> <br />
 
 <!-- insert content -->
 <div>
-  	<tiles:insertAttribute name="content" />
+    <tiles:insertAttribute name="content" />
 </div> 
 
  <div>
-	<tiles:insertAttribute name="footer" />
+    <tiles:insertAttribute name="footer" />
 </div>
 
 </body>

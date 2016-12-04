@@ -20,9 +20,9 @@
 			<c:forEach items="${users}" var="user" varStatus="varStatus">
 				<tr data-user-id="${user.userId}" class="user userpage${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')} 
 				${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')}">
-					<td data-field="id">${user.userId}</td>
-					<td data-field="username">${user.username}</td>
-					<td data-field="enabled">
+					<td data-prop="id">${user.userId}</td>
+					<td data-prop="username">${user.username}</td>
+					<td>
 						<%-- if user isn't authority, authorize --%> 
 						<c:set var="contains" value="false" /> 
 						<c:forEach var="role" items="${user.roles}">
@@ -38,6 +38,7 @@
 						</c:when>
 						</c:choose>
 					</td>
+					<td data-prop="enabled" style="display:none;">${user.enabled}</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -58,82 +59,92 @@
 	</div>
 	
 	<!-- Adding management div here for ajax operations -->
-			<div id="management">
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-header">
-						<h2>Update User Privileges</h2>
-					</div>
-					<div class="panel-body">
-						<table class="table table-hover table bordered table-striped" id="user_data">
-							<tr>
-								<td><b>Id Number: </b></td>
-								<td data-field="id"></td>
-							</tr>
-							<tr>
-								<td><b>Username: </b></td>
-								<td data-field="username"></td>
-							</tr>
-							<tr>
-								<td><b>Status: </b></td>
-								<td data-field="status"></td>
-							</tr>
+	<div id="management">	
+		<table class="table table-hover table bordered table-striped" id="user_data">
+			<tr>
+				<td><b>Id Number: </b></td>
+				<td data-field="id"></td>
+			</tr>
+			<tr>
+				<td><b>Username: </b></td>
+				<td data-field="username"></td>
+			</tr>
+			<tr>
+				<td><b>Status: </b></td>
+				<td data-field="status"></td>
+			</tr>
+		</table>
+	<br />
+	<%-- if user isn't authority, authorize --%>
+	<c:set var="contains" value="false" />
+	<c:forEach var="role" items="${user.roles}">
+		<c:if test="${role == 'ROLE_ADMIN'}">
+			<c:set var="contains" value="true" />
+		</c:if>
+	</c:forEach>
+	<c:choose>
+		<c:when test="${!contains}">
+			<%-- Authorize <form:checkbox path="authorize"/>--%>
+			<form>
+				Authorize <input type="checkbox" name="authority" />
+				<br /><br />
+				<input type="radio" name="status" value="enabled" />  Enable
+				<input type="radio" name="status" value="disabled" />  Disable
+				<br /><br />
+			</form>
+		</c:when>
+		<c:when test="${contains}">
+			<i>This user is an administrative user. Can't edit
+				privileges.</i>
+		</c:when>
+	</c:choose>
+</div>
 
-						</table>
-						<br />
-						<%-- if user isn't authority, authorize --%>
-						<c:set var="contains" value="false" />
-						<c:forEach var="role" items="${user.roles}">
-							<c:if test="${role == 'ROLE_ADMIN'}">
-								<c:set var="contains" value="true" />
-							</c:if>
-						</c:forEach>
-						<c:choose>
-							<c:when test="${!contains}">
-								<%-- Authorize <form:checkbox path="authorize"/>--%>
-								<form>
-									Authorize <input type="checkbox" name="authority" />
-									<br /><br />
-									<input type="radio" />  Enable
-									<input type="radio" />  Disable
-									<br /><br />
-									<input class="btn btn-primary" type="submit" name="edit"
-										value="Update" />
-								</form>
-							</c:when>
-							<c:when test="${contains}">
-								<i>This user is an administrative user. Can't edit
-									privileges.</i>
-							</c:when>
-						</c:choose>
-					</div>
-				</div>
-				</div>
-
-			</div>
-	
 <script>
-function populateManagementTable(userId){
+
+function updatePrivileges(userId, status){
 	$.ajax({
-		url: "/service/" + userId + "/user",
+		url: "/service/user/" + userId,
+		method: "PUT", 
 		dataType: "json",
-		success: function(data) {
-			$("#management td[data-field='id']").html(data.id);
-			$("#management td[data-field='username']").html(data.username);
-		}
+		
 	});
-	$("#management").dialog("open");
 }
 
 $(function(){
 	$("#management").dialog({
-		autoOpen: false
+		autoOpen: false,
+		title: "Update User Privileges",
+		buttons: {
+			"Update": function(){
+				var userId = $("#management td[data-field='id']").html();
+				//get values from forms and pass them into function
+				//update function
+				//print out values before moving on.
+				//console.log(status);
+				//console.log(userId);
+				//updatePrivileges(userId, status);
+				$(this).dialog("close");
+			}
+		}
 	});
 	
 	$(".manage").click(function(){
 		$("form")[0].reset();
 		var userId = $(this).closest("tr").attr("data-user-id");
-		populateManagementTable(userId);
+		var username = $(this).closest("tr").find("td[data-prop='username']").html();
+		var status = $(this).closest("tr").find("td[data-prop='enabled']").html();
+		console.log(status);
+		$("#management td[data-field='id']").html(userId);
+		$("#management td[data-field='username']").html(username);
+	 	if(status === "true"){
+			$("#management td[data-field='status']").html('<i><font color="green">enabled</font></i>');
+			$("#management input[value='enabled']").prop("checked", true);
+	 	}else{
+			$("#management td[data-field='status']").html('<i><font color="red">disabled</font></i>');
+			$("#management input[value='disabled']").prop("checked", true);
+	 	}
+		$("#management").dialog("open");
 	});
 	
 });

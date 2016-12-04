@@ -122,14 +122,14 @@ public class UserController {
 	@RequestMapping(value="user/{userId}/profile", method=RequestMethod.GET)
 	public String profile(@PathVariable int userId, ModelMap models){
 		models.put("user", userDao.getUser(userId));
-		return "/user/profile";
+		return "user/profile";
 	}
 	
 	@RequestMapping(value="user/{userId}/profile", method=RequestMethod.POST)
 	public String profile(@ModelAttribute User user, BindingResult result, SessionStatus status){
 		editUserValidator.validate(user, result);
 		if(result.hasErrors())
-			return "/user/profile";
+			return "user/profile";
 		userDao.saveUser(user);
 		status.setComplete();
 		return "redirect:/user/" + user.getUsername() + "/home";
