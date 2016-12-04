@@ -12,7 +12,7 @@
 	<h3>Profile:</h3> <a href="<c:url value="/user/${user.userId}/profile"/>">Edit Profile</a>
 	
 	<table class="table table-bordered table-striped table-hover">
-		<tr><th>Member #: </th><td>${user.userId }</td></tr>
+		<tr><th>Member #: </th><td data-user-id>${user.userId }</td></tr>
 		<tr><th>Username:</th> <td>${user.username}</td></tr>
 		<tr><th>e-mail: </th><td>${user.email}</td></tr>
 	</table>
@@ -40,10 +40,12 @@
 			<table id="fav" class="table table-bordered table-striped table-hover">
 				<tr><th>Title</th><th>action</th></tr>
 				<c:forEach items="${user.favorites}" var="movie" varStatus="status" >
-					<tr class="fav favpage${fn:replace(((status.count/5)-((status.count/5)%1)+1),'.0','')}">
+					<tr data-index="${status.index}"
+					class="fav favpage${fn:replace(((status.count/5)-((status.count/5)%1)+1),'.0','')}">
 						<td><a href="<c:url value="/movies/details2?id=${ movie.movieId }"/>">${movie.title }</a></td>
 						<td>
-							<a href="<c:url value="/user/${user.userId}/${status.index}/removeFav" />">
+							<%-- <a href="<c:url value="/user/${user.userId}/${status.index}/removeFav" />"> --%>
+							<a class="remove" href="javascript:void(0)">
 								<img src="<c:url value="/images/delete.png" />"></img> Delete
 							</a>
 						</td>
@@ -73,10 +75,12 @@
 			<table id="watch" class="table table-bordered table-striped table-hover">
 				<tr><th>Title</th><th>action</th></tr>
 				<c:forEach items="${user.watchLater}" var="movie" varStatus="status" >
-					<tr class="watch watchpage${fn:replace(((status.count/5)-((status.count/5)%1)+1),'.0','')}">
+					<tr data-index="${status.index}"
+					class="watch watchpage${fn:replace(((status.count/5)-((status.count/5)%1)+1),'.0','')}">
 						<td><a href="<c:url value="/movies/details2?id=${ movie.movieId }" />">${movie.title }</a></td>
 						<td>
-							<a href="<c:url value="/user/${user.userId}/${status.index}/removeWL" />">
+							<%-- <a href="<c:url value="/user/${user.userId}/${status.index}/removeWL" />"> --%>
+							<a class="remove" href="javascript:void(0)">
 								<img src="<c:url value="/images/delete.png" />" ></img> Delete
 							</a>
 						</td>
@@ -164,3 +168,30 @@
 		</div>
 		</div>
 </div>
+
+<script>
+
+function removeMovie(){
+	var tableName = $(this).closest("table").attr("id");
+	var index = $(this).closest("tr").attr("data-index");
+	var userId = $('tr').find('td[data-user-id]').html();
+/* 	console.log(tableName);
+	console.log(index);
+	console.log("user id is: " + userId); */
+	$.ajax({// /service/user/{id}/table/{tableId}/{index}
+		url: "/movievultures/service/user/" + userId + "/table/" + tableName + "/" + index,
+		method: "PUT",
+		context: $(this),
+		success: function(){
+			console.log("Inside success func!");
+			$(this).closest("tr").fadeOut(500);
+			$(this).closest("tr").remove();
+		}
+	});
+}
+
+$(function(){
+	$(".remove").click(removeMovie);
+	
+});
+</script>

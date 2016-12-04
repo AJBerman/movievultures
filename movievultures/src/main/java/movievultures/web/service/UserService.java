@@ -34,6 +34,7 @@ public class UserService {
 		return "service/user.xml";
 	}
 	
+	//Service to update user role/privileges.
     @RequestMapping(value = "/service/user/{id}/{enabled}/{authorized}", method=RequestMethod.PUT)
     @ResponseBody
     public void updateUser( @PathVariable Integer id, @PathVariable boolean enabled, @PathVariable boolean authorized )
@@ -45,6 +46,20 @@ public class UserService {
         	user.getRoles().add("ROLE_ADMIN");
         }
         userDao.saveUser(user);
+    }
+    
+    //Service to delete movies from favorites or watchLater
+    @RequestMapping(value = "/service/user/{id}/table/{tableId}/{index}", method=RequestMethod.PUT)
+    @ResponseBody
+    public void updateUserTables(@PathVariable int id, @PathVariable String tableId, 
+    		@PathVariable int index){
+    	User user = userDao.getUser(id);
+    	if(tableId.equalsIgnoreCase("fav")) //if one remove from favorites
+    		user.getFavorites().remove(index);
+    	else  //else remove from watch later
+    		user.getWatchLater().remove(index);
+    	//save user
+    	userDao.saveUser(user);
     }
 
 }
