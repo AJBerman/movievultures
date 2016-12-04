@@ -15,14 +15,26 @@
 			<tr>
 				<th>User ID</th>
 				<th>Username</th>
+				<th>Status</th>
 				<th>Manage</th>
 			</tr>
 			<c:forEach items="${users}" var="user" varStatus="varStatus">
-				<tr data-user-id="${user.userId}" class="user userpage${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')} 
+				<tr data-user-id="${user.userId}" 
+					class="user userpage${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')} 
 				${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')}">
 					<td data-prop="id">${user.userId}</td>
 					<td data-prop="username">${user.username}</td>
-					<td>
+					<td data-prop="status">
+						<c:choose>
+							<c:when test="${user.enabled}">
+								<i><font color="green">enabled</font></i>
+							</c:when>
+							<c:when test="${!user.enabled}">
+								<i><font color="red">disabled</font></i>
+							</c:when>
+						</c:choose>
+					</td>
+					<td data-prop="role">
 						<%-- if user isn't authority, authorize --%> 
 						<c:set var="contains" value="false" /> 
 						<c:forEach var="role" items="${user.roles}">
@@ -102,11 +114,28 @@
 
 <script>
 
-function updatePrivileges(userId, status){
+function updatePrivileges(userId, status, authorize){
 	$.ajax({
-		url: "/service/user/" + userId,
-		method: "PUT", 
-		dataType: "json",
+		url: "../service/user/" + userId + "/" + status + "/" + authorize,
+		method: "PUT",
+        success: function(data){
+        	console.log("In here!");
+        	var id = $("#management td[data-field='id']").html();
+        	var status = ($("input[name='status']:checked").val() == "enabled");
+        	var target = $("#usersT tr[data-user-id='" + id + "']").find("td[data-prop='status']");
+        	if(status)
+        		target.html('<i><font color="green">enabled</font></i>');
+        	else
+        		target.html('<i><font color="red">disabled</font></i>'); 
+        	$("#usersT tr[data-user-id='" + id + "']").find("td[data-prop='enabled']").html(status);
+        	if($("#management input[name='authority']").is(":checked")){
+        		$("#usersT tr[data-user-id='" + id + "']").find("td[data-prop='role']").html("Admin");
+        	}
+        	
+		},
+ 		error: function(request, status, error){
+			alert(request.responseText);
+		} 
 		
 	});
 }
@@ -118,12 +147,13 @@ $(function(){
 		buttons: {
 			"Update": function(){
 				var userId = $("#management td[data-field='id']").html();
+				console.log(userId);
 				//get values from forms and pass them into function
-				//update function
-				//print out values before moving on.
-				//console.log(status);
-				//console.log(userId);
-				//updatePrivileges(userId, status);
+				var status = ($("input[name='status']:checked").val() == "enabled");
+				var authorize = $("#management input[name='authority']").is(":checked");
+				console.log(status);
+				console.log(authorize);
+				updatePrivileges(userId, status, authorize);
 				$(this).dialog("close");
 			}
 		}

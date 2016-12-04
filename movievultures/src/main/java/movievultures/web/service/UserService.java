@@ -34,16 +34,17 @@ public class UserService {
 		return "service/user.xml";
 	}
 	
-    @RequestMapping(value = "/service/user/{id}/{enabled}/{authorized}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/service/user/{id}/{enabled}/{authorized}", method=RequestMethod.PUT)
     @ResponseBody
-    public User updateUser( @PathVariable Integer id, @PathVariable boolean enabled, @PathVariable boolean authorized )
+    public void updateUser( @PathVariable Integer id, @PathVariable boolean enabled, @PathVariable boolean authorized )
     {
+    	System.out.println("Inside the service!");
         User user = userDao.getUser(id);
         user.setEnabled(enabled);
         if(authorized){
         	user.getRoles().add("ROLE_ADMIN");
         }
-        return userDao.saveUser( user );
+        userDao.saveUser(user);
     }
 
 }
