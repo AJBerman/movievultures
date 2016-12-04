@@ -14,9 +14,10 @@
 }
 </style>
 		<%-- ===== MOVIE DETAILS DISPLAY ===== --%>
-
-		<h1>${movie.title}</h1>
-
+		<h1 data-movie-id="${movie.movieId}" data-movie-title="${movie.title}"
+			data-movie-year="<fmt:formatDate value="${ movie.date }" pattern="yyyy" />">${movie.title}</h1>
+		
+		<!-- MOVIE MANAGEMENT BUTTONS -->
 		<sec:authorize access="isAuthenticated()">
 			<a href="edit?id=${movie.movieId}" class="btn btn-primary">Edit
 				Movie</a>
@@ -27,14 +28,18 @@
 		</sec:authorize>
 
 		<c:if test="${not empty user.username}"> |
-		<c:choose>
+			<c:choose>
 				<c:when test="${empty userreview}">
-					<a href="<c:url value="/review/add?id=${movie.movieId}" />"
-						class="btn btn-primary">Review this movie</a>
-				</c:when>
-				<c:otherwise>
-					<a href="<c:url value="/review/edit?id=${movie.movieId}" />"
-						class="btn btn-primary">Edit your review</a>
+					<%--
+						<a href="<c:url value="/review/add?id=${movie.movieId}" />"
+							class="reviewM btn btn-primary">Review this movie</a>
+					--%>
+					<a data-user-id="${user.userId}" href="javascript:void(0)"
+							class="reviewM btn btn-primary">Review this movie</a>
+					</c:when>
+					<c:otherwise>
+						<a href="<c:url value="/review/edit?id=${movie.movieId}" />"
+							class="btn btn-primary">Edit your review</a>
 				</c:otherwise>
 			</c:choose> |
 		<a href="<c:url value="/elo/add?movie1=${movie.movieId}" />"
@@ -45,9 +50,11 @@
 				class="btn btn-primary">Add to WatchList?</a>
 		</c:if>
 		<br /> <br />
+		
+		<!-- MOVIE INFORMATION -->
 		<div class="panel panel-default">
 			<div class="panel-body">
-
+				
 				<p>
 					<b>Year of Release</b>:
 					<fmt:formatDate value="${ movie.date }" pattern="yyyy" />
@@ -246,7 +253,12 @@
 
 			</div>
 		</div>
-	</div>
+	
+	
+	
+	<!-- ADD REVIEW DIV ADDED HERE FOR AJAX OPERATIONS -->
+
+	
 	
 <script>
 	var current_page_reviews = 1;
@@ -359,4 +371,46 @@
 		changePageReviews(1);
 		changePageElo(1);
 	};
+	
+	//----------------
+	// AJAX FUNCTIONS //
+	//----------------
+	$(function addR(movieId, movieTitle, movieYear, userId){
+		//alert("Movie ID: " + $("h1").attr("data-movie-id"));
+		//alert("Movie Title: " + $("h1").attr("data-movie-title"));
+		//alert("Movie Year: " + $("h1").attr("data-movie-year"));
+		//alert("User ID: " + $("h1").attr("data-user-id"));
+		var time = new Date().getTime();
+		var date = new Date(time);
+		alert(date.toString());
+		
+		$.ajax({
+			url: "/review/add",
+			method: "POST",
+			dataType: "json",
+			contentType: "application/json",
+			data: JSON.stringify({
+				user: "object???",
+				movie: "object???",
+				rating: $("fieldset[name='userRating']").val(),
+				review: $("form:textarea[name='userReview']").val(),
+				date: ""
+			}),
+			success: function(data){
+				
+			}
+		});
+	});
+	
+	$(function(){
+		$("#addReview").dialog({
+			autoOpen: false
+		});
+		
+		$(".reviewM").click(function(){
+			$("form")[0].reset();
+			$("#addReview").dialog("open");
+		})
+	})
+	
 </script>
