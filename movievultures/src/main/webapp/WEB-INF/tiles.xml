@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+    "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+    "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<!-- 
+	*****************
+	* Base Template *
+	*****************
+	 -->
+	<definition name="defaultTemplate" template="/WEB-INF/jsp/layout/template.basic.jsp" >
+		<put-attribute name="menu" value="/WEB-INF/jsp/layout/menu.jsp" />
+		<!-- <put-attribute name="searchbar" value="/WEB-INF/jsp/layout/searchMovies.jsp" /> -->
+		<put-attribute name="footer" value="/WEB-INF/jsp/layout/footer.jsp" />
+		<!-- default javascript list, contains js library only. Add others as needed-->
+ 		<put-list-attribute name="javascripts">
+        	<add-attribute value="/res/js/jquery-3.1.1.min.js" />
+   		</put-list-attribute>
+   		
+   		<!-- default style sheet list contains nothing, but can add to it later -->
+   		<put-list-attribute name="stylesheets">
+   			<add-attribute value="/res/css/footer.css" />
+   		</put-list-attribute>
+	</definition>	
+	
+	<!-- TEMPLATES FOR SIMPLE WEB SERVICES -->
+	<definition name="serviceJSON" template="/WEB-INF/jsp/service/service.json.jsp" />
+	<definition name="serviceXML" template="/WEB-INF/jsp/service/service.xml.jsp" />
+<!-- 
+	 **************
+	 *  Home/Main *
+	 **************
+ -->
+	<definition name="home" extends="defaultTemplate" >
+		<put-attribute name="content" value="/WEB-INF/jsp/home.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/res/js/movieTableTruncate.js"/>
+		</put-list-attribute>
+	</definition>
+	
+	<definition name="login" extends="defaultTemplate" >
+		<put-attribute name="content" value="/WEB-INF/jsp/login.jsp" />
+	</definition>
+<!-- 
+	 ***************
+	 *  User Pages *
+	 ***************
+-->  
+	<definition name="user/home" extends="defaultTemplate" >
+		<put-attribute name="content" value="/WEB-INF/jsp/user/home.jsp" />
+		<put-attribute name="title" value="There's No Place Like Home!" />
+ 		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/res/js/userHomePaging.js"/>
+		</put-list-attribute> 
+	</definition>
+	
+	<definition name="user/register" extends="defaultTemplate" >
+		<put-attribute name="title" value="Willkommen, Bienvenue, Welcome!" />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/register.jsp" />
+	</definition>
+	
+	<definition name="user/list" extends="defaultTemplate" >
+		<put-attribute name="title" value="With great power comes..." />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/list.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/res/js/userPaging.js" />
+		</put-list-attribute>
+	</definition>
+	
+	<definition name="user/management" extends="defaultTemplate" >
+		<put-attribute name="title" value="User Management" />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/management.jsp" />
+	</definition>
+	
+	<definition name="user/profile" extends="defaultTemplate" >
+		<put-attribute name="title" value="User Profile" />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/profile.jsp" />
+	</definition>
+	
+		<definition name="user/searchResults" extends="defaultTemplate" >
+		<put-attribute name="title" value="User Search" />
+		<put-attribute name="content" value="/WEB-INF/jsp/user/searchResults.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/res/js/userPaging.js" />
+		</put-list-attribute>
+	</definition>
+	<!-- 
+	************
+	*  Movies  *
+	************
+	 -->
+	 
+	<!-- if js is embedded in head of file, add it to the bottom of the file -->
+	<definition name="movies/add" extends="defaultTemplate">
+		<put-attribute name="title" value="Add Movie" />
+		<put-attribute name="content" value="/WEB-INF/jsp/movies/add.jsp" />
+	</definition>
+	
+	<definition name="movies/details2" extends="defaultTemplate">
+		<put-attribute name="title" value="Movie Details" />
+		<put-attribute name="content" value="/WEB-INF/jsp/movies/details2.jsp" />
+	</definition>
+	
+	<definition name="movies/edit" extends="defaultTemplate">
+		<put-attribute name="title" value="Edit Movie" />
+		<put-attribute name="content" value="/WEB-INF/jsp/movies/edit.jsp" />
+	</definition>
+	
+	<!-- 
+		Do we still use these?
+		- movieDetails?
+		- movies?
+		- movies2?
+	 -->
+	
+	<!-- 
+	************
+	*  Search  *
+	************
+	 -->
+	<!-- if js is embedded in head of file, add it to the bottom of the file -->
+	<definition name="search/searchMovies4" extends="defaultTemplate">
+		<put-attribute name="title" value="Search for Awesomeness" />
+		<put-attribute name="content" value="/WEB-INF/jsp/search/searchMovies4.jsp" />
+	</definition>
+	
+	<!-- 
+	************
+	*  Review  *
+	************
+	 -->
+	<definition name="review/add" extends="defaultTemplate">
+		<put-attribute name="title" value="Review Film" />
+		<put-attribute name="content" value="/WEB-INF/jsp/review/add.jsp" />
+		<put-list-attribute name="stylesheets" inherit="true">
+			<add-attribute value="/res/css/starrating.css" />
+		</put-list-attribute>
+	</definition>
+	
+	<definition name="review/edit" extends="defaultTemplate">
+		<put-attribute name="title" value="Edit Film" />
+		<put-attribute name="content" value="/WEB-INF/jsp/review/edit.jsp" />
+		<put-list-attribute name="stylesheets" inherit="true">
+			<add-attribute value="/res/css/starrating.css" />
+		</put-list-attribute>
+	</definition>
+	
+	<!-- 
+	***********
+	*   Elo   *
+	***********
+	 -->
+	 <definition name="elo/add" extends="defaultTemplate">
+	 	<put-attribute name="title" value="Elo Duel" />
+	 	<put-attribute name="content" value="/WEB-INF/jsp/elo/add.jsp" />
+	 </definition>
+	 
+	 <definition name="elo/view" extends="defaultTemplate">
+	 	<put-attribute name="title" value="Elo Instance" />
+	 	<put-attribute name="content" value="/WEB-INF/jsp/elo/view.jsp" />
+	 </definition>
+	 
+	 <!-- 
+	 ************
+	 * Services *
+	 ************
+	  -->
+	<definition name="service/user.json" extends="serviceJSON">
+		<put-attribute name="content" value="/WEB-INF/jsp/service/user.json.jsp" />
+	</definition>
+	
+	<definition name="service/user.xml" extends="serviceJSON">
+		<put-attribute name="content" value="/WEB-INF/jsp/service/user.xml.jsp" />
+	</definition>
+	
+</tiles-definitions>

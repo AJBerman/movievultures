@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,7 +76,7 @@ public class MovieController {
 		return "movies/movies";
 	}
 
-	@RequestMapping(value = "/movies/add.html", method = RequestMethod.GET)
+	@RequestMapping(value = "movies/add", method = RequestMethod.GET)
 	public String getAddMovies(ModelMap models) {
 		models.put("movie", new Movie());
 		if(!SecurityUtils.isAuthenticated())
@@ -83,7 +84,7 @@ public class MovieController {
 		return "movies/add";
 	}
 
-	@RequestMapping(value = "/movies/add.html", method = RequestMethod.POST)
+	@RequestMapping(value = "movies/add", method = RequestMethod.POST)
 	public String postAddMovies(
 			@ModelAttribute Movie movie, BindingResult result, SessionStatus status,
 			@RequestParam(required=false) List<String> addmovie_genres,
@@ -113,10 +114,10 @@ public class MovieController {
 		movie=movieDao.saveMovie(movie);
 		status.setComplete();
 		// movie saved to db
-		return "redirect:details2.html?id="+movie.getMovieId();
+		return "redirect:details2?id="+movie.getMovieId();
 	}
 
-	@RequestMapping(value = "/movies/details2.html")
+	@RequestMapping(value = "/movies/details2")
 	public String getDetails(@RequestParam int id, ModelMap models) {
 		// System.out.println("in here");
 		
@@ -139,15 +140,15 @@ public class MovieController {
 		return "movies/details2";
 	}
 
-	@RequestMapping(value = "/movies/delete.html")
+	@RequestMapping(value = "/movies/delete")
 	public String getDelete(@RequestParam int id, ModelMap models) {
 		Movie movie = movieDao.getMovie(id);
 		movieDao.delMovie(movie);
 		System.out.println("deleted");
-		return "redirect:../home.html";
+		return "redirect:../home";
 	}
 
-	@RequestMapping(value="/movies/edit.html",method=RequestMethod.GET)
+	@RequestMapping(value="/movies/edit",method=RequestMethod.GET)
 	public String getEdit(@RequestParam int id, ModelMap models)
 	{
 		if(!SecurityUtils.isAuthenticated())
@@ -156,7 +157,7 @@ public class MovieController {
 		return "movies/edit";
 	}
 
-	@RequestMapping(value="/movies/edit.html",method=RequestMethod.POST)
+	@RequestMapping(value="/movies/edit",method=RequestMethod.POST)
 	public String postEdit(@ModelAttribute Movie movie, BindingResult results, 
 							@RequestParam(required=false) String editmovie_plot, 
 							@RequestParam(required=false) List<String> editmovie_genres,
@@ -185,7 +186,7 @@ public class MovieController {
 		}
 		movieDao.saveMovie(movie);
 		status.setComplete();
-		return "redirect:../movies/details2.html?id=" + movie.getMovieId();
+		return "redirect:../movies/details2?id=" + movie.getMovieId();
 	}
 	
 	@InitBinder

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,7 +55,7 @@ public class UserController {
 	@Autowired
 	private MailSender mailSender;
 	
-	@RequestMapping("user/list.html")
+	@RequestMapping("user/list")
 	public String listUsers(ModelMap models){
 		
 		List<User> users = userDao.getUsers();
@@ -64,8 +65,8 @@ public class UserController {
 	}
 	
 	//this will take user to user's home page, can view everything
-	@RequestMapping("user/home.html")
-	public String home(@RequestParam String username, ModelMap models, @RequestHeader("referer") String referer){
+	@RequestMapping("user/{username}/home")
+	public String home(@PathVariable String username, ModelMap models){
 		String username_sec = "";
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if(!(authentication instanceof AnonymousAuthenticationToken) && username.equals(authentication.getName())){
@@ -75,28 +76,21 @@ public class UserController {
 			models.put("elos", eloRunoffDao.getEloRunoffsByUser(user));
 			return "user/home";
 		}else if(!(authentication instanceof AnonymousAuthenticationToken) && !username.equals(authentication.getName())){
-			return "redirect:../";
+			return "redirect:/";
 		}else{
-			return "redirect:../login";
+			return "redirect:/login";
 		}
 		
 	}
 	
-	//Can view other users movie ratings? Can't edit.
-	@RequestMapping("user/view.html")
-	public String view(@RequestParam int userId, ModelMap models){
-		models.put("user", userDao.getUser(userId));
-		return "user/view";
-	}
-	
 	//register user
-	@RequestMapping(value="user/register.html", method=RequestMethod.GET)
+	@RequestMapping(value="user/register", method=RequestMethod.GET)
 	public String register(ModelMap models){
 		models.put("user", new User());
 		return "user/register";
 	}
 	
-	@RequestMapping(value="user/register.html", method=RequestMethod.POST)
+	@RequestMapping(value="user/register", method=RequestMethod.POST)
 	public String register(@ModelAttribute User user, BindingResult result, SessionStatus status){
 		userValidator.validate(user, result);
 		if(result.hasErrors())
@@ -121,24 +115,24 @@ public class UserController {
 		msg.setText( msgBody );
 		mailSender.send( msg );
 		
-		return "redirect:../home.html";
+		return "redirect:/home";
 	}
 	
 	//updateProfile
-	@RequestMapping(value="user/profile.html", method=RequestMethod.GET)
-	public String profile(@RequestParam int userId, ModelMap models){
+	@RequestMapping(value="user/{userId}/profile", method=RequestMethod.GET)
+	public String profile(@PathVariable int userId, ModelMap models){
 		models.put("user", userDao.getUser(userId));
-		return "user/profile";
+		return "/user/profile";
 	}
 	
-	@RequestMapping(value="user/profile.html", method=RequestMethod.POST)
+	@RequestMapping(value="user/{userId}/profile", method=RequestMethod.POST)
 	public String profile(@ModelAttribute User user, BindingResult result, SessionStatus status){
 		editUserValidator.validate(user, result);
 		if(result.hasErrors())
-			return "user/profile";
+			return "/user/profile";
 		userDao.saveUser(user);
 		status.setComplete();
-		return "redirect:/user/home.html?username=" + user.getUsername();
+		return "redirect:/user/" + user.getUsername() + "/home";
 	}
 	
 	//These methods only delete items from their lists - adding should be done at a movie page.
@@ -157,35 +151,35 @@ public class UserController {
 		if(!user.getFavorites().contains(movie))
 			user.getFavorites().add(movie);
 		userDao.saveUser(user);
-		return "redirect:/user/home.html?username=" + user.getUsername();
+		return "redirect:/user/" + user.getUsername() + "/home";
 	}
 	
-	@RequestMapping("user/removeFav")
-	public String removeFav(@RequestParam int index, @RequestParam int userId, SessionStatus status){
+	@RequestMapping("user/{userId}/{movieIndex}/removeFav")
+	public String removeFav(@PathVariable int userId, @PathVariable int movieIndex, SessionStatus status){
 		User user = userDao.getUser(userId);
-		user.getFavorites().remove(index);
+		user.getFavorites().remove(movieIndex);
 		userDao.saveUser(user);
 		status.setComplete();
-		return "redirect:/user/home.html?username=" + user.getUsername();
+		return "redirect:/user/" + user.getUsername() + "/home";
 	}
 	
 	//update recommendations	
-	@RequestMapping("user/removeRec")
-	public String removeRec(@RequestParam int index, @RequestParam int userId, SessionStatus status){
+	@RequestMapping("user/{userId}/{movieIndex}/removeRec")
+	public String removeRec(@PathVariable int userId, @PathVariable int movieIndex, SessionStatus status){
 		User user = userDao.getUser(userId);
-		user.getRecommendations().remove(index);
+		user.getRecommendations().remove(movieIndex);
 		userDao.saveUser(user);
 		status.setComplete();
-		return "redirect:/user/home.html?username=" + user.getUsername();
+		return "redirect:/user/"+ user.getUsername() + "/home";
 	}
 	
-	@RequestMapping("user/removeWL")
-	public String watchLater(@RequestParam int index, @RequestParam int userId, SessionStatus status){
+	@RequestMapping("user/{userId}/{movieIndex}/removeWL")
+	public String watchLater(@PathVariable int userId, @PathVariable int movieIndex, SessionStatus status){
 		User user = userDao.getUser(userId);
-		user.getWatchLater().remove(index);
+		user.getWatchLater().remove(movieIndex);
 		userDao.saveUser(user);
 		status.setComplete();
-		return "redirect:/user/home.html?username=" + user.getUsername();
+		return "redirect:/user/" + user.getUsername() + "/home";
 	}
 	
 	@RequestMapping("user/addWL")
@@ -202,7 +196,7 @@ public class UserController {
 		if(!user.getWatchLater().contains(movie))
 			user.getWatchLater().add(movie);
 		userDao.saveUser(user);
-		return "redirect:/user/home.html?username=" + user.getUsername();
+		return "redirect:/user/" + user.getUsername() + "/home";
 	}
 	
 	//authorize user
@@ -211,42 +205,37 @@ public class UserController {
 		User user = userDao.getUser(userid);
 		user.getRoles().add("ROLE_ADMIN");
 		userDao.saveUser(user);
-		return "redirect:/user/list.html";
+		return "redirect:/user/list";
 	}
 	
-	@RequestMapping(value="user/management.html", method=RequestMethod.GET)
-	public String manage(@RequestParam int userid, ModelMap models){
-		//only authenticated users allowed here
-		if(!SecurityUtils.getRoles().contains("ROLE_ADMIN"))
-			return "redirect:/home.html";
-		models.put("user", userDao.getUser(userid));
-		return "user/management";
-	}
-	
-	@RequestMapping(value="user/management.html", method=RequestMethod.POST)
-	public String manage(@ModelAttribute User user, @RequestParam(required = false) boolean authority,
-			SessionStatus status){
-		if(authority){
-			user.getRoles().add("ROLE_ADMIN");
-		}
-		userDao.saveUser(user);
-		status.setComplete();
-		return "redirect:/user/list.html";
-	}
+//	@RequestMapping(value="user/{userId}/management", method=RequestMethod.GET)
+//	public String manage(@PathVariable int userId, ModelMap models){
+//		//only authenticated users allowed here
+//		if(!SecurityUtils.getRoles().contains("ROLE_ADMIN"))
+//			return "redirect:/home";
+//		models.put("user", userDao.getUser(userId));
+//		return "user/management";
+//	}
+//	
+//	@RequestMapping(value="user/{userId}/management", method=RequestMethod.POST)
+//	public String manage( @ModelAttribute User user,
+//			@RequestParam(required = false) boolean authority,
+//			SessionStatus status){
+//		if(authority){
+//			user.getRoles().add("ROLE_ADMIN");
+//		}
+//		userDao.saveUser(user);
+//		status.setComplete();
+//		return "redirect:/user/list";
+//	}
 
-	@RequestMapping(value="login.html", method=RequestMethod.GET)
-	public String getLogin()
-	{
-		return "login";
-	}
 	
-	
-	@RequestMapping(value="user/searchForm.html", method=RequestMethod.GET)
+	@RequestMapping(value="user/searchForm", method=RequestMethod.GET)
 	public String searchUsers(){
 		return "user/searchResults";
 	}
 	
-	@RequestMapping(value="user/searchResults.html", method=RequestMethod.POST)
+	@RequestMapping(value="user/searchResults", method=RequestMethod.POST)
 	public String searchResults(ModelMap models, 
 			@RequestParam(value="nameQuery", required = false) String username){
 		List<User> users;
