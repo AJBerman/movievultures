@@ -376,10 +376,10 @@
 	// AJAX FUNCTIONS //
 	//----------------
 	$(function addR(movieId, movieTitle, movieYear, userId){
-		//alert("Movie ID: " + $("h1").attr("data-movie-id"));
-		//alert("Movie Title: " + $("h1").attr("data-movie-title"));
-		//alert("Movie Year: " + $("h1").attr("data-movie-year"));
-		//alert("User ID: " + $("h1").attr("data-user-id"));
+		alert("Movie ID: " + $("h1").attr("data-movie-id"));
+		alert("Movie Title: " + $("h1").attr("data-movie-title"));
+		alert("Movie Year: " + $("h1").attr("data-movie-year"));
+		alert("User ID: " + $("a").attr("data-user-id"));
 		var time = new Date().getTime();
 		var date = new Date(time);
 		alert(date.toString());
