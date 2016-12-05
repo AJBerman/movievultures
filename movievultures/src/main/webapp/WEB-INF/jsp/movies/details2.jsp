@@ -14,9 +14,7 @@
 }
 </style>
 		<%-- ===== MOVIE DETAILS DISPLAY ===== --%>
-
 		<h1><span id="movie-title">${movie.title}</span></h1>
-
 		<sec:authorize access="isAuthenticated()">
 			<a href="#" onclick="$('#movie-form').dialog('open')" class="btn btn-primary">Edit
 				Movie</a>
@@ -27,14 +25,18 @@
 		</sec:authorize>
 
 		<c:if test="${not empty user.username}"> |
-		<c:choose>
+			<c:choose>
 				<c:when test="${empty userreview}">
-					<a href="<c:url value="/review/add?id=${movie.movieId}" />"
-						class="btn btn-primary">Review this movie</a>
-				</c:when>
-				<c:otherwise>
-					<a href="<c:url value="/review/edit?id=${movie.movieId}" />"
-						class="btn btn-primary">Edit your review</a>
+					<%--
+						<a href="<c:url value="/review/add?id=${movie.movieId}" />"
+							class="reviewM btn btn-primary">Review this movie</a>
+					--%>
+					<a data-user-id="${user.userId}" href="javascript:void(0)"
+							class="reviewM btn btn-primary">Review this movie</a>
+					</c:when>
+					<c:otherwise>
+						<a href="<c:url value="/review/edit?id=${movie.movieId}" />"
+							class="btn btn-primary">Edit your review</a>
 				</c:otherwise>
 			</c:choose> |
 		<a href="<c:url value="/elo/add?movie1=${movie.movieId}" />"
@@ -45,9 +47,11 @@
 				class="btn btn-primary">Add to WatchList?</a>
 		</c:if>
 		<br /> <br />
+		
+		<!-- MOVIE INFORMATION -->
 		<div class="panel panel-default">
 			<div class="panel-body">
-
+				
 				<p>
 					<b>Year of Release</b>:
 					<span id="movie-date"><fmt:formatDate value="${ movie.date }" pattern="yyyy" /></span>
@@ -284,6 +288,7 @@
 
 			</div>
 		</div>
+
 	<div id="movie-form">
 		<form>
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -567,3 +572,4 @@ $("#movie-form").dialog({
 </script>
 </body>
 </html>
+

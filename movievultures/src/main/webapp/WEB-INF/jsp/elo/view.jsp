@@ -4,12 +4,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-	<h5><a href="/movievultures/home.html">Home</a></h5>
+	<h5><a href="/movievultures/home">Home</a></h5>
 	
 	<table class="table table-bordered table-striped table-hover">
 		<tr><th>Rating By:</th><td>${runoff.user.username}</td></tr>
 		<tr><th>On:</th><td><fmt:formatDate value="${runoff.date}" pattern="MM-dd-yyyy hh:mm" /></td></tr>
-		<tr><th>Title</th><td><a href="/movievultures/movies/details.html?id=${runoff.winner.movieId}">${runoff.winner.title}</a></td><td><a href="/movievultures/movies/details.html?id=${runoff.loser.movieId}">${runoff.loser.title}</a></td></tr>
+		<tr><th>Title</th><td><a href="/movievultures/movies/details2?id=${runoff.winner.movieId}">${runoff.winner.title}</a></td><td><a href="/movievultures/movies/details2?id=${runoff.loser.movieId}">${runoff.loser.title}</a></td></tr>
 		<tr><th>Year</th><td><fmt:formatDate value="${runoff.winner.date}" pattern="yyyy" /></td><td><fmt:formatDate value="${runoff.loser.date}" pattern="yyyy" /></td></tr>
 		<tr><th>Plot</th><td>${runoff.winner.plot}</td><td>${runoff.loser.plot}</td></tr>
 		<tr><th>director(s)</th><td>${runoff.winner.directors[0]}</td><td>${runoff.loser.directors[0]}</td></tr>

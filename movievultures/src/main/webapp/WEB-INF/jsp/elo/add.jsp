@@ -15,9 +15,9 @@
 		<table class="table table-bordered table-striped table-hover">
 			<tr>
 				<th>Title</th>
-				<td><a href="../movies/details2.html?id=${ movie1.movieId }"
+				<td><a href="<c:url value="/movies/details2?id=${ movie1.movieId }" />"
 					target="_blank">${movie1.title}</a></td>
-				<td><a href="../movies/details2.html?id=${ movie2.movieId }"
+				<td><a href="<c:url value="/movies/details2?id=${ movie2.movieId }" />"
 					target="_blank">${movie2.title}</a></td>
 			</tr>
 			<tr>
@@ -88,11 +88,11 @@
 			<tr bgcolor="#FFEB99">
 				<th>Different Match</th>
 
-				<td><a href="add.html?movie2=${movie2.movieId}">Switch
-						First Movie?</a> | <a href="add.html?movie1=${movie1.movieId}">Switch
+				<td><a href="add?movie2=${movie2.movieId}">Switch
+						First Movie?</a> | <a href="add?movie1=${movie1.movieId}">Switch
 						Second Movie?</a></td>
 
-				<td><a href="add.html">New Match?</a></td>
+				<td><a href="add">New Match?</a></td>
 			</tr>
 		</table>
 	</div>

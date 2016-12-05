@@ -56,4 +56,14 @@ public class UserDaoImpl implements UserDao {
 				.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getUsernames(String term) {
+		return entityManager
+				.createNativeQuery("select username from users where username LIKE lower(:term)")
+				.setParameter("term", term + '%')
+				.getResultList();
+	}
+
+	
 }
