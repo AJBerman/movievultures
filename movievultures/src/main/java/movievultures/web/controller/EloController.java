@@ -28,7 +28,7 @@ public class EloController {
 	@Autowired
 	private UserDao userDao; 
 	
-	@RequestMapping(value = "/elo/add.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/elo/add", method = RequestMethod.GET)
     public String add( @RequestParam(value="movie1", required = false) Integer movie1id,
     		@RequestParam(value="movie2", required = false) Integer movie2id, 
     		ModelMap models )
@@ -51,7 +51,7 @@ public class EloController {
         return "elo/add";
     }
 	
-	@RequestMapping(value = "/elo/add.html", method = RequestMethod.POST)
+	@RequestMapping(value = "/elo/add", method = RequestMethod.POST)
     public String addpost( @RequestParam("winner") int winner, ModelMap models )
     {
 		System.out.println(((Movie)models.get("movie1")).getMovieId());
@@ -67,10 +67,10 @@ public class EloController {
 		}
 		movieDao.updateElos(runoff);
 		eloDao.saveEloRunoff(runoff);
-        return "redirect:add.html?movie1="+runoff.getWinner().getMovieId();
+        return "redirect:add?movie1="+runoff.getWinner().getMovieId();
     }
 
-	@RequestMapping(value = "/elo/view.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/elo/view", method = RequestMethod.GET)
     public String view( @RequestParam("movie1") Integer movie1id, @RequestParam("movie2") Integer movie2id, @RequestParam("userid") int userid, ModelMap models )
     {
 		models.put("runoff", eloDao.getEloRunoffByUserAndMovies(userid, movie1id, movie2id));
