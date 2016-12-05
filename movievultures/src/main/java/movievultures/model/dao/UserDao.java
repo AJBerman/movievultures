@@ -11,4 +11,7 @@ public interface UserDao {
 	User saveUser(User user);
 	List<User> getUsers();
 	List<User> getUsersByUsernames(String username);
+	
+	//new code
+	User existingUser(String userName, String email);
 }

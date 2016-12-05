@@ -55,5 +55,23 @@ public class UserDaoImpl implements UserDao {
 				.setParameter("username", username + '%')
 				.getResultList();
 	}
+	
+	//new code
+	@Override
+    public User existingUser(String username, String email) {
+        try {
+            User existingUser = entityManager
+                    .createQuery("from User where username=:username and email=:email", User.class)
+                    .setParameter("username", username)
+                    .setParameter("email", email)
+                    .getSingleResult();
+            System.out.println("Exisitng user :: " + existingUser.getEmail());
+            return existingUser;
+        } catch (Exception e) {
+            System.out.println("No existing user found");
+
+        }
+        return null;
+    }
 
 }
