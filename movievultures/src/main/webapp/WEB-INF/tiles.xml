@@ -100,6 +100,9 @@
 	<definition name="movies/details2" extends="defaultTemplate">
 		<put-attribute name="title" value="Movie Details" />
 		<put-attribute name="content" value="/WEB-INF/jsp/movies/details2.jsp" />
+		<put-list-attribute name="stylesheets" inherit="true">
+			<add-attribute value="/res/css/starrating.css" />
+		</put-list-attribute>
 	</definition>
 	
 	<definition name="movies/edit" extends="defaultTemplate">
