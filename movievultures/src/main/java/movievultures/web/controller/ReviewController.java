@@ -8,6 +8,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -86,7 +87,7 @@ public class ReviewController {
         models.put("review", review);
 		return "review/edit";
 	}
-	
+
 	@RequestMapping(value = "/review/edit", method = RequestMethod.POST)
 	public String edit( @ModelAttribute Review review, BindingResult result, SessionStatus status )
 	{
@@ -108,6 +109,25 @@ public class ReviewController {
 		}
 		status.setComplete();
         return "redirect:../movies/details2?id=" + review.getMovie().getMovieId();
+	}
+	@RequestMapping(value = "/review/editajax", method = RequestMethod.POST)
+	public String edit( @RequestParam("reviewId") int reviewId, @RequestParam("rating") double rating, @RequestParam("review") String review )
+	{
+		//Debugging statement
+		//System.out.println("Review ID: " + review.getReviewId());
+		if(rating > 5.0 || rating < 0.5) return "redirect:../home";
+		try {
+			Review oldreview = reviewDao.getReview(reviewId);
+			//if we're still here, that means there's already a review.
+			oldreview.setReview(review);
+			oldreview.setRating(rating);
+			oldreview = reviewDao.saveReview(oldreview); //preserve the old reviewid, and prevent dupes.
+			return "redirect:../movies/details2?id=" + oldreview.getMovie().getMovieId();
+		} catch (EmptyResultDataAccessException e) {
+			//for some reason they're trying to edit a review that didn't exist in the first place.
+			return "redirect:../home";
+		}
+        
 	}
 
 	@InitBinder

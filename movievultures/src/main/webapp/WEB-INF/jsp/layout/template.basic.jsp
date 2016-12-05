@@ -52,7 +52,7 @@
 </script>
   
 <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/i18n/defaults-*.min.js">
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/i18n/defaults-en.min.js">
 </script>
 
 

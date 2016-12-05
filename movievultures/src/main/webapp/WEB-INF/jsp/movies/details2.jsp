@@ -7,7 +7,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
+<title>Details</title>
 <style>
 .gold {
 	color: #FFD700;
@@ -15,10 +15,10 @@
 </style>
 		<%-- ===== MOVIE DETAILS DISPLAY ===== --%>
 
-		<h1>${movie.title}</h1>
+		<h1><span id="movie-title">${movie.title}</span></h1>
 
 		<sec:authorize access="isAuthenticated()">
-			<a href="edit?id=${movie.movieId}" class="btn btn-primary">Edit
+			<a href="#" onclick="$('#movie-form').dialog('open')" class="btn btn-primary">Edit
 				Movie</a>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -50,7 +50,7 @@
 
 				<p>
 					<b>Year of Release</b>:
-					<fmt:formatDate value="${ movie.date }" pattern="yyyy" />
+					<span id="movie-date"><fmt:formatDate value="${ movie.date }" pattern="yyyy" /></span>
 				</p>
 
 				<br /> <b>Plot</b><br />
@@ -61,17 +61,21 @@
 					<div class="panel-heading">
 						<b>Genre${fn:length(movie.genres) > 1 ? 's':''}</b>
 					</div>
-					<div class="pabel-body">
+					<div class="panel-body">
 						<c:choose>
 							<c:when test="${ not empty movie.genres }">
+								<span id="movie-genres">
 								<c:forEach items="${movie.genres}" var="genre">
 									<ul>
 										<li>${genre}</li>
 									</ul>
 								</c:forEach>
+								</span>
 							</c:when>
 							<c:otherwise>
-							Please help by adding Genres to this movie.
+								<span id="movie-genres">
+								Please help by adding Genres to this movie.
+								</span>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -81,11 +85,13 @@
 						<b>Cast</b>
 					</div>
 					<div class="panel-body">
+						<span id="movie-actors">
 						<c:forEach items="${movie.actors}" var="c">
 							<ul>
 								<li>${c}</li>
 							</ul>
 						</c:forEach>
+						</span>
 					</div>
 				</div>
 				<div class="panel panel-default">
@@ -93,11 +99,13 @@
 						<b>Director${fn:length(movie.directors) > 1 ? 's':''}</b>
 					</div>
 					<div class="panel-body">
+						<span id="movie-directors">
 						<c:forEach items="${movie.directors}" var="director">
 							<ul>
 								<li>${director}</li>
 							</ul>
 						</c:forEach>
+						</span>
 					</div>
 				</div>
 				<div class="panel panel-default">
@@ -140,22 +148,52 @@
 								<br />
 								<ul id="reviews">
 									<c:if test="${not empty userreview}">
-										<li>${user.username}-${userreview.rating}|<a
-											href="<c:url value="/review/edit?id=${movie.movieId}" />"> Changed
-												your mind?</a> <br /> ${userreview.review}<br />
+										<li class="userReview">
+											<span id="showUserReview">
+											${userreview.user.username} - <span id="userRating"> ${userreview.rating} </span> | <a onclick="editUserReview()"> Changed your mind?</a>
+											<br /><span id="userReviewText">${userreview.review}</span><br />
+											</span>
+											<span id="editUserReview" style="display:none;">
+											<form>
+											<input type="hidden" value="${userreview.reviewId}" name="reviewId" />
+											<fieldset class="rating">
+												<input type="radio" id="star5" name="rating" value="5" ${userreview.rating == 5 ? "checked='checked'" : ""} />
+												<label class="full" for="star5" title="Awesome - 5 stars"></label>
+												<input type="radio" id="star4half" name="rating" value="4.5" ${userreview.rating == 4.5 ? "checked='checked'" : ""} />
+												<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+												<input type="radio" id="star4" name="rating" value="4" ${userreview.rating == 4 ? "checked='checked'" : ""} />
+												<label class="full" for="star4" title="Pretty good - 4 stars"></label>
+												<input type="radio" id="star3half" name="rating" value="3.5" ${userreview.rating == 3.5 ? "checked='checked'" : ""} />
+												<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+												<input type="radio" id="star3" name="rating" value="3" ${userreview.rating == 3 ? "checked='checked'" : ""} />
+												<label class="full" for="star3" title="Meh - 3 stars"></label>
+												<input type="radio" id="star2half" name="rating" value="2.5" ${userreview.rating == 2.5 ? "checked='checked'" : ""} />
+												<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+												<input type="radio" id="star2" name="rating" value="2" ${userreview.rating == 2 ? "checked='checked'" : ""} />
+												<label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+												<input type="radio" id="star1half" name="rating" value="1.5" ${userreview.rating == 1.5 ? "checked='checked'" : ""} />
+												<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+												<input type="radio" id="star1" name="rating" value="1" ${userreview.rating == 1 ? "checked='checked'" : ""} />
+												<label class="full" for="star1" title="Sucks big time - 1 star"></label>
+												<input type="radio" id="starhalf" name="rating" value="0.5" ${userreview.rating == 0.5 ? "checked='checked'" : ""} />
+												<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+											</fieldset>
+											<br /><br /><textarea name="review">${userreview.review}</textarea><br />
+											<a onclick="submitEditedReview()">Done</a> | <a onclick="cancelEditReview()">Cancel</a>
+											<br />
+											</form>
+											</span>
 										</li>
 									</c:if>
 									<c:forEach items="${movie.reviews}" var="r"
 										varStatus="varStatus">
-										<li
-											class="review reviewpage${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')} ${r.user.username == user.username ? 'userReview' : ''}"
-											style="${r.user.username == user.username ? '' : 'display: none;'}">
-											${r.user.username} - ${r.rating} <c:if
-												test="${r.user.username == user.username}">
-				  	 | <a href="<c:url value="/review/edit?id=${movie.movieId}" />"> Changed
-													your mind?</a>
-											</c:if> <br /> ${r.review}<br />
-										</li>
+										<c:if test="${r.user.username != user.username}">
+											<li
+												class="review reviewpage${fn:replace(((varStatus.count/10)-((varStatus.count/10)%1)+1),'.0','')}"
+												style="display: none;">
+												${r.user.username} - ${r.rating}<br />${r.review}<br />
+											</li>
+										</c:if>
 									</c:forEach>
 								</ul>
 								<a href="javascript:changePageBy(-1)" id="review_btn_prev">Prev</a>
@@ -246,8 +284,86 @@
 
 			</div>
 		</div>
+	<div id="movie-form">
+		<form>
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		<input type="hidden" name="movieId" value="${movie.movieId}" />
+			<div class="form-group row">
+				<div class="col-xs-2 col-form-label">Title of the Movie</div>
+				<div class="col-xs-10">
+					<input class="form-control" type="text" name="title" value="${movie.title}"
+						placeholder="Enter title of the movie" /><br />
+						<font color="red"><span id="movie-title-errors"></span></font>
+				</div>
+				<br />
+			</div>
+			<div class="form-group row">
+				<div class="col-xs-2 col-form-label">Plot</div>
+				<div class="col-xs-10">
+					<textarea style="width: 50%; height: 300px;" class="form-control"
+						placeholder="Enter plot of the movie" name="editmovie_plot"
+						>${movie.plot}</textarea>
+				</div>
+				<br />
+			</div>
+			<div class="form-group row">
+				<div class="col-xs-2 col-form-label">Date</div>
+				<div class="col-xs-10">
+					<input name="date" type="date" value="<fmt:formatDate value="${ movie.date }" pattern="yyyy" />"/><br />
+					<font color="red"><span id="movie-date-errors"></span></font>
+				</div>
+				<br />
+			</div>
+			<div class="form-group row">
+				<div class="col-xs-2 col-form-label">Genre(s)</div>
+				<div class="col-xs-10">
+					<span id="genres">
+					<c:forEach items="${movie.genres}" var="genre" varStatus="stat">
+						<span id="genre${stat.count}">
+						<br />
+						<input type="text" placeholder="Horror, Comedy,....." name="editmovie_genres" value="${genre}"/>
+						<a onclick="$('#genre${stat.count}').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a>
+						</span>
+					</c:forEach> 
+					</span>
+					<a onclick="addGenre()"><i style="color: green;" class="fa fa-plus-circle" aria-hidden="true"></i></a>
+				</div>
+				<br />
+			</div>
+			<div class="form-group row">
+				<div class="col-xs-2 col-form-label">Cast</div>
+				<div class="col-xs-10">
+					<span id="actors">
+					<c:forEach items="${movie.actors}" var="actor" varStatus="stat">
+						<span id="actor${stat.count}">
+						<br />
+						<input type="text" placeholder="Fay Wray, Ronald Reagan,....." name="editmovie_actors" value="${actor}"/>
+						<a onclick="$('#actor${stat.count}').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a>
+						</span>
+					</c:forEach>
+					</span>
+					<a onclick="addActor()"><i style="color: green;" class="fa fa-plus-circle" aria-hidden="true"></i></a>
+				</div>
+				<br />
+			</div>
+			<div class="form-group row">
+				<div class="col-xs-2 col-form-label">Director(s)</div>
+				<div class="col-xs-10">
+					<span id="directors">
+					<c:forEach items="${movie.directors}" var="director" varStatus="stat">
+						<span id="director${stat.count}">
+						<br />
+						<input type="text" placeholder="Wes Anderson, Woody Allen,....." name="editmovie_directors" value="${director}"/>
+						<a onclick="$('#director${stat.count}').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a>
+						</span>
+					</c:forEach>
+					</span>
+					<a onclick="addDirector()"><i style="color: green;" class="fa fa-plus-circle" aria-hidden="true"></i></a>
+				</div>
+				<br />
+			</div>
+		</form>
 	</div>
-	
 <script>
 	var current_page_reviews = 1;
 	var records_per_page = 10;
@@ -360,3 +476,94 @@
 		changePageElo(1);
 	};
 </script>
+<script>
+function addGenre() {
+	var id = Date.now()
+	$('#genres').append( '<span id="genre' + id + '"><br /><input type="text" placeholder="Horror, Comedy,....." name="editmovie_genres""/> <a onclick="$(\'#genre' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a></span>' );
+}
+function addActor() {
+	var id = Date.now()
+	$('#actors').append( '<span id="actor' + id + '"><br /><input type="text" placeholder="Fay Wray, Ronald Reagan,....." name="editmovie_actors""/> <a onclick="$(\'#actor' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a></span>' );
+}
+function addDirector() {
+	var id = Date.now()
+	$('#directors').append( '<span id="director' + id + '"><br /><input type="text" placeholder="Wes Anderson, Woody Allen,....." name="editmovie_directors"/> <a onclick="$(\'#director' + id +'\').remove();"><i style="color: red;" class="fa fa-minus-circle" aria-hidden="true"></i></a></span>' );
+}
+function editMovie() {
+    $.ajax({
+        url: "edit",
+        method: "POST",
+        processData: false,
+        data: $("#movie-form > form").serialize(),
+        success: function() {
+        	console.log("post success!");
+        	$("#movie-title").text($("input[name='title']").val());
+        	$("#movie-date").text($("input[name='date']").val());
+        	$("#movie-plot").text($("input[name='editmovie_plot']").val());
+        	$("#movie-genres").html("");
+        	$("[name='editmovie_genres']").each(function(k,v) {
+        		console.log($(v));
+        		if($(v).val() != "") {
+            		$("#movie-genres").append("<ul><li>"+$(v).val()+"</li></ul>");
+        		}
+        	})
+        	$("#movie-actors").html("");
+        	$("[name='editmovie_actors']").each(function(k,v) {
+        		console.log($(v));
+        		if($(v).val() != "") {
+            		$("#movie-actors").append("<ul><li>"+$(v).val()+"</li></ul>");
+        		}
+        	})
+        	$("#movie-directors").html("");
+        	$("[name='editmovie_directors']").each(function(k,v) {
+        		console.log($(v));
+        		if($(v).val() != "") {
+            		$("#movie-directors").append("<ul><li>"+$(v).val()+"</li></ul>");
+        		}
+        	})
+        },
+        error: function() {
+        	console.log("post error!");
+        }
+    });
+}
+function editUserReview() {
+	$("#showUserReview").detach().insertAfter($("#editUserReview")).hide(); //yes, seriously. I can't figure out how to fully hide it, it's adding whitespace even when hidden.
+	$("#editUserReview").show();
+}
+function submitEditedReview() {
+    $.ajax({
+        url: "../review/editajax",
+        method: "POST",
+        processData: false,
+        data: $("#editUserReview > form").serialize(),
+        success: function() {
+        	$("#showUserReview").detach().insertAfter($("#editUserReview")).fadeIn("slow"); //yes, seriously. I can't figure out how to fully hide it, it's adding whitespace even when hidden.
+        	console.log($("fieldset > input:checked"));
+        	$("#userRating").text($("fieldset > input:checked").val());
+        	$("#userReviewText").text($("textarea[name='review']").val());
+        	$("#editUserReview").hide();
+        },
+        error: function() {
+        	alert("Failed to update review. Try again?");
+        }
+    });
+}
+function cancelEditReview() {
+	$("#showUserReview").detach().insertBefore($("#editUserReview")).fadeIn("slow"); 
+	$("#editUserReview").hide();
+}
+$("#movie-form").dialog({
+	autoOpen: false,
+    buttons: {
+        "Save": function(){
+        	editMovie();
+            $(this).dialog( "close" );
+        }
+    },
+    minWidth: 640,
+    width: 800
+});
+</script>
+</body>
+</html>
