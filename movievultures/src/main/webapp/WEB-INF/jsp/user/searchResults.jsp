@@ -98,7 +98,7 @@
 	<c:choose>
 		<c:when test="${!contains}">
 			<%-- Authorize <form:checkbox path="authorize"/>--%>
-			<form>
+			<form id="privileges">
 				Authorize <input type="checkbox" name="authority" />
 				<br /><br />
 				<input type="radio" name="status" value="enabled" />  Enable
@@ -121,19 +121,18 @@ function updatePrivileges(userId, status, authorize){
 		url: "../service/user/" + userId + "/" + status + "/" + authorize,
 		method: "PUT",
         success: function(data){
-        	console.log("In here!");
-        	var id = $("#management td[data-field='id']").html();
+        	$("tr[data-user-id='" + userId + "']").hide();
         	var status = ($("input[name='status']:checked").val() == "enabled");
-        	var target = $("#usersT tr[data-user-id='" + id + "']").find("td[data-prop='status']");
+        	var target = $("#usersT tr[data-user-id='" + userId + "']").find("td[data-prop='status']");
         	if(status)
         		target.html('<i><font color="green">enabled</font></i>');
         	else
         		target.html('<i><font color="red">disabled</font></i>'); 
-        	$("#usersT tr[data-user-id='" + id + "']").find("td[data-prop='enabled']").html(status);
+        	$("#usersT tr[data-user-id='" + userId + "']").find("td[data-prop='enabled']").html(status);
         	if($("#management input[name='authority']").is(":checked")){
-        		$("#usersT tr[data-user-id='" + id + "']").find("td[data-prop='role']").html("Admin");
+        		$("#usersT tr[data-user-id='" + userId + "']").find("td[data-prop='role']").html("Admin");
         	}
-        	
+        	$("tr[data-user-id='" + userId + "']").fadeIn(1500);
 		},
  		error: function(request, status, error){
 			alert(request.responseText);
@@ -149,7 +148,7 @@ $(function(){
 		buttons: {
 			"Update": function(){
 				var userId = $("#management td[data-field='id']").html();
-				console.log(userId);
+				//console.log(userId);
 				//get values from forms and pass them into function
 				var status = ($("input[name='status']:checked").val() == "enabled");
 				var authorize = $("#management input[name='authority']").is(":checked");
@@ -162,7 +161,7 @@ $(function(){
 	});
 	
 	$(".manage").click(function(){
-		$("form")[0].reset();
+		$("#privileges")[0].reset();
 		var userId = $(this).closest("tr").attr("data-user-id");
 		var username = $(this).closest("tr").find("td[data-prop='username']").html();
 		var status = $(this).closest("tr").find("td[data-prop='enabled']").html();
