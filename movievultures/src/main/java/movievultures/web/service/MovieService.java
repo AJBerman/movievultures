@@ -67,8 +67,5 @@ public class MovieService {
 	    {
 	        e.printStackTrace();
 	    }
-		catch (AssertionError e) {
-			//Do nothing, but we don't want the rest of the code to execute.
-		}
 	}
 }
