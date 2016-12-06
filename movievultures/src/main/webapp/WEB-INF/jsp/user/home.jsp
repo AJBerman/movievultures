@@ -26,7 +26,7 @@
 			<div id="tabs">
 				<ul>
 					<c:forEach items="${user.recommendations}" var="movie" varStatus="status">
-						<li><a href="<c:url value="/movies/${movie.movieId}/plot" />">${movie.title}</a></li>
+						<li><a href="<c:url value="/movies/${movie.movieId}/plot" />">Movie ${status.index + 1}</a></li>
 					</c:forEach>
 				</ul>
 			</div>	
