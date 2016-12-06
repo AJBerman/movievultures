@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.util.NestedServletException;
@@ -187,6 +188,18 @@ public class MovieController {
 		movieDao.saveMovie(movie);
 		status.setComplete();
 		return "redirect:../movies/details2?id=" + movie.getMovieId();
+	}
+	
+	//PRACTICE
+	@RequestMapping(value="/movies/{id}/plot", method=RequestMethod.GET)
+	@ResponseBody
+	public String getPlot(@PathVariable int id){
+		Movie movie = movieDao.getMovie(id);
+		String formatMovie = "<p><b>Title:  </b>"
+				+ "<a href='/movievultures/movies/details2?id=" + movie.getMovieId() +"'>" 
+				+ movie.getTitle() + "</a>" +
+				"<br /><br /><b>Plot:  </b><p>" + movie.getPlot() + "</p></p>";
+		return formatMovie;
 	}
 	
 	@InitBinder

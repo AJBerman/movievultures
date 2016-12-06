@@ -19,18 +19,18 @@
 	
 	<div id=toggles>
 	<h3>Recommendations:</h3>
-		<div>
 		<c:if test="${empty user.recommendations}">
 			<p>None at the moment.</p>
 		</c:if>
 		<c:if test="${not empty user.recommendations}">
-			<ul>
-			<c:forEach items="${user.recommendations}" var="movie" varStatus="status">
-				<li><a href="<c:url value="/movies/details2.html?id=${ movie.movieId }" />">${movie.title}</a></li>
-			</c:forEach>
-			</ul>
+			<div id="tabs">
+				<ul>
+					<c:forEach items="${user.recommendations}" var="movie" varStatus="status">
+						<li><a href="<c:url value="/movies/${movie.movieId}/plot" />">Movie ${status.index + 1}</a></li>
+					</c:forEach>
+				</ul>
+			</div>	
 		</c:if>
-		</div>	
 	<h3>Favorites:</h3>
 	<div>
 		<c:if test="${empty user.favorites}">
@@ -192,6 +192,15 @@ function removeMovie(){
 
 $(function(){
 	$(".remove").click(removeMovie);
-	
+    $("#tabs").tabs({
+      beforeLoad: function( event, ui ) {
+        ui.jqXHR.fail(function() {
+          ui.panel.html(
+            "Couldn't load this tab. We'll try to fix this as soon as possible. " +
+            "If this wouldn't be a demo." );
+        });
+      }
+    
+      });
 });
 </script>
