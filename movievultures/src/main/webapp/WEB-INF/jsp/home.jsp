@@ -4,6 +4,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<style>
+	.ui-accordion-header.ui-state-active { background-color: #336699; }
+</style>
+
 <div class="container">
 		<%-- ===== LOGIN AUTHENTICATION ===== --%>
 		<br />
@@ -61,11 +65,12 @@
 	<%-- ===== Display Recommendations, WatchLater, and Favorites===== --%>
 	
 	<sec:authorize access="isAuthenticated()">
-	
+		<div id="accordion">
 		<h2>Recommendations</h2>
+		<div>
 		<c:choose>
 			<c:when test="${not empty recomms}">
-				<table id="recomms" border=1>
+				<table id="recomms" class="table table-bordered">
 					<tr>
 						<c:forEach items="${recomms}" var="movie" varStatus="status" >
 							<td>
@@ -103,11 +108,12 @@
 				We have no recommendations for you at this time. <br />
 			</c:when>
 		</c:choose>
-	
+		</div>
 		<h2>Favorites</h2>
+		<div>
 		<c:choose>
 			<c:when test="${ not empty movies }">
-				<table id="favs" border=1 >
+				<table id="favs" class="table table-bordered" >
 					<tr>
 						<c:forEach items="${movies}" var="movie" varStatus="status">
 							<td>
@@ -147,13 +153,13 @@
 				There are no movies to display.
 			</c:otherwise>
 		</c:choose>
-		<br />
+		</div>
 		
 		<h2>Watch Later</h2>
-		
+		<div>
 		<c:choose>
 			<c:when test="${ not empty movies2 }">
-				<table id="wl" border=1>
+				<table id="wl" class="table table-bordered">
 					<tr>
 						<c:forEach items="${movies2}" var="movie2" varStatus="status">
 							<td>
@@ -192,5 +198,13 @@
 				There are no movies to display.
 			</c:otherwise>
 			</c:choose>
+			</div>
+			</div>
 		</sec:authorize>
 	</div>
+	
+	<script>
+/* 	$(function(){
+		$( "#accordion" ).accordion();
+	}); */
+	</script>

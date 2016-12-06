@@ -21,7 +21,7 @@ $(function(){
 		source: function(request, response){
 			console.log(request);
 			console.log(request.term);
-			console.log("Trying something here!");
+			//console.log("Trying something here!");
 			$.ajax({
 				url: "../service/users/" + request.term,
 				dataType: "json",
