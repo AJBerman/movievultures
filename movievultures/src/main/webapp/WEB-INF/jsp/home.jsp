@@ -70,7 +70,7 @@
 		<div>
 		<c:choose>
 			<c:when test="${not empty recomms}">
-				<table id="recomms" border=1>
+				<table id="recomms" class="table table-bordered">
 					<tr>
 						<c:forEach items="${recomms}" var="movie" varStatus="status" >
 							<td>
@@ -113,7 +113,7 @@
 		<div>
 		<c:choose>
 			<c:when test="${ not empty movies }">
-				<table id="favs" border=1 >
+				<table id="favs" class="table table-bordered" >
 					<tr>
 						<c:forEach items="${movies}" var="movie" varStatus="status">
 							<td>
@@ -159,7 +159,7 @@
 		<div>
 		<c:choose>
 			<c:when test="${ not empty movies2 }">
-				<table id="wl" border=1>
+				<table id="wl" class="table table-bordered">
 					<tr>
 						<c:forEach items="${movies2}" var="movie2" varStatus="status">
 							<td>
