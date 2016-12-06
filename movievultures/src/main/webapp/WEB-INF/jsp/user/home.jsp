@@ -5,6 +5,9 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<style>
+	.ui-accordion-header.ui-state-active { background-color: #336699; }
+</style>
 
 <div class="container">
 	<h2>Welcome ${user.username}</h2>
