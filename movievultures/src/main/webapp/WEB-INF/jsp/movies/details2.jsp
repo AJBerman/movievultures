@@ -496,32 +496,38 @@ function addDirector() {
 }
 function editMovie() {
     $.ajax({
-        url: "edit",
-        method: "POST",
+        url: "../service/movies/edit",
+        method: "PUT",
         processData: false,
-        data: $("#movie-form > form").serialize(),
+        contentType: "application/json",
+        data: JSON.stringify({
+        	movieId: $("input[name='movieId']").val(),
+        	title: $("input[name='title']").val(),
+        	year: $("input[name='date']").val(),
+        	plot: $("textarea[name='editmovie_plot']").val(),
+        	genres: $("input[name='editmovie_genres']").map(function() { return $(this).val() }).toArray(),
+        	actors: $("input[name='editmovie_actors']").map(function() { return $(this).val() }).toArray(),
+        	directors: $("input[name='editmovie_directors']").map(function() { return $(this).val() }).toArray()
+        }),
         success: function() {
         	console.log("post success!");
         	$("#movie-title").text($("input[name='title']").val());
         	$("#movie-date").text($("input[name='date']").val());
-        	$("#movie-plot").text($("input[name='editmovie_plot']").val());
+        	$("#movie-plot").text($("textarea[name='editmovie_plot']").val());
         	$("#movie-genres").html("");
         	$("[name='editmovie_genres']").each(function(k,v) {
-        		console.log($(v));
         		if($(v).val() != "") {
             		$("#movie-genres").append("<ul><li>"+$(v).val()+"</li></ul>");
         		}
         	})
         	$("#movie-actors").html("");
         	$("[name='editmovie_actors']").each(function(k,v) {
-        		console.log($(v));
         		if($(v).val() != "") {
             		$("#movie-actors").append("<ul><li>"+$(v).val()+"</li></ul>");
         		}
         	})
         	$("#movie-directors").html("");
         	$("[name='editmovie_directors']").each(function(k,v) {
-        		console.log($(v));
         		if($(v).val() != "") {
             		$("#movie-directors").append("<ul><li>"+$(v).val()+"</li></ul>");
         		}
@@ -538,10 +544,15 @@ function editUserReview() {
 }
 function submitEditedReview() {
     $.ajax({
-        url: "../review/editajax",
-        method: "POST",
+        url: "../service/reviews/edit",
+        method: "PUT",
         processData: false,
-        data: $("#editUserReview > form").serialize(),
+        contentType: "application/json",
+        data: JSON.stringify({
+        	reviewId:$("input[name='reviewId']").val(),
+        	review:$("textarea[name='review']").val(),
+        	rating:$("input[name='rating']:checked").val()
+        }),
         success: function() {
         	$("#showUserReview").detach().insertAfter($("#editUserReview")).fadeIn("slow"); //yes, seriously. I can't figure out how to fully hide it, it's adding whitespace even when hidden.
         	console.log($("fieldset > input:checked"));

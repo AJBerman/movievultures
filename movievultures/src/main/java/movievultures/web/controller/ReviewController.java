@@ -59,7 +59,7 @@ public class ReviewController {
     public String add( @ModelAttribute("review") Review review, BindingResult result, SessionStatus status ) // e.g. /rate?id=5267
     {
         User user = userDao.getUserByUsername(SecurityUtils.getUserName());
-        if(user.getUserId() != review.getUser().getUserId()) return "redirect:../home";
+        assert user.getUserId() == review.getUser().getUserId();
 		//Debugging statement
 		//System.out.println("Review ID: " + review.getReviewId());
 		reviewFormsValidator.validate(review, result);
@@ -94,7 +94,7 @@ public class ReviewController {
 	public String edit( @ModelAttribute Review review, BindingResult result, SessionStatus status )
 	{
         User user = userDao.getUserByUsername(SecurityUtils.getUserName());
-        if(user.getUserId() != review.getUser().getUserId()) return "redirect:../home";
+        assert user.getUserId() == review.getUser().getUserId();
 		//Debugging statement
 		//System.out.println("Review ID: " + review.getReviewId());
 		reviewFormsValidator.validate(review, result);
