@@ -58,6 +58,8 @@ public class ReviewController {
 	@RequestMapping(value = "/review/add", method = RequestMethod.POST)
     public String add( @ModelAttribute("review") Review review, BindingResult result, SessionStatus status ) // e.g. /rate?id=5267
     {
+        User user = userDao.getUserByUsername(SecurityUtils.getUserName());
+        if(user.getUserId() != review.getUser().getUserId()) return "redirect:../home";
 		//Debugging statement
 		//System.out.println("Review ID: " + review.getReviewId());
 		reviewFormsValidator.validate(review, result);
@@ -91,6 +93,8 @@ public class ReviewController {
 	@RequestMapping(value = "/review/edit", method = RequestMethod.POST)
 	public String edit( @ModelAttribute Review review, BindingResult result, SessionStatus status )
 	{
+        User user = userDao.getUserByUsername(SecurityUtils.getUserName());
+        if(user.getUserId() != review.getUser().getUserId()) return "redirect:../home";
 		//Debugging statement
 		//System.out.println("Review ID: " + review.getReviewId());
 		reviewFormsValidator.validate(review, result);
@@ -113,11 +117,13 @@ public class ReviewController {
 	@RequestMapping(value = "/review/editajax", method = RequestMethod.POST)
 	public String edit( @RequestParam("reviewId") int reviewId, @RequestParam("rating") double rating, @RequestParam("review") String review )
 	{
+        User user = userDao.getUserByUsername(SecurityUtils.getUserName());
 		//Debugging statement
 		//System.out.println("Review ID: " + review.getReviewId());
 		if(rating > 5.0 || rating < 0.5) return "redirect:../home";
 		try {
 			Review oldreview = reviewDao.getReview(reviewId);
+	        if(user.getUserId() != oldreview.getUser().getUserId()) return "redirect:../home";
 			//if we're still here, that means there's already a review.
 			oldreview.setReview(review);
 			oldreview.setRating(rating);

@@ -12,4 +12,7 @@ public interface UserDao {
 	List<User> getUsers();
 	List<User> getUsersByUsernames(String username);
 	List<String> getUsernames(String term);
+	
+	//new code
+	User existingUser(String userName, String email);
 }

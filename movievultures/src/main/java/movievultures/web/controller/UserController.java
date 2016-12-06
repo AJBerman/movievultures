@@ -1,8 +1,11 @@
 package movievultures.web.controller;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
@@ -247,5 +250,27 @@ public class UserController {
 
 		return "user/searchResults";
 	}
+	
+	//new code
+	@RequestMapping(value = "user/register/existing/{username}/{email}", method = RequestMethod.GET)
+    public String checkExistingUser(ModelMap models, @PathVariable String username, @PathVariable String email, HttpServletResponse response) {
+        System.out.println("Checking existing registration ::: " + username + "." + email);
+        User user = userDao.existingUser(username, email);
+        if (user!=null) {
+            user = new User();
+            user.setReviewedMovies(Collections.emptyList());
+            user.setRoles(Collections.EMPTY_SET);
+            user.setWatchLater(Collections.emptyList());
+            user.setRecommendations(Collections.emptyList());
+            user.setFavorites(Collections.emptyList());
+            models.put("user", user);
+            return "service/user.json";
+        }
+        user = new User();
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        models.put("user", user);
+        return "service/user.json";
+    }
+
 
 }
