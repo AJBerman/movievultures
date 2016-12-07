@@ -31,7 +31,7 @@
 						<a href="<c:url value="/review/add?id=${movie.movieId}" />"
 							class="reviewM btn btn-primary">Review this movie</a>
 					--%>
-					<a href="/review/add?id=${movie.movieid}" class="reviewM btn btn-primary">Review this movie</a>
+					<a href="../review/add?id=${movie.movieId}" class="reviewM btn btn-primary">Review this movie</a>
 					</c:when>
 					<c:otherwise>
 						<a href="<c:url value="/review/edit?id=${movie.movieId}" />"
